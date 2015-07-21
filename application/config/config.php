@@ -14,7 +14,7 @@
 | path to your installation.
 |
 */
-$config['base_url']	= 'http://localhost:8080/projetos/atual/';
+$config['base_url']	= 'http://localhost:8080/';
 /*$config['base_url']	= 'http://52.25.102.57:8080/';*/
 /*
 |--------------------------------------------------------------------------

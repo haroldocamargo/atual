@@ -3,8 +3,6 @@
 # TABLE STRUCTURE FOR: permissoes
 #
 
-DROP TABLE IF EXISTS permissoes;
-
 CREATE TABLE `permissoes` (
   `idPermissao` int(11) NOT NULL AUTO_INCREMENT,
   `nome` varchar(80) NOT NULL,
@@ -20,8 +18,6 @@ INSERT INTO permissoes (`idPermissao`, `nome`, `permissoes`, `situacao`, `data`)
 #
 # TABLE STRUCTURE FOR: usuarios
 #
-
-DROP TABLE IF EXISTS usuarios;
 
 CREATE TABLE `usuarios` (
   `idUsuarios` int(11) NOT NULL AUTO_INCREMENT,
@@ -55,8 +51,6 @@ INSERT INTO `usuarios` (`idUsuarios`, `nome`, `rg`, `cpf`, `rua`, `numero`, `bai
 # TABLE STRUCTURE FOR: auditoria
 #
 
-DROP TABLE IF EXISTS auditoria;
-
 CREATE TABLE `auditoria` (
   `idAuditoria` int(11) NOT NULL AUTO_INCREMENT,
   `usuario` varchar(80) NOT NULL,
@@ -72,8 +66,6 @@ CREATE TABLE `auditoria` (
 # TABLE STRUCTURE FOR: ci_sessions
 #
 
-DROP TABLE IF EXISTS ci_sessions;
-
 CREATE TABLE `ci_sessions` (
   `session_id` varchar(40) NOT NULL DEFAULT '0',
   `ip_address` varchar(45) NOT NULL DEFAULT '0',
@@ -88,8 +80,6 @@ CREATE TABLE `ci_sessions` (
 #
 # TABLE STRUCTURE FOR: clientes
 #
-
-DROP TABLE IF EXISTS clientes;
 
 CREATE TABLE `clientes` (
   `idClientes` int(11) NOT NULL AUTO_INCREMENT,
@@ -116,8 +106,6 @@ CREATE TABLE `clientes` (
 #
 # TABLE STRUCTURE FOR: lancamentos
 #
-
-DROP TABLE IF EXISTS lancamentos;
 
 CREATE TABLE `lancamentos` (
   `idLancamentos` int(11) NOT NULL AUTO_INCREMENT,
@@ -147,8 +135,6 @@ CREATE TABLE `lancamentos` (
 # TABLE STRUCTURE FOR: compras
 #
 
-DROP TABLE IF EXISTS compras;
-
 CREATE TABLE `compras` (
   `idCompras` int(11) NOT NULL AUTO_INCREMENT,
   `dataCompra` date DEFAULT NULL,
@@ -175,8 +161,6 @@ CREATE TABLE `compras` (
 # TABLE STRUCTURE FOR: documentos
 #
 
-DROP TABLE IF EXISTS documentos;
-
 CREATE TABLE `documentos` (
   `idDocumentos` int(11) NOT NULL AUTO_INCREMENT,
   `documento` varchar(70) DEFAULT NULL,
@@ -195,8 +179,6 @@ CREATE TABLE `documentos` (
 #
 # TABLE STRUCTURE FOR: emitente
 #
-
-DROP TABLE IF EXISTS emitente;
 
 CREATE TABLE `emitente` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -222,8 +204,6 @@ CREATE TABLE `emitente` (
 # TABLE STRUCTURE FOR: produtos
 #
 
-DROP TABLE IF EXISTS produtos;
-
 CREATE TABLE `produtos` (
   `idProdutos` int(11) NOT NULL AUTO_INCREMENT,
   `descricao` varchar(80) NOT NULL,
@@ -247,8 +227,6 @@ CREATE TABLE `produtos` (
 # TABLE STRUCTURE FOR: itens_de_compras
 #
 
-DROP TABLE IF EXISTS itens_de_compras;
-
 CREATE TABLE `itens_de_compras` (
   `idItens` int(11) NOT NULL AUTO_INCREMENT,
   `valor` decimal(10,2) NOT NULL,
@@ -269,8 +247,6 @@ CREATE TABLE `itens_de_compras` (
 #
 # TABLE STRUCTURE FOR: vendas
 #
-
-DROP TABLE IF EXISTS vendas;
 
 CREATE TABLE `vendas` (
   `idVendas` int(11) NOT NULL AUTO_INCREMENT,
@@ -298,8 +274,6 @@ CREATE TABLE `vendas` (
 # TABLE STRUCTURE FOR: itens_de_vendas
 #
 
-DROP TABLE IF EXISTS itens_de_vendas;
-
 CREATE TABLE `itens_de_vendas` (
   `idItens` int(11) NOT NULL AUTO_INCREMENT,
   `valor` decimal(10,2) NOT NULL,
@@ -320,8 +294,6 @@ CREATE TABLE `itens_de_vendas` (
 #
 # TABLE STRUCTURE FOR: os
 #
-
-DROP TABLE IF EXISTS os;
 
 CREATE TABLE `os` (
   `idOs` int(11) NOT NULL AUTO_INCREMENT,
@@ -353,8 +325,6 @@ CREATE TABLE `os` (
 # TABLE STRUCTURE FOR: anexos
 #
 
-DROP TABLE IF EXISTS anexos;
-
 CREATE TABLE `anexos` (
   `idAnexos` int(11) NOT NULL AUTO_INCREMENT,
   `anexo` varchar(45) DEFAULT NULL,
@@ -371,8 +341,6 @@ CREATE TABLE `anexos` (
 #
 # TABLE STRUCTURE FOR: produtos_os
 #
-
-DROP TABLE IF EXISTS produtos_os;
 
 CREATE TABLE `produtos_os` (
   `idProdutos_os` int(11) NOT NULL AUTO_INCREMENT,
@@ -395,8 +363,6 @@ CREATE TABLE `produtos_os` (
 # TABLE STRUCTURE FOR: servicos
 #
 
-DROP TABLE IF EXISTS servicos;
-
 CREATE TABLE `servicos` (
   `idServicos` int(11) NOT NULL AUTO_INCREMENT,
   `nome` varchar(45) NOT NULL,
@@ -417,8 +383,6 @@ CREATE TABLE `servicos` (
 # TABLE STRUCTURE FOR: servicos_os
 #
 
-DROP TABLE IF EXISTS servicos_os;
-
 CREATE TABLE `servicos_os` (
   `idServicos_os` int(11) NOT NULL AUTO_INCREMENT,
   `os_id` int(11) NOT NULL,
@@ -438,8 +402,6 @@ CREATE TABLE `servicos_os` (
 #
 # TABLE STRUCTURE FOR: estoque
 #
-
-DROP TABLE IF EXISTS estoque;
 
 CREATE TABLE `estoque` (
   `idEstoque` int(11) NOT NULL AUTO_INCREMENT,
