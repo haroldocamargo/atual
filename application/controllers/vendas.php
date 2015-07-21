@@ -199,7 +199,6 @@ class Vendas extends CI_Controller {
         $id =  $this->input->post('id');
         $documentoVenda = $this->vendas_model->getById($id)->documentoVenda;
         if ($id == null){
-
             $this->session->set_flashdata('error','Erro ao tentar excluir venda.');            
             redirect(base_url().'index.php/vendas/gerenciar/');
         }
@@ -211,19 +210,30 @@ class Vendas extends CI_Controller {
             }
         }
 
-        $this->vendas_model->delete('itens_de_vendas','vendas_id', $id);
+		if($this->vendas_model->delete('itens_de_vendas','vendas_id', $id) <> TRUE){
+			$this->session->set_flashdata('error','Ocorreu um erro ao excluir venda.');
+	        redirect(base_url().'index.php/vendas/gerenciar/');
+		}
 
-        $this->vendas_model->delete('vendas','idVendas', $id);
+		if($this->vendas_model->delete('vendas','idVendas', $id) <> TRUE){
+			$this->session->set_flashdata('error','Ocorreu um erro ao excluir venda.');
+	        redirect(base_url().'index.php/vendas/gerenciar/');
+		}
 
-        $this->vendas_model->delete('lancamentos','vendas_id', $id);
+		if($this->vendas_model->delete('lancamentos','vendas_id', $id) <> TRUE){
+			$this->session->set_flashdata('error','Ocorreu um erro ao excluir venda.');
+	        redirect(base_url().'index.php/vendas/gerenciar/');
+		}
 
-        $this->vendas_model->delete('estoque','vendas_id', $id);
+		if($this->vendas_model->delete('estoque','vendas_id', $id) <> TRUE){
+			$this->session->set_flashdata('error','Ocorreu um erro ao excluir venda.');
+	        redirect(base_url().'index.php/vendas/gerenciar/');
+		}
 
 		auditoria('Exclusão de vendas', 'Excluída venda de documento "'.$documentoVenda.'"');
 
         $this->session->set_flashdata('success','Venda excluída com sucesso!');            
         redirect(base_url().'index.php/vendas/gerenciar/');
-
     }
 
     public function autoCompleteProduto(){
@@ -309,10 +319,13 @@ class Vendas extends CI_Controller {
 					'subTotal' => $subtotal,
 					'observacaoEstoque' => $this->input->post('observacaoItem')
 	            );
-    	        $this->estoque_model->add('estoque',$data2);
+	    	    if($this->estoque_model->add('estoque',$data2)){
+					auditoria('Inclusão de produto em vendas', 'Inclusão do produto "'.$produto.'" na venda '.$this->input->post('idVendasProduto'));
+                	echo json_encode(array('result'=> true));}
+				else {
+    	            echo json_encode(array('result'=> false));
+				}	
 
-				auditoria('Inclusão de produto em vendas', 'Inclusão do produto "'.$produto.'" na venda '.$this->input->post('idVendasProduto'));
-                echo json_encode(array('result'=> true));
             }else{
                 echo json_encode(array('result'=> false));
             }
@@ -338,10 +351,13 @@ class Vendas extends CI_Controller {
                 
 				$data = array('vendas_id' => $Venda, 
 					'produtos_id' => $produto);
-		        $this->vendas_model->deleteWhere('estoque', $data);
-
-				auditoria('Exclusão de produto em vendas', 'Exclusão do produto "'.$produto.'" na venda '.$Venda);
-                echo json_encode(array('result'=> true));
+		        if ($this->vendas_model->deleteWhere('estoque', $data) <> TRUE){
+	                echo json_encode(array('result'=> false));
+		        }
+				else{
+					auditoria('Exclusão de produto em vendas', 'Exclusão do produto "'.$produto.'" na venda '.$Venda);
+    	            echo json_encode(array('result'=> true));
+				}
             }
             else{
                 echo json_encode(array('result'=> false));
@@ -434,7 +450,14 @@ class Vendas extends CI_Controller {
 	            $data = array(
     	            'faturado' => 1,
         	        'valorTotal' => $this->input->post('valor'));
-				$this->vendas_model->edit('vendas', $data, 'idVendas', $venda);	
+
+				if ($this->vendas_model->edit('vendas', $data, 'idVendas', $venda) <> TRUE){
+	                $this->session->set_flashdata('error','Ocorreu um erro ao tentar faturar venda.');
+    	            $json = array('result'=>  false);
+   	    	        echo json_encode($json);
+       	    	    die();
+				}	
+
             } else {
                 $this->session->set_flashdata('error','Ocorreu um erro ao tentar faturar venda.');
                 $json = array('result'=>  false);
@@ -464,7 +487,14 @@ class Vendas extends CI_Controller {
 		            $data = array(
 	    	            'faturado' => 1,
 	        	        'valorTotal' => ($this->input->post('valor') + $this->input->post('valor2')));
-					$this->vendas_model->edit('vendas', $data, 'idVendas', $venda);	
+
+					if ($this->vendas_model->edit('vendas', $data, 'idVendas', $venda) <> TRUE){
+	            	    $this->session->set_flashdata('error','Ocorreu um erro ao tentar faturar venda.');
+    	    	        $json = array('result'=>  false);
+   	    		        echo json_encode($json);
+    	   	    	    die();
+					}	
+
 	            } else {
 	                $this->session->set_flashdata('error','Ocorreu um erro ao tentar faturar venda.');
 	                $json = array('result'=>  false);
@@ -496,7 +526,14 @@ class Vendas extends CI_Controller {
 	    	            'faturado' => 1,
 	        	        'valorTotal' => ($this->input->post('valor') + $this->input->post('valor2') + 
 	        	        $this->input->post('valor3')));
-					$this->vendas_model->edit('vendas', $data, 'idVendas', $venda);	
+
+					if ($this->vendas_model->edit('vendas', $data, 'idVendas', $venda) <> TRUE){
+	            	    $this->session->set_flashdata('error','Ocorreu um erro ao tentar faturar venda.');
+    	    	        $json = array('result'=>  false);
+   	    		        echo json_encode($json);
+    	   	    	    die();
+					}	
+
 	            } else {
 	                $this->session->set_flashdata('error','Ocorreu um erro ao tentar faturar venda.');
 	                $json = array('result'=>  false);
@@ -528,7 +565,14 @@ class Vendas extends CI_Controller {
 	    	            'faturado' => 1,
 	        	        'valorTotal' => ($this->input->post('valor') + $this->input->post('valor2') + 
 	        	        $this->input->post('valor3') + $this->input->post('valor4')));
-					$this->vendas_model->edit('vendas', $data, 'idVendas', $venda);	
+
+					if ($this->vendas_model->edit('vendas', $data, 'idVendas', $venda) <> TRUE){
+	            	    $this->session->set_flashdata('error','Ocorreu um erro ao tentar faturar venda.');
+    	    	        $json = array('result'=>  false);
+   	    		        echo json_encode($json);
+    	   	    	    die();
+					}	
+
 	            } else {
 	                $this->session->set_flashdata('error','Ocorreu um erro ao tentar faturar venda.');
 	                $json = array('result'=>  false);
@@ -561,7 +605,14 @@ class Vendas extends CI_Controller {
 	        	        'valorTotal' => ($this->input->post('valor') + $this->input->post('valor2') + 
 	        	        $this->input->post('valor3') + $this->input->post('valor4') + 
 	        	        $this->input->post('valor5')));
-					$this->vendas_model->edit('vendas', $data, 'idVendas', $venda);	
+
+					if ($this->vendas_model->edit('vendas', $data, 'idVendas', $venda) <> TRUE){
+	            	    $this->session->set_flashdata('error','Ocorreu um erro ao tentar faturar venda.');
+    	    	        $json = array('result'=>  false);
+   	    		        echo json_encode($json);
+    	   	    	    die();
+					}	
+
 	            } else {
 	                $this->session->set_flashdata('error','Ocorreu um erro ao tentar faturar venda.');
 	                $json = array('result'=>  false);
@@ -594,7 +645,14 @@ class Vendas extends CI_Controller {
 	        	        'valorTotal' => ($this->input->post('valor') + $this->input->post('valor2') + 
 	        	        $this->input->post('valor3') + $this->input->post('valor4') + $this->input->post('valor5') + 
 	        	        $this->input->post('valor6')));
-					$this->vendas_model->edit('vendas', $data, 'idVendas', $venda);	
+
+					if ($this->vendas_model->edit('vendas', $data, 'idVendas', $venda) <> TRUE){
+	            	    $this->session->set_flashdata('error','Ocorreu um erro ao tentar faturar venda.');
+    	    	        $json = array('result'=>  false);
+   	    		        echo json_encode($json);
+    	   	    	    die();
+					}	
+
 	            } else {
 	                $this->session->set_flashdata('error','Ocorreu um erro ao tentar faturar venda.');
 	                $json = array('result'=>  false);

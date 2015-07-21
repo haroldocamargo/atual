@@ -256,12 +256,20 @@ class Estoque extends CI_Controller {
     		$result = $this->estoque_model->delete('estoque','idEstoque',$id); 
     		if($result){
         		if($idProduto != null){
-					if ($tipo='saida'):	
-						$this->estoque_model->somaEstoque($quantidade, $idProduto);
-					else:	
-						$this->estoque_model->subtraiEstoque($quantidade, $idProduto);
-					endif;
-					$this->db->query($sql, array($quantidade, $idProduto));
+					if ($tipo='saida'){	
+						if ($this->estoque_model->somaEstoque($quantidade, $idProduto) <> TRUE){
+			    			$json = array('result'=>  false);
+			    			echo json_encode($json);
+							die();
+						}
+					}
+					else{	
+						if ($this->estoque_model->subtraiEstoque($quantidade, $idProduto)<> TRUE){
+			    			$json = array('result'=>  false);
+			    			echo json_encode($json);
+							die();
+						}
+					}
         		}
 
 				auditoria('Exclusão de estoque', 'Excluído estoque de documento "'.$documento.'"');

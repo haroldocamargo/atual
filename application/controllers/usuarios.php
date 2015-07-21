@@ -216,7 +216,12 @@ class Usuarios extends CI_Controller {
     function excluir(){
             $ID =  $this->uri->segment(3);
             $nomeUsuario = $this->usuarios_model->getById($ID)->nome;
-            $this->usuarios_model->delete('usuarios','idUsuarios',$ID);             
+
+            if($this->usuarios_model->delete('usuarios','idUsuarios',$ID) <> TRUE){
+                $this->session->set_flashdata('error','Erro ao excluir o usuário!');
+	            redirect(base_url().'index.php/usuarios/gerenciar/');
+            }             
+
 			auditoria('Exclusão de usuários', 'Excluído cadastro do usuário "'.$nomeUsuario.'"');
             redirect(base_url().'index.php/usuarios/gerenciar/');
     }

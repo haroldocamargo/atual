@@ -147,19 +147,23 @@ class Servicos extends CI_Controller {
            $this->session->set_flashdata('error','Você não tem permissão para excluir serviços.');
            redirect(base_url());
         }
-       
         
         $id =  $this->input->post('id');
         $nomeServico = $this->servicos_model->getById($id)->nome;
-        if ($id == null){
-
+        if($id == null){
             $this->session->set_flashdata('error','Erro ao tentar excluir serviço.');            
             redirect(base_url().'index.php/servicos/gerenciar/');
         }
 
-        $this->servicos_model->delete('servicos_os','servicos_id',$id);             
+        if($this->servicos_model->delete('servicos_os','servicos_id',$id) <> TRUE){             
+	        $this->session->set_flashdata('error','Erro ao excluir serviço!');
+	        redirect(base_url().'index.php/servicos/gerenciar/');
+        }           
 
-        $this->servicos_model->delete('servicos','idServicos',$id);             
+        if($this->servicos_model->delete('servicos','idServicos',$id) <> TRUE){
+	        $this->session->set_flashdata('error','Erro ao excluir serviço!');
+	        redirect(base_url().'index.php/servicos/gerenciar/');
+        }           
         
 		auditoria('Exclusão de serviços', 'Excluído cadastro do serviço "'.$nomeServico.'"');
 

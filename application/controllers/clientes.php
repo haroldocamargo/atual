@@ -175,7 +175,6 @@ class Clientes extends CI_Controller {
             $id =  $this->input->post('id');
             $nomeCliente = $this->clientes_model->getById($id)->nomeCliente;
             if ($id == null){
-
                 $this->session->set_flashdata('error','Erro ao tentar excluir pessoa.');            
                 redirect(base_url().'index.php/clientes/gerenciar/');
             }
@@ -188,7 +187,10 @@ class Clientes extends CI_Controller {
             if($os != null){
 
                 foreach ($os as $o) {
-                    $this->clientes_model->delete('servicos_os', 'os_id', $o->idOs);
+                    if($this->clientes_model->delete('servicos_os', 'os_id', $o->idOs) <> TRUE){
+	    	            $this->session->set_flashdata('error','Erro ao tentar excluir pessoa.');            
+    	    	        redirect(base_url().'index.php/clientes/gerenciar/');
+					}	
 
 			        $this->db->where('os_id', $v->idOs);
 			        $itensOs = $this->db->get('produto_os')->result();
@@ -199,9 +201,15 @@ class Clientes extends CI_Controller {
 			            }
 			        }
 
-                    $this->clientes_model->delete('produtos_os', 'os_id', $o->idOs);
+                    if($this->clientes_model->delete('produtos_os', 'os_id', $o->idOs) <> TRUE){
+	    	            $this->session->set_flashdata('error','Erro ao tentar excluir pessoa.');            
+    	    	        redirect(base_url().'index.php/clientes/gerenciar/');
+					}	
 
-                    $this->clientes_model->delete('os', 'idOs', $o->idOs);
+                    if($this->clientes_model->delete('os', 'idOs', $o->idOs) <> TRUE){
+	    	            $this->session->set_flashdata('error','Erro ao tentar excluir pessoa.');            
+    	    	        redirect(base_url().'index.php/clientes/gerenciar/');
+					}	
                 }
             }
 
@@ -223,9 +231,15 @@ class Clientes extends CI_Controller {
 			            }
 			        }
 
-                    $this->clientes_model->delete('itens_de_vendas', 'vendas_id', $v->idVendas);
+                    if($this->clientes_model->delete('itens_de_vendas', 'vendas_id', $v->idVendas) <> TRUE){
+	    	            $this->session->set_flashdata('error','Erro ao tentar excluir pessoa.');            
+    	    	        redirect(base_url().'index.php/clientes/gerenciar/');
+					}	
 
-                    $this->clientes_model->delete('vendas', 'idVendas', $v->idVendas);
+                    if($this->clientes_model->delete('vendas', 'idVendas', $v->idVendas) <> TRUE){
+	    	            $this->session->set_flashdata('error','Erro ao tentar excluir pessoa.');            
+    	    	        redirect(base_url().'index.php/clientes/gerenciar/');
+					}	
                 }
             }
 
@@ -246,16 +260,28 @@ class Clientes extends CI_Controller {
 			            }
 			        }
 
-                    $this->clientes_model->delete('itens_de_compras', 'compras_id', $v->idCompras);
+                    if($this->clientes_model->delete('itens_de_compras', 'compras_id', $v->idCompras) <> TRUE){
+	    	            $this->session->set_flashdata('error','Erro ao tentar excluir pessoa.');            
+    	    	        redirect(base_url().'index.php/clientes/gerenciar/');
+					}	
 
-                    $this->clientes_model->delete('compras', 'idCompras', $v->idCompras);
+                    if($this->clientes_model->delete('compras', 'idCompras', $v->idCompras) <> TRUE){
+	    	            $this->session->set_flashdata('error','Erro ao tentar excluir pessoa.');            
+    	    	        redirect(base_url().'index.php/clientes/gerenciar/');
+					}	
                 }
             }
 
             //excluindo receitas vinculadas ao cliente
-            $this->clientes_model->delete('lancamentos','clientes_id',$id); 
+            if($this->clientes_model->delete('lancamentos','clientes_id',$id) <> TRUE){ 
+   	            $this->session->set_flashdata('error','Erro ao tentar excluir pessoa.');            
+    	        redirect(base_url().'index.php/clientes/gerenciar/');
+			}	
 
-            $this->clientes_model->delete('clientes','idClientes',$id); 
+            if($this->clientes_model->delete('clientes','idClientes',$id) <> TRUE){
+   	            $this->session->set_flashdata('error','Erro ao tentar excluir pessoa.');            
+    	        redirect(base_url().'index.php/clientes/gerenciar/');
+			}	
 
 			auditoria('Exclusão de pessoas', 'Excluído cadastro da pessoa "'.$nomeCliente.'"');
 			
