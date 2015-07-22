@@ -21,8 +21,8 @@
 
 <?php if($this->permission->checkPermission($this->session->userdata('permissao'),'aLancamento')){ ?>
   <div class="span3" style="margin-left: 0">
-      <a href="#modalReceita" data-toggle="modal" role="button" class="btn btn-success tip-bottom" title="Cadastrar nova receita"><i class="icon-plus icon-white"></i> Nova Receita</a>  
-      <a href="#modalDespesa" data-toggle="modal" role="button" class="btn btn-danger tip-bottom" title="Cadastrar nova despesa"><i class="icon-plus icon-white"></i> Nova Despesa</a>
+      <a href="#modalReceita" data-toggle="modal" role="button" class="btn btn-success tip-bottom" title="Cadastrar nova receita"><i class="icon-plus icon-white"></i> Receita</a>  
+      <a href="#modalDespesa" data-toggle="modal" role="button" class="btn btn-danger tip-bottom" title="Cadastrar nova despesa"><i class="icon-plus icon-white"></i> Despesa</a>
   </div>
 <?php } ?>
 	
@@ -37,7 +37,7 @@
 			</select>
 		</div>
 
-		<div class="span1">
+		<div class="span2">
 			<label>Situação <i class="icon-info-sign tip-top" title="Lançamentos com situação específica ou todos."></i></label>
 			<select name="situacao" class="span12">
                             <option value="todos">Todos</option>
@@ -47,7 +47,7 @@
 		</div>
 
 
-        <div class="span3">
+        <div class="span2">
             <label for="cliente">Pessoa <i class="icon-info-sign tip-top" title="Lançamentos com pessoa específica ou todos."></i></label>
             <input id="cliente" class="span12" type="text" name="cliente" value=""  />
             <input id="clientes_id" class="span12" type="hidden" name="clientes_id" value=""  />

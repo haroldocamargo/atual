@@ -61,35 +61,28 @@
                     </div>
 
                     <div class="control-group">
-                        <label for="preco" class="control-label">Preço</label>
-                        <div class="controls">
-                            <input id="preco" class="input-small" class="money" type="text" name="preco" value="<?php echo set_value('preco'); ?>"  />
-                        </div>
-                    </div>
-
-                    <div class="control-group">
-                        <label for="precoCompra" class="control-label">Preço de Compra</label>
+                        <label for="precoCompra" class="control-label">Preço de Compra<span class="required">*</span></label>
                         <div class="controls">
                             <input id="precoCompra" class="input-small" class="money" type="text" name="precoCompra" value="<?php echo set_value('precoCompra'); ?>"  />
                         </div>
                     </div>
 
                     <div class="control-group">
-                        <label for="precoVenda" class="control-label">Preço de Venda</label>
+                        <label for="precoVenda" class="control-label">Preço de Venda<span class="required">*</span></label>
                         <div class="controls">
                             <input id="precoVenda" class="input-small" class="money" type="text" name="precoVenda" value="<?php echo set_value('precoVenda'); ?>"  />
                         </div>
                     </div>
 
                     <div class="control-group">
-                        <label for="estoque" class="control-label">Estoque</label>
+                        <label for="estoque" class="control-label">Estoque<span class="required">*</span></label>
                         <div class="controls">
                             <input id="estoque" class="input-small" type="text" name="estoque" value="<?php echo set_value('estoque'); ?>"  />
                         </div>
                     </div>
 
                     <div class="control-group">
-                        <label for="estoqueMinimo" class="control-label">Estoque Mínimo</label>
+                        <label for="estoqueMinimo" class="control-label">Estoque Mínimo<span class="required">*</span></label>
                         <div class="controls">
                             <input id="estoqueMinimo" class="input-small" type="text" name="estoqueMinimo" value="<?php echo set_value('estoqueMinimo'); ?>"  />
                         </div>
@@ -129,16 +122,18 @@
             rules :{
                   descricao: { required: true},
                   unidade: { required: false},
-                  precoCompra: { required: false},
-                  precoVenda: { required: false},
-                  estoque: { required: false}
+                  precoCompra: { required: true},
+                  precoVenda: { required: true},
+                  estoque: { required: true},
+                  estoqueMinimo: { required: true}
             },
             messages:{
                   descricao: { required: 'Campo Requerido.'},
                   unidade: {required: 'Campo Requerido.'},
                   precoCompra: { required: 'Campo Requerido.'},
                   precoVenda: { required: 'Campo Requerido.'},
-                  estoque: { required: 'Campo Requerido.'}
+                  estoque: { required: 'Campo Requerido.'},
+                  estoqueMinimo: { required: 'Campo Requerido.'}
             },
 
             errorClass: "help-inline",

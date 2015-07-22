@@ -51,14 +51,13 @@ class Clientes_model extends CI_Model {
     }
     
     function delete($table,$fieldID,$ID){
-        $this->db->where($fieldID,$ID);
-        $this->db->delete($table);
-        if ($this->db->affected_rows() == '1')
-		{
+		try {
+        	$this->db->where($fieldID,$ID);
+        	$this->db->delete($table);
 			return TRUE;
-		}
-		
-		return FALSE;        
+		} catch (Exception $e) {
+			return FALSE;
+		}		
     }
 
     function count($table) {

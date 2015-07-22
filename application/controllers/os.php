@@ -11,6 +11,7 @@ class Os extends CI_Controller {
 		$this->load->helper(array('form','codegen_helper'));
 		$this->load->model('os_model','',TRUE);
 		$this->load->model('estoque_model','',TRUE);
+		$this->load->model('financeiro_model','',TRUE);
 		$this->data['menuOs'] = 'OS';
 	}	
 	
@@ -224,7 +225,7 @@ class Os extends CI_Controller {
             redirect(base_url().'index.php/os/gerenciar/');
         }
 
-		if($this->os_model->delete('servicos_os','os_id', $id) <> TRUE){
+		if($this->os_model->delete('servicos_os','os_id', $id) == FALSE){
 			$this->session->set_flashdata('error','Ocorreu um erro ao excluir OS.');
 	        redirect(base_url().'index.php/os/gerenciar/');
 		}
@@ -236,22 +237,27 @@ class Os extends CI_Controller {
             }
         }
 
-		if($this->os_model->delete('produtos_os','os_id', $id) <> TRUE){
+		if($this->os_model->delete('produtos_os','os_id', $id) == FALSE){
 			$this->session->set_flashdata('error','Ocorreu um erro ao excluir OS.');
 	        redirect(base_url().'index.php/os/gerenciar/');
 		}
 
-		if($this->os_model->delete('anexos','os_id', $id) <> TRUE){
+		if($this->os_model->delete('anexos','os_id', $id) == FALSE){
 			$this->session->set_flashdata('error','Ocorreu um erro ao excluir OS.');
 	        redirect(base_url().'index.php/os/gerenciar/');
 		}
 
-		if($this->os_model->delete('lancamentos','os_id', $id) <> TRUE){
+		if($this->os_model->delete('lancamentos','os_id', $id) == FALSE){
 			$this->session->set_flashdata('error','Ocorreu um erro ao excluir OS.');
 	        redirect(base_url().'index.php/os/gerenciar/');
 		}
 
-		if($this->os_model->delete('estoque','os_id', $id) <> TRUE){
+		if($this->os_model->delete('estoque','os_id', $id) == FALSE){
+			$this->session->set_flashdata('error','Ocorreu um erro ao excluir OS.');
+	        redirect(base_url().'index.php/os/gerenciar/');
+		}
+		
+		if($this->os_model->delete('os','idOs', $id) == FALSE){
 			$this->session->set_flashdata('error','Ocorreu um erro ao excluir OS.');
 	        redirect(base_url().'index.php/os/gerenciar/');
 		}
@@ -366,20 +372,25 @@ class Os extends CI_Controller {
             if($this->os_model->delete('produtos_os','idProdutos_os',$ID) == true){
                 $quantidade = $this->input->post('quantidade');
                 $produto = $this->input->post('produto');
-				$this->estoque_model->somaEstoque($quantidade, $produto);
+				if($this->estoque_model->somaEstoque($quantidade, $produto) == FALSE){
+					$this->session->set_flashdata('error','Ocorreu um erro ao calcular o estoque.');
+	                echo json_encode(array('result'=> false));
+				}
                 
 				$data = array('os_id' => $Os, 
 					'produtos_id' => $produto);
-		        if ($this->os_model->deleteWhere('estoque', $data) <> TRUE){
+		        if ($this->os_model->deleteWhere('estoque', $data) == FALSE){
+					$this->session->set_flashdata('error','Ocorreu um erro ao excluir o lançamento de estoque.');
 	                echo json_encode(array('result'=> false));
 		        }
 				else{
-					auditoria('Exclusão de produto em os', 'Exclusão do produto "'.$produto.'" na os '.$Os);
+					auditoria('Exclusão de produto em os', 'Exclusão do produto "'.$produto.'" na Os '.$Os);
     	            echo json_encode(array('result'=> true));
 				}
 
             }
             else{
+				$this->session->set_flashdata('error','Ocorreu um erro ao excluir o produto da Os.');
                 echo json_encode(array('result'=> false));
             }           
     }
@@ -665,7 +676,6 @@ class Os extends CI_Controller {
                 'valor' => $this->input->post('valor'),
                 'clientes_id' => $this->input->post('clientes_id'),
                 'data_vencimento' => $vencimento,
-                'data_pagamento' => $recebimento,
                 'baixado' => $this->input->post('recebido'),
                 'cliente_fornecedor' => set_value('cliente'),
                 'forma_pgto' => $this->input->post('formaPgto'),
@@ -682,7 +692,7 @@ class Os extends CI_Controller {
     	            'faturado' => 1,
         	        'valorTotal' => $this->input->post('valor'));
 
-				if ($this->os_model->edit('os', $data, 'idOs', $os) <> TRUE){
+				if ($this->os_model->edit('os', $data, 'idOs', $os) == FALSE){
 	                $this->session->set_flashdata('error','Ocorreu um erro ao tentar faturar OS.');
 	                $json = array('result'=>  false);
     	            echo json_encode($json);
@@ -702,7 +712,6 @@ class Os extends CI_Controller {
 	                'valor' => $this->input->post('valor2'),
 	                'clientes_id' => $this->input->post('clientes_id'),
 	                'data_vencimento' => $vencimento2,
-	                'data_pagamento' => $recebimento,
 	                'baixado' => $this->input->post('recebido'),
 	                'cliente_fornecedor' => set_value('cliente'),
 	                'forma_pgto' => $this->input->post('formaPgto'),
@@ -719,7 +728,7 @@ class Os extends CI_Controller {
 	    	            'faturado' => 1,
 	        	        'valorTotal' => ($this->input->post('valor')+$this->input->post('valor2')));
 
-					if ($this->os_model->edit('os', $data, 'idOs', $os) <> TRUE){
+					if ($this->os_model->edit('os', $data, 'idOs', $os) == FALSE){
 		                $this->session->set_flashdata('error','Ocorreu um erro ao tentar faturar OS.');
 	    	            $json = array('result'=>  false);
     	    	        echo json_encode($json);
@@ -740,7 +749,6 @@ class Os extends CI_Controller {
 	                'valor' => $this->input->post('valor3'),
 	                'clientes_id' => $this->input->post('clientes_id'),
 	                'data_vencimento' => $vencimento3,
-	                'data_pagamento' => $recebimento,
 	                'baixado' => $this->input->post('recebido'),
 	                'cliente_fornecedor' => set_value('cliente'),
 	                'forma_pgto' => $this->input->post('formaPgto'),
@@ -758,7 +766,7 @@ class Os extends CI_Controller {
 	        	        'valorTotal' => ($this->input->post('valor') + $this->input->post('valor2') + 
 	        	        $this->input->post('valor3')));
 
-					if ($this->os_model->edit('os', $data, 'idOs', $os) <> TRUE){
+					if ($this->os_model->edit('os', $data, 'idOs', $os) == FALSE){
 		                $this->session->set_flashdata('error','Ocorreu um erro ao tentar faturar OS.');
 	    	            $json = array('result'=>  false);
     	    	        echo json_encode($json);
@@ -779,7 +787,6 @@ class Os extends CI_Controller {
 	                'valor' => $this->input->post('valor4'),
 	                'clientes_id' => $this->input->post('clientes_id'),
 	                'data_vencimento' => $vencimento4,
-	                'data_pagamento' => $recebimento,
 	                'baixado' => $this->input->post('recebido'),
 	                'cliente_fornecedor' => set_value('cliente'),
 	                'forma_pgto' => $this->input->post('formaPgto'),
@@ -797,7 +804,7 @@ class Os extends CI_Controller {
 	        	        'valorTotal' => ($this->input->post('valor') + $this->input->post('valor2') + 
 	        	        $this->input->post('valor3') + $this->input->post('valor4')));
 
-					if ($this->os_model->edit('os', $data, 'idOs', $os) <> TRUE){
+					if ($this->os_model->edit('os', $data, 'idOs', $os) == FALSE){
 		                $this->session->set_flashdata('error','Ocorreu um erro ao tentar faturar OS.');
 	    	            $json = array('result'=>  false);
     	    	        echo json_encode($json);
@@ -818,7 +825,6 @@ class Os extends CI_Controller {
 	                'valor' => $this->input->post('valor5'),
 	                'clientes_id' => $this->input->post('clientes_id'),
 	                'data_vencimento' => $vencimento5,
-	                'data_pagamento' => $recebimento,
 	                'baixado' => $this->input->post('recebido'),
 	                'cliente_fornecedor' => set_value('cliente'),
 	                'forma_pgto' => $this->input->post('formaPgto'),
@@ -836,7 +842,7 @@ class Os extends CI_Controller {
 	        	        'valorTotal' => ($this->input->post('valor') + $this->input->post('valor2') + 
 	        	        $this->input->post('valor3')+$this->input->post('valor4') + $this->input->post('valor5')));
 
-					if ($this->os_model->edit('os', $data, 'idOs', $os) <> TRUE){
+					if ($this->os_model->edit('os', $data, 'idOs', $os) == FALSE){
 		                $this->session->set_flashdata('error','Ocorreu um erro ao tentar faturar OS.');
 	    	            $json = array('result'=>  false);
     	    	        echo json_encode($json);
@@ -857,7 +863,6 @@ class Os extends CI_Controller {
 	                'valor' => $this->input->post('valor6'),
 	                'clientes_id' => $this->input->post('clientes_id'),
 	                'data_vencimento' => $vencimento6,
-	                'data_pagamento' => $recebimento,
 	                'baixado' => $this->input->post('recebido'),
 	                'cliente_fornecedor' => set_value('cliente'),
 	                'forma_pgto' => $this->input->post('formaPgto'),
@@ -876,7 +881,7 @@ class Os extends CI_Controller {
 	        	        $this->input->post('valor3') + $this->input->post('valor4') + $this->input->post('valor5') + 
 	        	        $this->input->post('valor6')));
 
-					if ($this->os_model->edit('os', $data, 'idOs', $os) <> TRUE){
+					if ($this->os_model->edit('os', $data, 'idOs', $os) == FALSE){
 		                $this->session->set_flashdata('error','Ocorreu um erro ao tentar faturar OS.');
 	    	            $json = array('result'=>  false);
     	    	        echo json_encode($json);

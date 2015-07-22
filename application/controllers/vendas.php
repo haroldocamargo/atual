@@ -12,6 +12,7 @@ class Vendas extends CI_Controller {
 		$this->load->helper(array('form','codegen_helper'));
 		$this->load->model('vendas_model','',TRUE);
 		$this->load->model('estoque_model','',TRUE);
+		$this->load->model('financeiro_model','',TRUE);
 		$this->data['menuVendas'] = 'Vendas';
 	}	
 	
@@ -210,22 +211,22 @@ class Vendas extends CI_Controller {
             }
         }
 
-		if($this->vendas_model->delete('itens_de_vendas','vendas_id', $id) <> TRUE){
+		if($this->vendas_model->delete('itens_de_vendas','vendas_id', $id) == FALSE){
 			$this->session->set_flashdata('error','Ocorreu um erro ao excluir venda.');
 	        redirect(base_url().'index.php/vendas/gerenciar/');
 		}
 
-		if($this->vendas_model->delete('vendas','idVendas', $id) <> TRUE){
+		if($this->vendas_model->delete('vendas','idVendas', $id) == FALSE){
 			$this->session->set_flashdata('error','Ocorreu um erro ao excluir venda.');
 	        redirect(base_url().'index.php/vendas/gerenciar/');
 		}
 
-		if($this->vendas_model->delete('lancamentos','vendas_id', $id) <> TRUE){
+		if($this->vendas_model->delete('lancamentos','vendas_id', $id) == FALSE){
 			$this->session->set_flashdata('error','Ocorreu um erro ao excluir venda.');
 	        redirect(base_url().'index.php/vendas/gerenciar/');
 		}
 
-		if($this->vendas_model->delete('estoque','vendas_id', $id) <> TRUE){
+		if($this->vendas_model->delete('estoque','vendas_id', $id) == FALSE){
 			$this->session->set_flashdata('error','Ocorreu um erro ao excluir venda.');
 	        redirect(base_url().'index.php/vendas/gerenciar/');
 		}
@@ -351,7 +352,7 @@ class Vendas extends CI_Controller {
                 
 				$data = array('vendas_id' => $Venda, 
 					'produtos_id' => $produto);
-		        if ($this->vendas_model->deleteWhere('estoque', $data) <> TRUE){
+		        if ($this->vendas_model->deleteWhere('estoque', $data) == FALSE){
 	                echo json_encode(array('result'=> false));
 		        }
 				else{
@@ -434,7 +435,6 @@ class Vendas extends CI_Controller {
                 'valor' => $this->input->post('valor'),
                 'clientes_id' => $this->input->post('clientes_id'),
                 'data_vencimento' => $vencimento,
-                'data_pagamento' => $recebimento,
                 'baixado' => $this->input->post('recebido'),
                 'cliente_fornecedor' => set_value('cliente'),
                 'forma_pgto' => $this->input->post('formaPgto'),
@@ -451,7 +451,7 @@ class Vendas extends CI_Controller {
     	            'faturado' => 1,
         	        'valorTotal' => $this->input->post('valor'));
 
-				if ($this->vendas_model->edit('vendas', $data, 'idVendas', $venda) <> TRUE){
+				if ($this->vendas_model->edit('vendas', $data, 'idVendas', $venda) == FALSE){
 	                $this->session->set_flashdata('error','Ocorreu um erro ao tentar faturar venda.');
     	            $json = array('result'=>  false);
    	    	        echo json_encode($json);
@@ -471,7 +471,6 @@ class Vendas extends CI_Controller {
 	                'valor' => $this->input->post('valor2'),
 	                'clientes_id' => $this->input->post('clientes_id'),
 	                'data_vencimento' => $vencimento2,
-	                'data_pagamento' => $recebimento,
 	                'baixado' => $this->input->post('recebido'),
 	                'cliente_fornecedor' => set_value('cliente'),
 	                'forma_pgto' => $this->input->post('formaPgto'),
@@ -488,7 +487,7 @@ class Vendas extends CI_Controller {
 	    	            'faturado' => 1,
 	        	        'valorTotal' => ($this->input->post('valor') + $this->input->post('valor2')));
 
-					if ($this->vendas_model->edit('vendas', $data, 'idVendas', $venda) <> TRUE){
+					if ($this->vendas_model->edit('vendas', $data, 'idVendas', $venda) == FALSE){
 	            	    $this->session->set_flashdata('error','Ocorreu um erro ao tentar faturar venda.');
     	    	        $json = array('result'=>  false);
    	    		        echo json_encode($json);
@@ -509,7 +508,6 @@ class Vendas extends CI_Controller {
 	                'valor' => $this->input->post('valor3'),
 	                'clientes_id' => $this->input->post('clientes_id'),
 	                'data_vencimento' => $vencimento3,
-	                'data_pagamento' => $recebimento,
 	                'baixado' => $this->input->post('recebido'),
 	                'cliente_fornecedor' => set_value('cliente'),
 	                'forma_pgto' => $this->input->post('formaPgto'),
@@ -527,7 +525,7 @@ class Vendas extends CI_Controller {
 	        	        'valorTotal' => ($this->input->post('valor') + $this->input->post('valor2') + 
 	        	        $this->input->post('valor3')));
 
-					if ($this->vendas_model->edit('vendas', $data, 'idVendas', $venda) <> TRUE){
+					if ($this->vendas_model->edit('vendas', $data, 'idVendas', $venda) == FALSE){
 	            	    $this->session->set_flashdata('error','Ocorreu um erro ao tentar faturar venda.');
     	    	        $json = array('result'=>  false);
    	    		        echo json_encode($json);
@@ -548,7 +546,6 @@ class Vendas extends CI_Controller {
 	                'valor' => $this->input->post('valor4'),
 	                'clientes_id' => $this->input->post('clientes_id'),
 	                'data_vencimento' => $vencimento4,
-	                'data_pagamento' => $recebimento,
 	                'baixado' => $this->input->post('recebido'),
 	                'cliente_fornecedor' => set_value('cliente'),
 	                'forma_pgto' => $this->input->post('formaPgto'),
@@ -566,7 +563,7 @@ class Vendas extends CI_Controller {
 	        	        'valorTotal' => ($this->input->post('valor') + $this->input->post('valor2') + 
 	        	        $this->input->post('valor3') + $this->input->post('valor4')));
 
-					if ($this->vendas_model->edit('vendas', $data, 'idVendas', $venda) <> TRUE){
+					if ($this->vendas_model->edit('vendas', $data, 'idVendas', $venda) == FALSE){
 	            	    $this->session->set_flashdata('error','Ocorreu um erro ao tentar faturar venda.');
     	    	        $json = array('result'=>  false);
    	    		        echo json_encode($json);
@@ -587,7 +584,6 @@ class Vendas extends CI_Controller {
 	                'valor' => $this->input->post('valor5'),
 	                'clientes_id' => $this->input->post('clientes_id'),
 	                'data_vencimento' => $vencimento5,
-	                'data_pagamento' => $recebimento,
 	                'baixado' => $this->input->post('recebido'),
 	                'cliente_fornecedor' => set_value('cliente'),
 	                'forma_pgto' => $this->input->post('formaPgto'),
@@ -606,7 +602,7 @@ class Vendas extends CI_Controller {
 	        	        $this->input->post('valor3') + $this->input->post('valor4') + 
 	        	        $this->input->post('valor5')));
 
-					if ($this->vendas_model->edit('vendas', $data, 'idVendas', $venda) <> TRUE){
+					if ($this->vendas_model->edit('vendas', $data, 'idVendas', $venda) == FALSE){
 	            	    $this->session->set_flashdata('error','Ocorreu um erro ao tentar faturar venda.');
     	    	        $json = array('result'=>  false);
    	    		        echo json_encode($json);
@@ -627,7 +623,6 @@ class Vendas extends CI_Controller {
 	                'valor' => $this->input->post('valor6'),
 	                'clientes_id' => $this->input->post('clientes_id'),
 	                'data_vencimento' => $vencimento6,
-	                'data_pagamento' => $recebimento,
 	                'baixado' => $this->input->post('recebido'),
 	                'cliente_fornecedor' => set_value('cliente'),
 	                'forma_pgto' => $this->input->post('formaPgto'),
@@ -646,7 +641,7 @@ class Vendas extends CI_Controller {
 	        	        $this->input->post('valor3') + $this->input->post('valor4') + $this->input->post('valor5') + 
 	        	        $this->input->post('valor6')));
 
-					if ($this->vendas_model->edit('vendas', $data, 'idVendas', $venda) <> TRUE){
+					if ($this->vendas_model->edit('vendas', $data, 'idVendas', $venda) == FALSE){
 	            	    $this->session->set_flashdata('error','Ocorreu um erro ao tentar faturar venda.');
     	    	        $json = array('result'=>  false);
    	    		        echo json_encode($json);

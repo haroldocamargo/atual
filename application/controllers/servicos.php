@@ -155,12 +155,12 @@ class Servicos extends CI_Controller {
             redirect(base_url().'index.php/servicos/gerenciar/');
         }
 
-        if($this->servicos_model->delete('servicos_os','servicos_id',$id) <> TRUE){             
+        if($this->servicos_model->delete('servicos_os','servicos_id',$id) == FALSE){             
 	        $this->session->set_flashdata('error','Erro ao excluir serviço!');
 	        redirect(base_url().'index.php/servicos/gerenciar/');
         }           
 
-        if($this->servicos_model->delete('servicos','idServicos',$id) <> TRUE){
+        if($this->servicos_model->delete('servicos','idServicos',$id) == FALSE){
 	        $this->session->set_flashdata('error','Erro ao excluir serviço!');
 	        redirect(base_url().'index.php/servicos/gerenciar/');
         }           

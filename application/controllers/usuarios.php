@@ -217,7 +217,7 @@ class Usuarios extends CI_Controller {
             $ID =  $this->uri->segment(3);
             $nomeUsuario = $this->usuarios_model->getById($ID)->nome;
 
-            if($this->usuarios_model->delete('usuarios','idUsuarios',$ID) <> TRUE){
+            if($this->usuarios_model->delete('usuarios','idUsuarios',$ID) == FALSE){
                 $this->session->set_flashdata('error','Erro ao excluir o usuário!');
 	            redirect(base_url().'index.php/usuarios/gerenciar/');
             }             

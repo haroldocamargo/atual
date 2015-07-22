@@ -49,7 +49,7 @@
                                             <input id="documentoCompra" class="span12" type="text" name="documentoCompra" maxlength="20" value=""  />
                                         </div>
                                         <div class="span2">
-                                            <label for="dataDocumentoCompra">Data documento</label>
+                                            <label for="dataDocumentoCompra">Data documento<span class="required">*</span></label>
                                             <input id="dataDocumentoCompra" class="span12 datepicker" type="text" name="dataDocumentoCompra" value=""  />
                                         </div>
 
@@ -106,13 +106,13 @@ $(document).ready(function(){
              cliente: {required:true},
              tecnico: {required:true},
              dataCompra: {required:true},
-             observacaoCompra: {required:false}
+             dataDocumentoCompra: {required:true}
           },
           messages:{
              cliente: {required: 'Campo Requerido.'},
              tecnico: {required: 'Campo Requerido.'},
              dataCompra: {required: 'Campo Requerido.'},
-             observacaoCompra: {required: 'Campo Requerido.'}
+             dataDocumentoCompra: {required: 'Campo Requerido.'}
           },
 
             errorClass: "help-inline",

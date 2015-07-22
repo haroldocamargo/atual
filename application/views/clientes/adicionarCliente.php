@@ -104,7 +104,7 @@
                     </div>
 
                     <div class="control-group" class="control-label">
-                        <label for="limite" class="control-label">Limite</label>
+                        <label for="limite" class="control-label">Limite<span class="required">*</span></label>
                         <div class="controls">
                             <input id="limite" class="input-small" class="money" type="text" name="limite" value="<?php echo set_value('limite'); ?>"  />
                         </div>
@@ -149,7 +149,7 @@
                   cidade:{ required: false},
                   estado:{ required: false},
                   cep:{ required: false},
-                  limite:{ required: false},
+                  limite:{ required: true},
                   observacaoCliente:{ required: false}
             },
             messages:{

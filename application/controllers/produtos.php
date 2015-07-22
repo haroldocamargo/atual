@@ -187,22 +187,22 @@ class Produtos extends CI_Controller {
             redirect(base_url().'index.php/produtos/gerenciar/');
         }
 
-        if($this->produtos_model->delete('produtos_os','produtos_id',$id) <> TRUE){             
+        if($this->produtos_model->delete('produtos_os','produtos_id',$id) == FALSE){             
 	        $this->session->set_flashdata('error','Erro ao excluir produto!');
 	        redirect(base_url().'index.php/produtos/gerenciar/');
         }           
 
-        if($this->produtos_model->delete('itens_de_vendas','produtos_id',$id) <> TRUE){             
+        if($this->produtos_model->delete('itens_de_vendas','produtos_id',$id) == FALSE){             
 	        $this->session->set_flashdata('error','Erro ao excluir produto!');
 	        redirect(base_url().'index.php/produtos/gerenciar/');
         }           
 
-        if($this->produtos_model->delete('itens_de_compras','produtos_id',$id) <> TRUE){             
+        if($this->produtos_model->delete('itens_de_compras','produtos_id',$id) == FALSE){             
 	        $this->session->set_flashdata('error','Erro ao excluir produto!');
 	        redirect(base_url().'index.php/produtos/gerenciar/');
         }           
         
-        if($this->produtos_model->delete('produtos','idProdutos',$id) <> TRUE){             
+        if($this->produtos_model->delete('produtos','idProdutos',$id) == FALSE){             
 	        $this->session->set_flashdata('error','Erro ao excluir produto!');
 	        redirect(base_url().'index.php/produtos/gerenciar/');
         }           

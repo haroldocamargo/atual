@@ -257,7 +257,7 @@ class Estoque extends CI_Controller {
     		if($result){
         		if($idProduto != null){
 					if ($tipo='saida'){	
-						if ($this->estoque_model->somaEstoque($quantidade, $idProduto) <> TRUE){
+						if ($this->estoque_model->somaEstoque($quantidade, $idProduto) == FALSE){
 			    			$json = array('result'=>  false);
 			    			echo json_encode($json);
 							die();

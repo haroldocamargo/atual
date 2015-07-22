@@ -62,7 +62,7 @@ $config = array('clientes' => array(array(
 								array(
                                 	'field'=>'limite',
                                 	'label'=>'Limite',
-                                	'rules'=>'trim|xss_clean'
+                                	'rules'=>'required|trim|xss_clean'
                                 ),
 								array(
                                 	'field'=>'observacaoCliente',
@@ -83,7 +83,7 @@ $config = array('clientes' => array(array(
                                 array(
                                     'field'=>'preco',
                                     'label'=>'',
-                                    'rules'=>'trim|xss_clean'
+                                    'rules'=>'required|trim|xss_clean'
                                 ),
                                 array(
                                     'field'=>'grupo',
@@ -129,22 +129,22 @@ $config = array('clientes' => array(array(
                                 array(
                                     'field'=>'precoCompra',
                                     'label'=>'Preo de Compra',
-                                    'rules'=>'trim|xss_clean'
+                                    'rules'=>'required|trim|xss_clean'
                                 ),
                                 array(
                                     'field'=>'precoVenda',
                                     'label'=>'Preo de Venda',
-                                    'rules'=>'trim|xss_clean'
+                                    'rules'=>'required|trim|xss_clean'
                                 ),
                                 array(
                                     'field'=>'estoque',
                                     'label'=>'Estoque',
-                                    'rules'=>'trim|xss_clean'
+                                    'rules'=>'required|trim|xss_clean'
                                 ),
                                 array(
                                     'field'=>'estoqueMinimo',
                                     'label'=>'Estoque Mnimo',
-                                    'rules'=>'trim|xss_clean'
+                                    'rules'=>'required|trim|xss_clean'
                                 ),
                                 array(
                                     'field'=>'grupo',

@@ -60,7 +60,7 @@
                     </div>
 
                     <div class="control-group">
-                        <label for="preco" class="control-label">Preço</label>
+                        <label for="preco" class="control-label">Preço<span class="required">*</span></label>
                         <div class="controls">
                             <input id="preco" class="input-small" class="money" type="text" name="preco" value="<?php echo set_value('preco'); ?>"  />
                         </div>
@@ -95,7 +95,7 @@
            $('#formServico').validate({
             rules :{
                   nome:{ required: true},
-                  preco:{ required: false}
+                  preco:{ required: true}
             },
             messages:{
                   nome :{ required: 'Campo Requerido.'},

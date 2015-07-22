@@ -264,7 +264,7 @@ class Permissoes extends CI_Controller {
             redirect(base_url().'index.php/permissoes/gerenciar/');
         }
 
-        if($this->permissoes_model->delete('permissoes','idPermissao',$id) <> TRUE){             
+        if($this->permissoes_model->delete('permissoes','idPermissao',$id) == FALSE){             
 	        $this->session->set_flashdata('error','Erro ao excluir permissão!');
 	        redirect(base_url().'index.php/permissoes/gerenciar/');
         }           

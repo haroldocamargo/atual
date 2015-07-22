@@ -53,7 +53,7 @@
                                             <input id="documentoCompra" class="span12" type="text" name="documentoCompra" maxlength="20" value="<?php echo $result->documentoCompra ?>"  />
                                         </div>
                                         <div class="span2">
-                                            <label for="dataDocumentoCompra">Data documento</label>
+                                            <label for="dataDocumentoCompra">Data documento<span class="required">*</span></label>
                                             <input id="dataDocumentoCompra" class="span12 datepicker" type="text" name="dataDocumentoCompra" value="<?php echo date('d/m/Y', strtotime($result->dataDocumentoCompra)); ?>"  />
                                         </div>
                                         <div class="span8">
@@ -400,12 +400,14 @@ $(document).ready(function(){
           rules:{
              cliente: {required:true},
              tecnico: {required:true},
-             dataCompra: {required:true}
+             dataCompra: {required:true},
+             dataDocumentoCompra: {required:true}
           },
           messages:{
              cliente: {required: 'Campo Requerido.'},
              tecnico: {required: 'Campo Requerido.'},
-             dataCompra: {required: 'Campo Requerido.'}
+             dataCompra: {required: 'Campo Requerido.'},
+             dataDocumentoCompra: {required: 'Campo Requerido.'},
           },
             errorClass: "help-inline",
             errorElement: "span",
