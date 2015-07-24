@@ -56,7 +56,11 @@
                                             <label for="dataDocumentoVenda">Data documento<span class="required">*</span></label>
                                             <input id="dataDocumentoVenda" class="span12 datepicker" type="text" name="dataDocumentoVenda" value="<?php echo date('d/m/Y', strtotime($result->dataDocumentoVenda)); ?>"  />
                                         </div>
-                                        <div class="span8">
+                                        <div class="span2">
+                                            <label for="setorVenda">Setor</label>
+                                            <input id="setorVenda" class="span12" type="text" name="setorVenda" value="<?php echo $result->setorVenda ?>"  />
+                                        </div>
+                                        <div class="span6">
                                             <label for="observacaoVenda">Observação</label>
                                             <input id="observacaoVenda" class="span12" type="text" name="observacaoVenda" value="<?php echo $result->observacaoVenda ?>"  />
                                         </div>
@@ -68,9 +72,9 @@
             
                                         <div class="span8 offset2" style="text-align: center">
                                             <?php if($result->faturado == 0){ ?>
-                                            <a href="#modal-faturar" id="btn-faturar" role="button" data-toggle="modal" class="btn btn-success"><i class="icon-file"></i> Faturar</a>
+    	                                        <a href="#modal-faturar" id="btn-faturar" role="button" data-toggle="modal" class="btn btn-success"><i class="icon-file"></i> Faturar</a>
+	                                            <button class="btn btn-primary" id="btnContinuar"><i class="icon-white icon-ok"></i> Alterar</button>
                                             <?php } ?>
-                                            <button class="btn btn-primary" id="btnContinuar"><i class="icon-white icon-ok"></i> Alterar</button>
                                             <a href="<?php echo base_url() ?>index.php/vendas/visualizar/<?php echo $result->idVendas; ?>" class="btn btn-inverse"><i class="icon-eye-open"></i> Visualizar Venda</a>
                                             <a href="<?php echo base_url() ?>index.php/vendas" class="btn"><i class="icon-arrow-left"></i> Voltar</a>
                                         </div>
@@ -88,12 +92,13 @@
 	                                            <input type="hidden" name="dataVenda" id="dataVenda" value="<?php echo date('d/m/Y', strtotime($result->dataVenda)); ?>"  />
 										        <input type="hidden" name="documentoVenda" id="documentoVenda" value="<?php echo $result->documentoVenda; ?>">
                                                 <input type="hidden" name="estoque" id="estoque" value=""/>
+										        <input type="hidden" name="setorVenda" id="setorVenda" value="<?php echo $result->setorVenda; ?>">
                                                 <label for="">Produto</label>
                                                 <input type="text" class="span12" name="produto" id="produto" placeholder="Digite o nome do produto" />
                                             </div>
                                             <div class="span1">
                                                 <label for="">Preço</label>
-                                                <input type="text" placeholder="Preço" id="preco" name="preco" class="span12" />
+                                                <input type="text" placeholder="Preço" id="preco" name="preco" class="span12 money" />
                                             </div>
                                             <div class="span1">
                                                 <label for="">Quantidade</label>
@@ -194,6 +199,7 @@
         <input type="hidden" name="documentoVenda" id="documentoVenda" value="<?php echo $result->documentoVenda; ?>">
         <input type="hidden" name="dataDocumentoVenda" id="dataDocumentoVenda" value="<?php echo $result->dataDocumentoVenda; ?>">
         <input type="hidden" name="observacaoVenda" id="observacaoVenda" value="<?php echo $result->observacaoVenda; ?>">
+        <input type="hidden" name="setorVenda" id="setorVenda" value="<?php echo $result->setorVenda; ?>">
       </div>
     </div>
 
@@ -305,7 +311,7 @@
 <script type="text/javascript">
 $(document).ready(function(){
 
-     $(".money").maskMoney(); 
+     $(".money").maskMoney({decimal:",", thousands:"."}); 
 
      $('#recebido').click(function(event) {
         var flag = $(this).is(':checked');
@@ -353,7 +359,7 @@ $(document).ready(function(){
                     window.location.reload(true);
                 }
                 else{
-                    alert('Ocorreu um erro ao tentar efetuar venda.');
+                    alert('Ocorreu um erro ao efetuar venda.');
                     $('#progress-fatura').hide();
                 }
               }
@@ -372,8 +378,6 @@ $(document).ready(function(){
                  $("#estoque").val(ui.item.estoque);
                  $("#preco").val(ui.item.preco);
                  $("#preco").focus();
-                 
-
             }
       });
 
@@ -456,7 +460,7 @@ $(document).ready(function(){
                         $("#produto").val('').focus();
                     }
                     else{
-                        alert('Ocorreu um erro ao tentar adicionar produto.');
+                        alert('Ocorreu um erro ao adicionar produto.');
                     }
                   }
                   });
@@ -489,7 +493,7 @@ $(document).ready(function(){
                         
                     }
                     else{
-                        alert('Ocorreu um erro ao tentar excluir produto.');
+                        alert('Ocorreu um erro ao excluir produto.');
                     }
                   }
                   });

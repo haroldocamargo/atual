@@ -35,7 +35,7 @@ CREATE TABLE `usuarios` (
   `celular` varchar(20) DEFAULT NULL,
   `situacao` tinyint(1) NOT NULL,
   `dataCadastro` date NOT NULL,
-  `nivel` int(11) NOT NULL,
+  `nivel` int(11) NOT NULL DEFAULT 1,
   `permissoes_id` int(11) NOT NULL,
   `observacaoUsuario` longtext,
   `dataAtualizacao` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
@@ -44,8 +44,8 @@ CREATE TABLE `usuarios` (
   CONSTRAINT `fk_usuarios_permissoes1` FOREIGN KEY (`permissoes_id`) REFERENCES `permissoes` (`idPermissao`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 
-INSERT INTO `usuarios` (`idUsuarios`, `nome`, `rg`, `cpf`, `rua`, `numero`, `bairro`, `cidade`, `estado`, `email`, `senha`, `telefone`, `celular`, `situacao`, `dataCadastro`, `nivel`, `permissoes_id`, `observacaoUsuario`) VALUES
-(1, 'admin', '.', '.', '.', '.', '.', '.', '.', 'admin@admin.com', '7c4a8d09ca3762af61e59520943dc26494f8941b', '.', '.', 1, '2015-07-01', 1, 1, '.');
+INSERT INTO `usuarios` (`idUsuarios`, `nome`, `rg`, `cpf`, `rua`, `numero`, `bairro`, `cidade`, `estado`, `email`, `senha`, `telefone`, `celular`, `situacao`, `dataCadastro`, `nivel`, `permissoes_id`, `observacaoUsuario`) 
+VALUES(1, 'admin', '.', '.', '.', '.', '.', '.', '.', 'admin@admin.com', '7c4a8d09ca3762af61e59520943dc26494f8941b', '.', '.', 1, '2015-07-01', 1, 1, '.');
 
 #
 # TABLE STRUCTURE FOR: auditoria
@@ -125,6 +125,7 @@ CREATE TABLE `lancamentos` (
   `vendas_id` int(11) DEFAULT NULL,
   `os_id` int(11) DEFAULT NULL,
   `observacao` varchar(255) DEFAULT NULL,
+  `setor` varchar(20) DEFAULT NULL,
   `dataAtualizacao` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`idLancamentos`),
   KEY `fk_lancamentos_clientes1` (`clientes_id`),
@@ -147,6 +148,7 @@ CREATE TABLE `compras` (
   `observacaoCompra` varchar(255) DEFAULT NULL,
   `documentoCompra` varchar(20) DEFAULT NULL,
   `dataDocumentoCompra` date DEFAULT NULL,
+  `setorCompra` varchar(20) DEFAULT NULL,
   `dataAtualizacao` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`idCompras`),
   KEY `fk_compras_clientes1` (`clientes_id`),
@@ -260,6 +262,7 @@ CREATE TABLE `vendas` (
   `observacaoVenda` varchar(255) DEFAULT NULL,
   `documentoVenda` varchar(20) DEFAULT NULL,
   `dataDocumentoVenda` date DEFAULT NULL,
+  `setorVenda` varchar(20) DEFAULT NULL,
   `dataAtualizacao` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`idVendas`),
   KEY `fk_vendas_clientes1` (`clientes_id`),
@@ -311,6 +314,7 @@ CREATE TABLE `os` (
   `lancamento` int(11) DEFAULT NULL,
   `faturado` tinyint(1) NOT NULL,
   `documentoOs` varchar(20) DEFAULT NULL,
+  `setorOs` varchar(20) DEFAULT NULL,
   `dataAtualizacao` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`idOs`),
   KEY `fk_os_clientes1` (`clientes_id`),
@@ -417,6 +421,7 @@ CREATE TABLE `estoque` (
   `documentoEstoque` varchar(20) DEFAULT NULL,
   `serie` varchar(50) DEFAULT NULL,
   `observacaoEstoque` varchar(255) DEFAULT NULL,
+  `setorEstoque` varchar(20) DEFAULT NULL,
   `dataAtualizacao` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`idEstoque`),
   KEY `fk_itens_de_estoque_produtos1` (`produtos_id`),
