@@ -27,12 +27,12 @@
                                 <form action="<?php echo current_url(); ?>" method="post" id="formOs">
 
                                     <div class="span12" style="padding: 1%">
-                                        <div class="span6">
+                                        <div class="span5">
                                             <label for="cliente">Pessoa<span class="required">*</span></label>
                                             <input id="cliente" class="span12" type="text" name="cliente" value=""  />
                                             <input id="clientes_id" class="span12" type="hidden" name="clientes_id" value=""  />
                                         </div>
-                                        <div class="span4">
+                                        <div class="span3">
                                             <label for="tecnico">Técnico / Responsável<span class="required">*</span></label>
                                             <input id="tecnico" class="span12" type="text" name="tecnico" value=""  />
                                             <input id="usuarios_id" class="span12" type="hidden" name="usuarios_id" value=""  />
@@ -40,6 +40,10 @@
                                         <div class="span2">
                                             <label for="documentoOs">Documento<span class="required">*</span></label>
                                             <input id="documentoOs" class="span12" type="text" name="documentoOs" value=""  />
+                                        </div>
+                                        <div class="span2">
+                                            <label for="setorOs">Setor</span></label>
+                                            <input id="setorOs" class="span12" type="text" name="setorOs" value=""  />
                                         </div>
                                     </div>
                                     <div class="span12" style="padding: 1%; margin-left: 0">

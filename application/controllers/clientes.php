@@ -71,6 +71,7 @@ class Clientes extends CI_Controller {
         if ($this->form_validation->run('clientes') == false) {
             $this->data['custom_error'] = (validation_errors() ? '<div class="form_error">' . validation_errors() . '</div>' : false);
         } else {
+            $limite = str_replace(",",".", set_value('limite'));
             $data = array(
                 'nomeCliente' => set_value('nomeCliente'),
                 'documento' => set_value('documento'),
@@ -85,7 +86,7 @@ class Clientes extends CI_Controller {
                 'cidade' => set_value('cidade'),
                 'estado' => set_value('estado'),
                 'cep' => set_value('cep'),
-                'limite' => set_value('limite'),
+                'limite' => $limite,
                 'observacaoCliente' => set_value('observacaoCliente'),
                 'dataCadastro' => date('Y-m-d')
             );
@@ -175,7 +176,7 @@ class Clientes extends CI_Controller {
             $id =  $this->input->post('id');
             $nomeCliente = $this->clientes_model->getById($id)->nomeCliente;
             if ($id == null){
-                $this->session->set_flashdata('error','Erro ao tentar excluir pessoa.');            
+                $this->session->set_flashdata('error','Erro ao excluir pessoa.');            
                 redirect(base_url().'index.php/clientes/gerenciar/');
             }
 
@@ -188,7 +189,7 @@ class Clientes extends CI_Controller {
 
                 foreach ($os as $o) {
                     if($this->clientes_model->delete('servicos_os', 'os_id', $o->idOs) == FALSE){
-	    	            $this->session->set_flashdata('error','Erro ao tentar excluir serviço de os da pessoa.');            
+	    	            $this->session->set_flashdata('error','Erro ao excluir serviço da OS da pessoa.');            
     	    	        redirect(base_url().'index.php/clientes/gerenciar/');
 					}	
 
@@ -200,16 +201,19 @@ class Clientes extends CI_Controller {
 							$this->estoque_model->somaEstoque($i->quantidade, $i->produtos_id);
 			            }
 			        }
+					auditoria('Exclusão de pessoas', 'Atualizado estoque dos produtos da OS da pessoa "'.$nomeCliente.'"');
 
                     if($this->clientes_model->delete('produtos_os', 'os_id', $o->idOs) == FALSE){
-	    	            $this->session->set_flashdata('error','Erro ao tentar excluir produto de os da pessoa.');            
+	    	            $this->session->set_flashdata('error','Erro ao excluir produto da OS da pessoa.');            
     	    	        redirect(base_url().'index.php/clientes/gerenciar/');
 					}	
+					auditoria('Exclusão de pessoas', 'Excluídos produtos da OS da pessoa "'.$nomeCliente.'"');
 
                     if($this->clientes_model->delete('os', 'idOs', $o->idOs) == FALSE){
-	    	            $this->session->set_flashdata('error','Erro ao tentar excluir os da pessoa.');            
+	    	            $this->session->set_flashdata('error','Erro ao excluir OS da pessoa.');            
     	    	        redirect(base_url().'index.php/clientes/gerenciar/');
 					}	
+					auditoria('Exclusão de pessoas', 'Excluídas OS da pessoa "'.$nomeCliente.'"');
                 }
             }
 
@@ -230,16 +234,19 @@ class Clientes extends CI_Controller {
 							$this->estoque_model->somaEstoque($i->quantidade, $i->produtos_id);
 			            }
 			        }
+					auditoria('Exclusão de pessoas', 'Atualizado estoque dos produtos de vendas da pessoa "'.$nomeCliente.'"');
 
                     if($this->clientes_model->delete('itens_de_vendas', 'vendas_id', $v->idVendas) == FALSE){
-	    	            $this->session->set_flashdata('error','Erro ao tentar excluir item de venda da pessoa.');            
+	    	            $this->session->set_flashdata('error','Erro ao excluir item de vendas da pessoa.');            
     	    	        redirect(base_url().'index.php/clientes/gerenciar/');
 					}	
+					auditoria('Exclusão de pessoas', 'Excluídos produtos de vendas da pessoa "'.$nomeCliente.'"');
 
                     if($this->clientes_model->delete('vendas', 'idVendas', $v->idVendas) == FALSE){
-	    	            $this->session->set_flashdata('error','Erro ao tentar excluir venda da pessoa.');            
+	    	            $this->session->set_flashdata('error','Erro ao excluir venda da pessoa.');            
     	    	        redirect(base_url().'index.php/clientes/gerenciar/');
 					}	
+					auditoria('Exclusão de pessoas', 'Excluídas vendas da pessoa "'.$nomeCliente.'"');
                 }
             }
 
@@ -259,30 +266,33 @@ class Clientes extends CI_Controller {
 							$this->estoque_model->somaEstoque($i->quantidade, $i->produtos_id);
 			            }
 			        }
+					auditoria('Exclusão de pessoas', 'Atualizado estoque dos produtos de compras da pessoa "'.$nomeCliente.'"');
 
                     if($this->clientes_model->delete('itens_de_compras', 'compras_id', $v->idCompras) == FALSE){
-	    	            $this->session->set_flashdata('error','Erro ao tentar excluir item de compra da pessoa.');            
+	    	            $this->session->set_flashdata('error','Erro ao excluir item de compra da pessoa.');            
     	    	        redirect(base_url().'index.php/clientes/gerenciar/');
 					}	
+					auditoria('Exclusão de pessoas', 'Excluídos produtos de compras da pessoa "'.$nomeCliente.'"');
 
                     if($this->clientes_model->delete('compras', 'idCompras', $v->idCompras) == FALSE){
-	    	            $this->session->set_flashdata('error','Erro ao tentar excluir compra da pessoa.');            
+	    	            $this->session->set_flashdata('error','Erro ao excluir compra da pessoa.');            
     	    	        redirect(base_url().'index.php/clientes/gerenciar/');
 					}	
+					auditoria('Exclusão de pessoas', 'Excluídas compras da pessoa "'.$nomeCliente.'"');
                 }
             }
 
             //excluindo receitas vinculadas ao cliente
             if($this->clientes_model->delete('lancamentos','clientes_id', $id) == FALSE){ 
-   	            $this->session->set_flashdata('error','Erro ao tentar excluir lancamento da pessoa.'.$id);            
+   	            $this->session->set_flashdata('error','Erro ao excluir lancamento da pessoa.'.$id);            
     	        redirect(base_url().'index.php/clientes/gerenciar/');
 			}	
+			auditoria('Exclusão de pessoas', 'Excluídas receitas e despesas da pessoa "'.$nomeCliente.'"');
 
             if($this->clientes_model->delete('clientes','idClientes',$id) == FALSE){
-   	            $this->session->set_flashdata('error','Erro ao tentar excluir pessoa.');            
+   	            $this->session->set_flashdata('error','Erro ao excluir pessoa.');            
     	        redirect(base_url().'index.php/clientes/gerenciar/');
 			}	
-
 			auditoria('Exclusão de pessoas', 'Excluído cadastro da pessoa "'.$nomeCliente.'"');
 			
             $this->session->set_flashdata('success','Pessoa excluida com sucesso!');            

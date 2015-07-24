@@ -47,7 +47,7 @@ class Atual extends CI_Controller {
             redirect(base_url() . 'index.php/atual/minhaConta');
         }
         else{
-            $this->session->set_flashdata('error','Ocorreu um erro ao tentar alterar a senha!');
+            $this->session->set_flashdata('error','Erro ao alterar a senha!');
             redirect(base_url() . 'index.php/atual/minhaConta');
             
         }
@@ -287,7 +287,7 @@ class Atual extends CI_Controller {
                 redirect(base_url().'index.php/atual/emitente');
             }
             else{
-                $this->session->set_flashdata('error','Ocorreu um erro ao tentar inserir as informações.');
+                $this->session->set_flashdata('error','Erro ao inserir as informações.');
                 redirect(base_url().'index.php/atual/emitente');
             }
             
@@ -350,7 +350,7 @@ class Atual extends CI_Controller {
                 redirect(base_url().'index.php/atual/emitente');
             }
             else{
-                $this->session->set_flashdata('error','Ocorreu um erro ao tentar alterar as informações.');
+                $this->session->set_flashdata('error','Erro ao alterar as informações.');
                 redirect(base_url().'index.php/atual/emitente');
             }
             
@@ -370,7 +370,7 @@ class Atual extends CI_Controller {
 
         $id = $this->input->post('id');
         if($id == null || !is_numeric($id)){
-           $this->session->set_flashdata('error','Ocorreu um erro ao tentar alterar a logomarca.');
+           $this->session->set_flashdata('error','Erro ao alterar a logomarca.');
            redirect(base_url().'index.php/atual/emitente'); 
         }
         $this->load->helper('file');
@@ -386,7 +386,7 @@ class Atual extends CI_Controller {
             redirect(base_url().'index.php/atual/emitente');
         }
         else{
-            $this->session->set_flashdata('error','Ocorreu um erro ao tentar alterar as informações.');
+            $this->session->set_flashdata('error','Erro ao alterar as informações.');
             redirect(base_url().'index.php/atual/emitente');
         }
 

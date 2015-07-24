@@ -128,7 +128,7 @@ $config = array('clientes' => array(array(
                                 ),
                                 array(
                                     'field'=>'precoCompra',
-                                    'label'=>'Preo de Compra',
+                                    'label'=>'Preço de Compra',
                                     'rules'=>'required|trim|xss_clean'
                                 ),
                                 array(

@@ -28,7 +28,7 @@
 	
 <div class="span12" style="margin-left: 0">
 	<form action="<?php echo current_url(); ?>" method="get" >
-		<div class="span1" style="margin-left: 0">
+		<div class="span2" style="margin-left: 0">
 			<label>Tipo <i class="icon-info-sign tip-top" title="Lançamentos com tipo específico ou todos."></i></label>
 			<select name="tipo" class="span12">
                    <option value="todos">Todos</option>
@@ -37,7 +37,14 @@
 			</select>
 		</div>
 
-        <div class="span5">
+		<div class="span1">
+			<label>Setor <i class="icon-info-sign tip-top" title="Lançamentos com setor específico ou todos."></i></label>
+    	    <div class="controls">
+        	    <input id="setorEstoque" class="input-small" type="text" name="setorEstoque" />
+            </div>
+		</div>
+
+        <div class="span3">
             <label for="produto">Produto <i class="icon-info-sign tip-top" title="Lançamentos com pessoa específica ou todos."></i></label>
             <input id="produto" class="span12" type="text" name="produto" value=""  />
             <input id="produtos_id" class="span12" type="hidden" name="produtos_id" value=""  />
@@ -50,17 +57,17 @@
             </div>
 		</div>
 
-		<div class="span2">
+		<div class="span1">
 			<label>Data de: </label>
     	    <div class="controls">
-	    		<input class="span12 datepicker" id="data" type="text" name="data" />
+	    		<input class="input-small  datepicker" id="data" type="text" name="data" />
             </div>
 		</div>
 		
-		<div class="span2">
+		<div class="span1">
 			<label>Data até: </label>
     	    <div class="controls">
-	    		<input class="span12 datepicker" id="data2" type="text" name="data2"  />
+	    		<input class="input-small  datepicker" id="data2" type="text" name="data2"  />
             </div>
 		</div>
 		
@@ -95,6 +102,7 @@ if(!$results){?>
             <th>#</th>
             <th>Data</th>
             <th>Tipo</th>
+            <th>Setor</th>
             <th>Produto</th>
             <th>Qtd</th>
             <th>Valor</th>
@@ -138,6 +146,7 @@ if(!$results){?>
             <th>#</th>
             <th>Data</th>
             <th>Tipo</th>
+            <th>Setor</th>
             <th>Produto</th>
             <th>Qtd</th>
             <th>Valor</th>
@@ -163,6 +172,7 @@ if(!$results){?>
             echo '<td>'.$r->idEstoque.'</td>';
             echo '<td>'.$data.'</td>';   
             echo '<td><span class="label label-'.$label.'">'.ucfirst($r->tipo).'</span></td>';
+            echo '<td>'.$r->setorEstoque.'</td>';
             echo '<td>'.$r->descricao.'</td>';
             echo '<td>'.$r->quantidade.'</td>';
             echo '<td> R$ '.number_format($r->valor,2,',','.').'</td>';
@@ -223,19 +233,24 @@ if(!$results){?>
   <div class="modal-body">
 
     	<div class="span12" style="margin-left: 0"> 
-	    	<div class="span4" >
+	    	<div class="span3" >
 	    		<label for="data">Data*</label>
 	    		<input class="span12 datepicker"  type="text" name="data"  />
     			<input type="hidden"  name="tipo" value="entrada" />	
 	    		<input id="urlAtual" type="hidden" name="urlAtual" value="<?php echo current_url() ?>"  />
 	    	</div>
 
-	        <div class="span4"> 
+	        <div class="span3"> 
+	          <label for="setor">Setor</label>
+	          <input class="span12" id="setorEstoque" type="text" name="setorEstoque"  />
+	        </div>  
+	
+	        <div class="span3"> 
 	          <label for="documento">Documento</label>
 	          <input class="span12" id="documento" type="text" name="documento"  />
 	        </div>  
 
-	        <div class="span4"> 
+	        <div class="span3"> 
 	          <label for="serie">Série</label>
 	          <input class="span12" id="serie" type="text" name="serie"  />
 	        </div>  
@@ -294,19 +309,24 @@ if(!$results){?>
   <div class="modal-body">
 
     	<div class="span12" style="margin-left: 0"> 
-	    	<div class="span4" >
+	    	<div class="span3" >
 	    		<label for="data">Data*</label>
 	    		<input class="span12 datepicker"  type="text" name="data"  />
     			<input type="hidden"  name="tipo" value="saida" />	
 	    		<input id="urlAtual" type="hidden" name="urlAtual" value="<?php echo current_url() ?>"  />
 	    	</div>
 
-	        <div class="span4"> 
+	        <div class="span3"> 
+	          <label for="setorEstoque">Setor</label>
+	          <input class="span12" id="setorEstoque" type="text" name="setorEstoque"  />
+	        </div>  
+	
+	        <div class="span3"> 
 	          <label for="documento">Documento</label>
 	          <input class="span12" id="documento" type="text" name="documento"  />
 	        </div>  
 
-	        <div class="span4"> 
+	        <div class="span3"> 
 	          <label for="serie">Série</label>
 	          <input class="span12" id="serie" type="text" name="serie"  />
 	        </div>  
@@ -413,7 +433,7 @@ if(!$results){?>
 	            }
 	      });
 	
-		$(".money").maskMoney();
+		$(".money").maskMoney({decimal:",", thousands:"."});
 
 		$('#pago').click(function(event) {
 			var flag = $(this).is(':checked');
@@ -494,7 +514,7 @@ if(!$results){?>
             }
             else{
                 $("#btnCancelExcluir").trigger('click');
-                alert('Ocorreu um erro ao tentar excluir produto.');
+                alert('Ocorreu um erro ao excluir produto.');
             }
           }
         });

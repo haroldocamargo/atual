@@ -40,6 +40,7 @@ class Financeiro extends CI_Controller {
 		$cliente = $this->input->get('clientes_id');
 		$vencimento = $this->input->get('vencimento');
 		$vencimento2 = $this->input->get('vencimento2');
+		$setor = $this->input->get('setor');
 
         
         // busca os lançamentos
@@ -67,6 +68,11 @@ class Financeiro extends CI_Controller {
 	    if(rtrim($grupo) <> ''){
 	    	if (rtrim($where) <> '') {$where = $where.' and ';}
 	        $where = $where.'grupo = "'.$grupo.'"';
+        };
+
+	    if(rtrim($setor) <> ''){
+	    	if (rtrim($where) <> '') {$where = $where.' and ';}
+	        $where = $where.'setor = "'.$setor.'"';
         };
 
 	    if(rtrim($documento) <> ''){
@@ -112,7 +118,7 @@ class Financeiro extends CI_Controller {
         $config['last_tag_close'] = '</li>';
         $this->pagination->initialize($config); 	
 
-		$this->data['results'] = $this->financeiro_model->get('lancamentos','idLancamentos,descricao,valor,data_vencimento,data_pagamento,baixado,cliente_fornecedor,tipo,forma_pgto,documento,observacao,grupo',$where,$config['per_page'],$this->uri->segment(3));
+		$this->data['results'] = $this->financeiro_model->get('lancamentos','idLancamentos,descricao,valor,data_vencimento,data_pagamento,baixado,cliente_fornecedor,tipo,forma_pgto,documento,observacao,grupo,setor',$where,$config['per_page'],$this->uri->segment(3));
        
 	    $this->data['view'] = 'financeiro/lancamentos';
        	$this->load->view('tema/topo',$this->data);
@@ -134,7 +140,7 @@ class Financeiro extends CI_Controller {
             $this->data['custom_error'] = (validation_errors() ? '<div class="form_error">' . validation_errors() . '</div>' : false);
         } else {
 
-
+            $valor = str_replace(",",".", set_value('valor'));
             $vencimento = $this->input->post('vencimento');
             $recebimento = $this->input->post('recebimento');
 
@@ -158,7 +164,7 @@ class Financeiro extends CI_Controller {
 
             $data = array(
                 'descricao' => set_value('descricao'),
-				'valor' => set_value('valor'),
+				'valor' => $valor,
 				'data_vencimento' => $vencimento,
 				'data_pagamento' => $recebimento != null ? $recebimento : date('Y-m-d'),
 				'baixado' => $this->input->post('recebido'),
@@ -168,6 +174,7 @@ class Financeiro extends CI_Controller {
 				'documento' => $this->input->post('documento'),
 				'grupo' => $this->input->post('grupo'),
 				'observacao' => $this->input->post('observacao'),
+				'setor' => $this->input->post('setor'),
 				'clientes_id' => $this->input->post('clientesIncluir_id')
             );
 
@@ -180,7 +187,7 @@ class Financeiro extends CI_Controller {
             }
         }
 
-        $this->session->set_flashdata('error','Ocorreu um erro ao tentar adicionar receita.');
+        $this->session->set_flashdata('error','Erro ao adicionar receita.');
         redirect($urlAtual);
         
     }
@@ -202,6 +209,7 @@ class Financeiro extends CI_Controller {
 
             $vencimento = $this->input->post('vencimento');
             $pagamento = $this->input->post('pagamento');
+            $valor = str_replace(",",".", set_value('valor'));
 
             if($pagamento != null){
                 $pagamento = explode('/', $pagamento);
@@ -223,7 +231,7 @@ class Financeiro extends CI_Controller {
 
             $data = array(
                 'descricao' => set_value('descricao'),
-				'valor' => set_value('valor'),
+				'valor' => $valor,
 				'data_vencimento' => $vencimento,
 				'data_pagamento' => $pagamento != null ? $pagamento : date('Y-m-d'),
 				'baixado' => $this->input->post('pago'),
@@ -233,6 +241,7 @@ class Financeiro extends CI_Controller {
 				'documento' => $this->input->post('documento'),
 				'grupo' => $this->input->post('grupo'),
 				'observacao' => $this->input->post('observacao'),
+				'setor' => $this->input->post('setor'),
 				'clientes_id' => $this->input->post('fornecedoresIncluir_id')
             );
 
@@ -241,12 +250,12 @@ class Financeiro extends CI_Controller {
                 $this->session->set_flashdata('success','Despesa adicionada com sucesso!');
                 redirect($urlAtual);
             } else {
-                $this->session->set_flashdata('error','Ocorreu um erro ao tentar adicionar despesa!');
+                $this->session->set_flashdata('error','Erro ao adicionar despesa!');
                 redirect($urlAtual);
             }
         }
 
-        $this->session->set_flashdata('error','Ocorreu um erro ao tentar adicionar despesa.');
+        $this->session->set_flashdata('error','Erro ao adicionar despesa.');
         redirect($urlAtual);
         
         
@@ -271,6 +280,7 @@ class Financeiro extends CI_Controller {
         $this->form_validation->set_rules('documento', '', 'trim|xss_clean');
         $this->form_validation->set_rules('grupo', '', 'trim|xss_clean');
         $this->form_validation->set_rules('observacao', '', 'trim|xss_clean');
+        $this->form_validation->set_rules('setor', '', 'trim|xss_clean');
 
         if ($this->form_validation->run() == false) {
             $this->data['custom_error'] = (validation_errors() ? '<div class="form_error">' . validation_errors() . '</div>' : false);
@@ -279,6 +289,7 @@ class Financeiro extends CI_Controller {
             $vencimento = $this->input->post('vencimento');
             $pagamento = $this->input->post('pagamento');
 			$fornecedoresEditar_id = $this->input->post('fornecedoresEditar_id');
+            $valor = str_replace(",",".", $this->input->post('valor'));
 			
 			if ($fornecedoresEditar_id == '') {
 		        $fornecedoresEditar_id = $this->financeiro_model->getById($this->input->post('id'))->idClientes;
@@ -298,7 +309,7 @@ class Financeiro extends CI_Controller {
 
             $data = array(
                 'descricao' => $this->input->post('descricao'),
-                'valor' => $this->input->post('valor'),
+                'valor' => $valor,
                 'data_vencimento' => $vencimento,
                 'data_pagamento' => $pagamento,
                 'baixado' => $this->input->post('pago'),
@@ -308,20 +319,21 @@ class Financeiro extends CI_Controller {
                 'documento' => $this->input->post('documento'),
                 'grupo' => $this->input->post('grupo'),
                 'observacao' => $this->input->post('observacao'),
+				'setor' => $this->input->post('setor'),
 				'clientes_id' => $fornecedoresEditar_id
             );
 
             if ($this->financeiro_model->edit('lancamentos',$data,'idLancamentos',$this->input->post('id')) == TRUE) {
-				auditoria('Alteração de lançamentos', 'Alterado lançamento de documento "'.$this->input->post('documento').'"');
+				auditoria('Alteração de lançamentos', 'Alterado lançamento "'.$this->input->post('descricao').'"');
                 $this->session->set_flashdata('success','lançamento editado com sucesso!');
                 redirect($urlAtual);
             } else {
-                $this->session->set_flashdata('error','Ocorreu um erro ao tentar editar lançamento!');
+                $this->session->set_flashdata('error','Erro ao editar lançamento!');
                 redirect($urlAtual);
             }
         }
 
-        $this->session->set_flashdata('error','Ocorreu um erro ao tentar editar lançamento.');
+        $this->session->set_flashdata('error','Erro ao editar lançamento.');
         redirect($urlAtual);
 
     }
@@ -335,7 +347,7 @@ class Financeiro extends CI_Controller {
         }
 
     	$id = $this->input->post('id');
-        $documento = $this->financeiro_model->getById($id)->documento;
+        $descricao = $this->financeiro_model->getById($id)->descricao;
 		
     	if($id == null || ! is_numeric($id)){
     		$json = array('result'=>  false);
@@ -347,7 +359,7 @@ class Financeiro extends CI_Controller {
     		if($result){
     			$json = array('result'=>  true);
     			echo json_encode($json);
-				auditoria('Exclusão de lançamentos', 'Excluído lançamento de documento "'.$documento.'"');
+				auditoria('Exclusão de lançamentos', 'Excluído lançamento "'.$descricao.'"');
     		}
     		else{
     			$json = array('result'=>  false);

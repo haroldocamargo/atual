@@ -32,13 +32,13 @@
                                     <div class="span12" style="padding: 1%; margin-left: 0">
                                         <h3>#Os: <?php echo $result->idOs ?></h3>
                                         
-                                        <div class="span6" style="margin-left: 0">
+                                        <div class="span5" style="margin-left: 0">
                                             <label for="cliente">Pessoa<span class="required">*</span></label>
                                             <input id="cliente" class="span12" type="text" name="cliente" value="<?php echo $result->nomeCliente ?>"  />
                                             <input id="clientes_id" class="span12" type="hidden" name="clientes_id" value="<?php echo $result->clientes_id ?>"  />
                                             <input id="valorTotal" type="hidden" name="valorTotal" value=""  />
                                         </div>
-                                        <div class="span4">
+                                        <div class="span3">
                                             <label for="tecnico">Técnico / Responsável<span class="required">*</span></label>
                                             <input id="tecnico" class="span12" type="text" name="tecnico" value="<?php echo $result->nome ?>"  />
                                             <input id="usuarios_id" class="span12" type="hidden" name="usuarios_id" value="<?php echo $result->usuarios_id ?>"  />
@@ -46,6 +46,10 @@
                                         <div class="span2">
                                             <label for="documentoOs">Documento<span class="required">*</span></label>
                                             <input id="documentoOs" class="span12" type="text" name="documentoOs" value="<?php echo $result->documentoOs ?>"  />
+                                        </div>
+                                        <div class="span2">
+                                            <label for="setorOs">Setor</span></label>
+                                            <input id="setorOs" class="span12" type="text" name="setorOs" value="<?php echo $result->setorOs ?>"  />
                                         </div>
                                     </div>
                                     <div class="span12" style="padding: 1%; margin-left: 0">
@@ -100,8 +104,8 @@
                                         <div class="span6 offset3" style="text-align: center">
                                             <?php if($result->faturado == 0){ ?>
                                                 <a href="#modal-faturar" id="btn-faturar" role="button" data-toggle="modal" class="btn btn-success"><i class="icon-file"></i> Faturar</a>
+	                                            <button class="btn btn-primary" id="btnContinuar"><i class="icon-white icon-ok"></i> Alterar</button>
                                             <?php } ?>
-                                            <button class="btn btn-primary" id="btnContinuar"><i class="icon-white icon-ok"></i> Alterar</button>
                                             <a href="<?php echo base_url() ?>index.php/os/visualizar/<?php echo $result->idOs; ?>" class="btn btn-inverse"><i class="icon-eye-open"></i> Visualizar OS</a>
                                             <a href="<?php echo base_url() ?>index.php/os" class="btn"><i class="icon-arrow-left"></i> Voltar</a>
                                         </div>
@@ -122,13 +126,14 @@
                                         <input type="hidden" name="dataOs" id="dataOs" value="<?php echo date('d/m/Y', strtotime($result->dataInicial)); ?>"  />
 								        <input type="hidden" name="documentoOs" id="documentoOs" value="<?php echo $result->documentoOs; ?>">
                                         <input type="hidden" name="estoque" id="estoque" value=""/>
+								        <input type="hidden" name="setorOs" id="setorOs" value="<?php echo $result->setorOs; ?>">
                                         <label for="">Produto</label>
                                         <input type="text" class="span12" name="produto" id="produto" placeholder="Digite o nome do produto" />
                                     </div>
 
                                     <div class="span1">
                                         <label for="">Preço</label>
-                                        <input type="text" placeholder="Preço" id="preco" name="preco" class="span12" />
+                                        <input type="text" placeholder="Preço" id="preco" name="preco" class="span12 money" />
                                     </div>
 
                                     <div class="span1">
@@ -212,7 +217,7 @@
                                     </div>
                                     <div class="span1">
                                         <label for="">Preço</label>
-                                        <input type="text" placeholder="Preço" id="precoServico" name="precoServico" class="span12" />
+                                        <input type="text" placeholder="Preço" id="precoServico" name="precoServico" class="span12 money" />
                                     </div>
 
                                     <div class="span3">
@@ -378,6 +383,7 @@
         <input type="hidden" name="os_id" id="os_id" value="<?php echo $result->idOs; ?>">
         <input type="hidden" name="documentoOs" id="documentoOs" value="<?php echo $result->documentoOs; ?>">
         <input type="hidden" name="observacaoOs" id="observacaoOs" value="<?php echo $result->observacaoOs; ?>">
+        <input type="hidden" name="setorOs" id="setorOs" value="<?php echo $result->setorOs; ?>">
       </div>
       
       
@@ -493,7 +499,7 @@
 <script type="text/javascript">
 $(document).ready(function(){
     
-    $(".money").maskMoney(); 
+    $(".money").maskMoney({decimal:",", thousands:"."}); 
 
      $('#recebido').click(function(event) {
         var flag = $(this).is(':checked');
@@ -545,7 +551,7 @@ $(document).ready(function(){
                     window.location.reload(true);
                 }
                 else{
-                    alert('Ocorreu um erro ao tentar faturar OS.');
+                    alert('Ocorreu um erro ao faturar OS.');
                     $('#progress-fatura').hide();
                 }
               }
@@ -563,7 +569,7 @@ $(document).ready(function(){
                  $("#idProduto").val(ui.item.id);
                  $("#estoque").val(ui.item.estoque);
                  $("#preco").val(ui.item.preco);
-                 $("#quantidade").focus();
+                 $("#preco").focus();
                  
 
             }
@@ -576,6 +582,7 @@ $(document).ready(function(){
 
                  $("#idServico").val(ui.item.id);
                  $("#precoServico").val(ui.item.preco);
+                 $("#precoServico").focus();
                  
 
             }
@@ -666,7 +673,7 @@ $(document).ready(function(){
                         $("#produto").val('').focus();
                     }
                     else{
-                        alert('Ocorreu um erro ao tentar adicionar produto.');
+                        alert('Ocorreu um erro ao adicionar produto.');
                     }
                   }
                   });
@@ -701,7 +708,7 @@ $(document).ready(function(){
                         $("#servico").val('').focus();
                     }
                     else{
-                        alert('Ocorreu um erro ao tentar adicionar serviço.');
+                        alert('Ocorreu um erro ao adicionar serviço.');
                     }
                   }
                   });
@@ -770,7 +777,7 @@ $(document).ready(function(){
                         
                     }
                     else{
-                        alert('Ocorreu um erro ao tentar excluir produto.');
+                        alert('Ocorreu um erro ao excluir produto.');
                     }
                   }
                   });
@@ -798,7 +805,7 @@ $(document).ready(function(){
 
                     }
                     else{
-                        alert('Ocorreu um erro ao tentar excluir serviço.');
+                        alert('Ocorreu um erro ao excluir serviço.');
                     }
                   }
                   });

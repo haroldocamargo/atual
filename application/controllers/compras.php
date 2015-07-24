@@ -98,11 +98,12 @@ class Compras extends CI_Controller {
                 'faturado' => 0,
                 'observacaoCompra' => $this->input->post('observacaoCompra'),
                 'documentoCompra' => $this->input->post('documentoCompra'),
+                'setorCompra' => $this->input->post('setorCompra'),
                 'dataDocumentoCompra' => $dataDocumentoCompra,
             );
 
             if (is_numeric($id = $this->compras_model->add('compras', $data, true)) ) {
-				auditoria('Inclusão de compras', 'Compra de documento "'.$this->input->post('documentoCompra').'" cadastrada no sistema');
+				auditoria('Inclusão de compras', 'Compra "'.$id.'" cadastrada no sistema');
                 $this->session->set_flashdata('success','Compra iniciada com sucesso, adicione os produtos.');
                 redirect('compras/editar/'.$id);
 
@@ -153,11 +154,12 @@ class Compras extends CI_Controller {
                 'clientes_id' => $this->input->post('clientes_id'),
                 'observacaoCompra' => $this->input->post('observacaoCompra'),
                 'dataDocumentoCompra' => $dataDocumentoCompra,
+                'setorCompra' => $this->input->post('setorCompra'),
                 'documentoCompra' => $this->input->post('documentoCompra')
             );
 
             if ($this->compras_model->edit('compras', $data, 'idCompras', $this->input->post('idCompras')) == TRUE) {
-				auditoria('Alteração de compras', 'Alterada compra de documento "'.$this->input->post('documentoCompra').'"');
+				auditoria('Alteração de compras', 'Alterada compra "'.$id.'"');
                 $this->session->set_flashdata('success','Compra editada com sucesso!');
                 redirect(base_url() . 'index.php/compras/editar/'.$this->input->post('idCompras'));
             } else {
@@ -197,10 +199,9 @@ class Compras extends CI_Controller {
         }
         
         $id =  $this->input->post('id');
-        $documentoCompra = $this->compras_model->getById($id)->documentoCompra;
         if ($id == null){
 
-            $this->session->set_flashdata('error','Erro ao tentar excluir compra.');            
+            $this->session->set_flashdata('error','Erro ao excluir compra.');            
             redirect(base_url().'index.php/compras/gerenciar/');
         }
 		
@@ -212,26 +213,28 @@ class Compras extends CI_Controller {
         }
 
 		if($this->compras_model->delete('itens_de_compras','compras_id', $id) == FALSE){
-			$this->session->set_flashdata('error','Ocorreu um erro ao excluir compra.');
+			$this->session->set_flashdata('error','Erro ao excluir produto da compra.');
 	        redirect(base_url().'index.php/compras/gerenciar/');
 		}
-
-		if($this->compras_model->delete('compras','idCompras', $id) == FALSE){
-			$this->session->set_flashdata('error','Ocorreu um erro ao excluir compra.');
-	        redirect(base_url().'index.php/compras/gerenciar/');
-		}
+		auditoria('Exclusão de compras', 'Excluídos produtos da compra "'.$id.'"');
 
 		if($this->compras_model->delete('lancamentos','compras_id', $id) == FALSE){
-			$this->session->set_flashdata('error','Ocorreu um erro ao excluir compra.');
+			$this->session->set_flashdata('error','Erro ao excluir faturamento da compra.');
 	        redirect(base_url().'index.php/compras/gerenciar/');
 		}
+		auditoria('Exclusão de compras', 'Excluído faturamento da compra "'.$id.'"');
 
 		if($this->compras_model->delete('estoque','compras_id', $id) == FALSE){
-			$this->session->set_flashdata('error','Ocorreu um erro ao excluir compra.');
+			$this->session->set_flashdata('error','Erro ao excluir estoque da compra.');
 	        redirect(base_url().'index.php/compras/gerenciar/');
 		}
+		auditoria('Exclusão de compras', 'Excluído estoque da compra "'.$id.'"');
 
-		auditoria('Exclusão de compras', 'Excluída compra de documento "'.$documentoCompra.'"');
+		if($this->compras_model->delete('compras','idCompras', $id) == FALSE){
+			$this->session->set_flashdata('error','Erro ao excluir compra.');
+	        redirect(base_url().'index.php/compras/gerenciar/');
+		}
+		auditoria('Exclusão de compras', 'Excluída compra "'.$id.'"');
 
         $this->session->set_flashdata('success','Compra excluída com sucesso!');            
         redirect(base_url().'index.php/compras/gerenciar/');
@@ -286,9 +289,8 @@ class Compras extends CI_Controller {
            echo json_encode(array('result'=> false)); 
         }
         else{
-
-            $preco = $this->input->post('preco');
-            $quantidade = $this->input->post('quantidade');
+            $preco = str_replace(",",".", $this->input->post('preco'));
+            $quantidade = str_replace(",",".", $this->input->post('quantidade'));
             $subtotal = $preco * $quantidade;
             $produto = $this->input->post('idProduto');
             $data = array(
@@ -319,6 +321,7 @@ class Compras extends CI_Controller {
 					'quantidade' => $quantidade,
 					'valor' => $preco,
 					'subTotal' => $subtotal,
+	                'setorEstoque' => $this->input->post('setorCompra'),
 					'observacaoEstoque' => $this->input->post('observacaoItem')
 	            );
 
@@ -355,7 +358,7 @@ class Compras extends CI_Controller {
 					'produtos_id' => $produto);
 
 		        if ($this->compras_model->deleteWhere('estoque', $data) == FALSE){
-	                $this->session->set_flashdata('error','Ocorreu um erro ao editar compra.');
+	                $this->session->set_flashdata('error','Erro ao editar compra.');
 	                echo json_encode(array('result'=> false));
 		        }else{
 					auditoria('Exclusão de produto em compras', 'Exclusão do produto "'.$produto.'" na compra '.$Compra);
@@ -391,6 +394,13 @@ class Compras extends CI_Controller {
             $vencimento5 = $this->input->post('vencimento5');
             $vencimento6 = $this->input->post('vencimento6');
             $recebimento = $this->input->post('recebimento');
+
+            $valor = str_replace(",",".", $this->input->post('valor'));
+   	        $valor2 = str_replace(",",".", $this->input->post('valor2'));
+   	        $valor3 = str_replace(",",".", $this->input->post('valor3'));
+   	        $valor4 = str_replace(",",".", $this->input->post('valor4'));
+   	        $valor5 = str_replace(",",".", $this->input->post('valor5'));
+   	        $valor6 = str_replace(",",".", $this->input->post('valor6'));
 
             try {
                 
@@ -433,7 +443,7 @@ class Compras extends CI_Controller {
 
             $data = array(
                 'descricao' => set_value('descricao'),
-                'valor' => $this->input->post('valor'),
+                'valor' => $valor,
                 'clientes_id' => $this->input->post('clientes_id'),
                 'data_vencimento' => $vencimento,
                 'baixado' => $this->input->post('recebido'),
@@ -443,6 +453,7 @@ class Compras extends CI_Controller {
                 'documento' => $this->input->post('documentoCompra'),
                 'grupo' => 'Compras',
                 'observacao' => $this->input->post('observacaoCompra'),
+                'setor' => $this->input->post('setorCompra'),
                 'compras_id' => $this->input->post('compras_id')
             );
 
@@ -450,17 +461,17 @@ class Compras extends CI_Controller {
                 $compra = $this->input->post('compras_id');
 	            $data = array(
     	            'faturado' => 1,
-        	        'valorTotal' => $this->input->post('valor'));
+        	        'valorTotal' => $valor);
 
 				if ($this->compras_model->edit('compras', $data, 'idCompras', $compra) == FALSE){
-	                $this->session->set_flashdata('error','Ocorreu um erro ao tentar faturar compra.');
+	                $this->session->set_flashdata('error','Erro ao faturar compra.');
 	                $json = array('result'=>  false);
     	            echo json_encode($json);
         	        die();
 				}	
 
 			} else {
-                $this->session->set_flashdata('error','Ocorreu um erro ao tentar faturar compra.');
+                $this->session->set_flashdata('error','Erro ao faturar compra.');
                 $json = array('result'=>  false);
                 echo json_encode($json);
                 die();
@@ -469,7 +480,7 @@ class Compras extends CI_Controller {
 			if ((rtrim($vencimento2) <> '') && ($this->input->post('valor2') > 0)){
 	            $data = array(
 	                'descricao' => set_value('descricao'),
-	                'valor' => $this->input->post('valor2'),
+	                'valor' => $valor2,
 	                'clientes_id' => $this->input->post('clientes_id'),
 	                'data_vencimento' => $vencimento2,
 	                'baixado' => $this->input->post('recebido'),
@@ -479,6 +490,7 @@ class Compras extends CI_Controller {
 	                'documento' => $this->input->post('documentoCompra'),
 	                'grupo' => 'Compras',
 	                'observacao' => $this->input->post('observacaoCompra'),
+	                'setor' => $this->input->post('setorCompra'),
     	            'compras_id' => $this->input->post('compras_id')
 	            );
 	
@@ -486,17 +498,17 @@ class Compras extends CI_Controller {
 	                $compra = $this->input->post('compras_id');
 	            	$data = array(
     	            	'faturado' => 1,
-        	        	'valorTotal' => ($this->input->post('valor') + $this->input->post('valor2')));
+        	        	'valorTotal' => ($valor + $valor2));
 
 					if ($this->compras_model->edit('compras', $data, 'idCompras', $compra) == FALSE){
-		                $this->session->set_flashdata('error','Ocorreu um erro ao tentar faturar compra.');
+		                $this->session->set_flashdata('error','Erro ao faturar compra.');
 	        	        $json = array('result'=>  false);
     		            echo json_encode($json);
     	    	        die();
 					}	
 
 	            } else {
-	                $this->session->set_flashdata('error','Ocorreu um erro ao tentar faturar compra.');
+	                $this->session->set_flashdata('error','Erro ao faturar compra.');
 	                $json = array('result'=>  false);
 	                echo json_encode($json);
 	                die();
@@ -506,7 +518,7 @@ class Compras extends CI_Controller {
 			if ((rtrim($vencimento3) <> '') && ($this->input->post('valor3') > 0)){
 	            $data = array(
 	                'descricao' => set_value('descricao'),
-	                'valor' => $this->input->post('valor3'),
+	                'valor' => $valor3,
 	                'clientes_id' => $this->input->post('clientes_id'),
 	                'data_vencimento' => $vencimento3,
 	                'baixado' => $this->input->post('recebido'),
@@ -516,6 +528,7 @@ class Compras extends CI_Controller {
 	                'documento' => $this->input->post('documentoCompra'),
 	                'grupo' => 'Compras',
 	                'observacao' => $this->input->post('observacaoCompra'),
+	                'setor' => $this->input->post('setorCompra'),
     	            'compras_id' => $this->input->post('compras_id')
 	            );
 	
@@ -523,18 +536,17 @@ class Compras extends CI_Controller {
 	                $compra = $this->input->post('compras_id');
 	            	$data = array(
     	            	'faturado' => 1,
-        	        	'valorTotal' => ($this->input->post('valor') + $this->input->post('valor2') + 
-        	        	$this->input->post('valor3')));
+        	        	'valorTotal' => ($valor + $valor2 + $valor3));
 
 					if ($this->compras_model->edit('compras', $data, 'idCompras', $compra) == FALSE){
-		                $this->session->set_flashdata('error','Ocorreu um erro ao tentar faturar compra.');
+		                $this->session->set_flashdata('error','Erro ao faturar compra.');
 	        	        $json = array('result'=>  false);
     		            echo json_encode($json);
     	    	        die();
 					}	
 
 	            } else {
-	                $this->session->set_flashdata('error','Ocorreu um erro ao tentar faturar compra.');
+	                $this->session->set_flashdata('error','Erro ao faturar compra.');
 	                $json = array('result'=>  false);
 	                echo json_encode($json);
 	                die();
@@ -544,7 +556,7 @@ class Compras extends CI_Controller {
 			if ((rtrim($vencimento4) <> '') && ($this->input->post('valor4') > 0)){
 	            $data = array(
 	                'descricao' => set_value('descricao'),
-	                'valor' => $this->input->post('valor4'),
+	                'valor' => $valor4,
 	                'clientes_id' => $this->input->post('clientes_id'),
 	                'data_vencimento' => $vencimento4,
 	                'baixado' => $this->input->post('recebido'),
@@ -554,6 +566,7 @@ class Compras extends CI_Controller {
 	                'documento' => $this->input->post('documentoCompra'),
 	                'grupo' => 'Compras',
 	                'observacao' => $this->input->post('observacaoCompra'),
+	                'setor' => $this->input->post('setorCompra'),
     	            'compras_id' => $this->input->post('compras_id')
 	            );
 	
@@ -561,18 +574,17 @@ class Compras extends CI_Controller {
 	                $compra = $this->input->post('compras_id');
 	            	$data = array(
     	            	'faturado' => 1,
-        	        	'valorTotal' => ($this->input->post('valor') + $this->input->post('valor2') + 
-        	        	$this->input->post('valor3') + $this->input->post('valor4')));
+        	        	'valorTotal' => ($valor + $valor2 + $valor3 + $valor4));
 
 					if ($this->compras_model->edit('compras', $data, 'idCompras', $compra) == FALSE){
-		                $this->session->set_flashdata('error','Ocorreu um erro ao tentar faturar compra.');
+		                $this->session->set_flashdata('error','Erro ao faturar compra.');
 	        	        $json = array('result'=>  false);
     		            echo json_encode($json);
     	    	        die();
 					}	
 
 	            } else {
-	                $this->session->set_flashdata('error','Ocorreu um erro ao tentar faturar compra.');
+	                $this->session->set_flashdata('error','Erro ao faturar compra.');
 	                $json = array('result'=>  false);
 	                echo json_encode($json);
 	                die();
@@ -582,7 +594,7 @@ class Compras extends CI_Controller {
 			if ((rtrim($vencimento5) <> '') && ($this->input->post('valor5') > 0)){
 	            $data = array(
 	                'descricao' => set_value('descricao'),
-	                'valor' => $this->input->post('valor5'),
+	                'valor' => $valor5,
 	                'clientes_id' => $this->input->post('clientes_id'),
 	                'data_vencimento' => $vencimento5,
 	                'baixado' => $this->input->post('recebido'),
@@ -592,6 +604,7 @@ class Compras extends CI_Controller {
 	                'documento' => $this->input->post('documentoCompra'),
 	                'grupo' => 'Compras',
 	                'observacao' => $this->input->post('observacaoCompra'),
+	                'setor' => $this->input->post('setorCompra'),
     	            'compras_id' => $this->input->post('compras_id')
 	            );
 	
@@ -599,18 +612,17 @@ class Compras extends CI_Controller {
 	                $compra = $this->input->post('compras_id');
 	            	$data = array(
     	            	'faturado' => 1,
-        	        	'valorTotal' => ($this->input->post('valor') + $this->input->post('valor2') + 
-        	        	$this->input->post('valor3') + $this->input->post('valor4') + $this->input->post('valor5')));
+        	        	'valorTotal' => ($valor + $valor2 + $valor3 + $valor4 + $valor5));
 
 					if ($this->compras_model->edit('compras', $data, 'idCompras', $compra) == FALSE){
-		                $this->session->set_flashdata('error','Ocorreu um erro ao tentar faturar compra.');
+		                $this->session->set_flashdata('error','Erro ao faturar compra.');
 	        	        $json = array('result'=>  false);
     		            echo json_encode($json);
     	    	        die();
 					}	
 
 	            } else {
-	                $this->session->set_flashdata('error','Ocorreu um erro ao tentar faturar compra.');
+	                $this->session->set_flashdata('error','Erro ao faturar compra.');
 	                $json = array('result'=>  false);
 	                echo json_encode($json);
 	                die();
@@ -620,7 +632,7 @@ class Compras extends CI_Controller {
 			if ((rtrim($vencimento6) <> '') && ($this->input->post('valor6') > 0)){
 	            $data = array(
 	                'descricao' => set_value('descricao'),
-	                'valor' => $this->input->post('valor6'),
+	                'valor' => $valor6,
 	                'clientes_id' => $this->input->post('clientes_id'),
 	                'data_vencimento' => $vencimento6,
 	                'baixado' => $this->input->post('recebido'),
@@ -630,6 +642,7 @@ class Compras extends CI_Controller {
 	                'documento' => $this->input->post('documentoCompra'),
 	                'grupo' => 'Compras',
 	                'observacao' => $this->input->post('observacaoCompra'),
+	                'setor' => $this->input->post('setorCompra'),
     	            'compras_id' => $this->input->post('compras_id')
 	            );
 	
@@ -637,19 +650,17 @@ class Compras extends CI_Controller {
 	                $compra = $this->input->post('compras_id');
 	            	$data = array(
     	            	'faturado' => 1,
-        	        	'valorTotal' => ($this->input->post('valor') + $this->input->post('valor2') + 
-        	        	$this->input->post('valor3') + $this->input->post('valor4') + $this->input->post('valor5') + 
-        	        	$this->input->post('valor6')));
+        	        	'valorTotal' => ($valor + $valor2 + $valor3 + $valor4 + $valor5 + $valor6));
 
 					if ($this->compras_model->edit('compras', $data, 'idCompras', $compra) == FALSE){
-		                $this->session->set_flashdata('error','Ocorreu um erro ao tentar faturar compra.');
+		                $this->session->set_flashdata('error','Erro ao faturar compra.');
 	        	        $json = array('result'=>  false);
     		            echo json_encode($json);
     	    	        die();
 					}	
 
 	            } else {
-	                $this->session->set_flashdata('error','Ocorreu um erro ao tentar faturar compra.');
+	                $this->session->set_flashdata('error','Erro ao faturar compra.');
 	                $json = array('result'=>  false);
 	                echo json_encode($json);
 	                die();
@@ -657,7 +668,7 @@ class Compras extends CI_Controller {
 			}
 
 
-			auditoria('Faturamento de compras', 'Faturada compra de documento "'.$this->input->post('documentoCompra').'"');
+			auditoria('Faturamento de compras', 'Faturada compra "'.$compra.'"');
 
             $this->session->set_flashdata('success','Compra faturada com sucesso!');
             $json = array('result'=>  true);
@@ -665,7 +676,7 @@ class Compras extends CI_Controller {
             die();
         }
 
-        $this->session->set_flashdata('error','Ocorreu um erro ao tentar faturar compra.');
+        $this->session->set_flashdata('error','Erro ao faturar compra.');
         $json = array('result'=>  false);
         echo json_encode($json);
         

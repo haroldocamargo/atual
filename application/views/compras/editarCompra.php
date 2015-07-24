@@ -30,7 +30,7 @@
                                     <div class="span12" style="padding: 1%; margin-left: 0">
                                         <h3>#Compra: <?php echo $result->idCompras ?></h3>
                                         <div class="span2" style="margin-left: 0">
-                                            <label for="dataFinal">Data Final</label>
+                                            <label for="dataFinal">Data da Compra</label>
                                             <input id="dataCompra" class="span12 datepicker" type="text" name="dataCompra" value="<?php echo date('d/m/Y', strtotime($result->dataCompra)); ?>"  />
                                         </div>
                                         <div class="span5" >
@@ -56,7 +56,11 @@
                                             <label for="dataDocumentoCompra">Data documento<span class="required">*</span></label>
                                             <input id="dataDocumentoCompra" class="span12 datepicker" type="text" name="dataDocumentoCompra" value="<?php echo date('d/m/Y', strtotime($result->dataDocumentoCompra)); ?>"  />
                                         </div>
-                                        <div class="span8">
+                                        <div class="span2">
+                                            <label for="setorCompra">Setor</label>
+                                            <input id="setorCompra" class="span12" type="text" name="setorCompra" value="<?php echo $result->setorCompra ?>"  />
+                                        </div>
+                                        <div class="span6">
                                             <label for="observacaoCompra">Observação</label>
                                             <input id="observacaoCompra" class="span12" type="text" name="observacaoCompra" value="<?php echo $result->observacaoCompra ?>"  />
                                         </div>
@@ -68,9 +72,9 @@
             
                                         <div class="span8 offset2" style="text-align: center">
                                             <?php if($result->faturado == 0){ ?>
-                                            <a href="#modal-faturar" id="btn-faturar" role="button" data-toggle="modal" class="btn btn-success"><i class="icon-file"></i> Faturar</a>
+    	                                        <a href="#modal-faturar" id="btn-faturar" role="button" data-toggle="modal" class="btn btn-success"><i class="icon-file"></i> Faturar</a>
+	                                            <button class="btn btn-primary" id="btnContinuar"><i class="icon-white icon-ok"></i> Alterar</button>
                                             <?php } ?>
-                                            <button class="btn btn-primary" id="btnContinuar"><i class="icon-white icon-ok"></i> Alterar</button>
                                             <a href="<?php echo base_url() ?>index.php/compras/visualizar/<?php echo $result->idCompras; ?>" class="btn btn-inverse"><i class="icon-eye-open"></i> Visualizar Compra</a>
                                             <a href="<?php echo base_url() ?>index.php/compras" class="btn"><i class="icon-arrow-left"></i> Voltar</a>
                                         </div>
@@ -88,12 +92,14 @@
 	                                            <input type="hidden" name="dataCompra" id="dataCompra" value="<?php echo date('d/m/Y', strtotime($result->dataCompra)); ?>"  />
 										        <input type="hidden" name="documentoCompra" id="documentoCompra" value="<?php echo $result->documentoCompra; ?>">
                                                 <input type="hidden" name="estoque" id="estoque" value=""/>
+										        <input type="hidden" name="setorCompra" id="setorCompra" value="<?php echo $result->setorCompra; ?>">
                                                 <label for="">Produto</label>
                                                 <input type="text" class="span12" name="produto" id="produto" placeholder="Digite o nome do produto" />
                                             </div>
                                             <div class="span1">
                                                 <label for="">Preço</label>
-                                                <input type="text" placeholder="Preço" id="preco" name="preco" class="span12" />
+                                                <input type="text" placeholder="Preço" id="preco" name="preco" class="span12 money" />
+                                            
                                             </div>
                                             <div class="span1">
                                                 <label for="">Quantidade</label>
@@ -192,6 +198,7 @@
         <input type="hidden" name="documentoCompra" id="documentoCompra" value="<?php echo $result->documentoCompra; ?>">
         <input type="hidden" name="dataDocumentoCompra" id="dataDocumentoCompra" value="<?php echo $result->dataDocumentoCompra; ?>">
         <input type="hidden" name="observacaoCompra" id="observacaoCompra" value="<?php echo $result->observacaoCompra; ?>">
+        <input type="hidden" name="setorCompra" id="setorCompra" value="<?php echo $result->setorCompra; ?>">
       </div>
     </div>
 
@@ -303,7 +310,7 @@
 <script type="text/javascript">
 $(document).ready(function(){
 
-     $(".money").maskMoney(); 
+     $(".money").maskMoney({decimal:",", thousands:"."}); 
 
      $('#recebido').click(function(event) {
         var flag = $(this).is(':checked');
@@ -351,7 +358,7 @@ $(document).ready(function(){
                     window.location.reload(true);
                 }
                 else{
-                    alert('Ocorreu um erro ao tentar efetuar compra.');
+                    alert('Ocorreu um erro ao efetuar compra.');
                     $('#progress-fatura').hide();
                 }
               }
@@ -370,8 +377,6 @@ $(document).ready(function(){
                  $("#estoque").val(ui.item.estoque);
                  $("#preco").val(ui.item.preco);
                  $("#preco").focus();
-                 
-
             }
       });
 
@@ -450,7 +455,7 @@ $(document).ready(function(){
                     $("#produto").val('').focus();
                 }
                 else{
-                    alert('Ocorreu um erro ao tentar adicionar produto.');
+                    alert('Ocorreu um erro ao adicionar produto.');
                 }
               }
               });
@@ -482,7 +487,7 @@ $(document).ready(function(){
                         
                     }
                     else{
-                        alert('Ocorreu um erro ao tentar excluir produto.');
+                        alert('Ocorreu um erro ao excluir produto.');
                     }
                   }
                   });

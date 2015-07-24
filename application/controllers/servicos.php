@@ -151,12 +151,12 @@ class Servicos extends CI_Controller {
         $id =  $this->input->post('id');
         $nomeServico = $this->servicos_model->getById($id)->nome;
         if($id == null){
-            $this->session->set_flashdata('error','Erro ao tentar excluir serviço.');            
+            $this->session->set_flashdata('error','Erro ao excluir serviço.');            
             redirect(base_url().'index.php/servicos/gerenciar/');
         }
 
         if($this->servicos_model->delete('servicos_os','servicos_id',$id) == FALSE){             
-	        $this->session->set_flashdata('error','Erro ao excluir serviço!');
+	        $this->session->set_flashdata('error','Erro ao excluir serviço de OS.');
 	        redirect(base_url().'index.php/servicos/gerenciar/');
         }           
 

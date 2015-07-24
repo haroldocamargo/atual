@@ -74,7 +74,36 @@
                     <div class="control-group">
                         <label for="descricao" class="control-label"><span class="required">UF*</span></label>
                         <div class="controls">
-                            <input  class="input-mini" type="text" name="uf" maxlength="2" value=""  />
+							<select name="uf" class="span5">
+								<option value="">Selecione</option>
+								<option value="AC">Acre</option>
+								<option value="AL">Alagoas</option>
+								<option value="AP">Amapá</option>
+								<option value="AM">Amazonas</option>
+								<option value="BA">Bahia</option>
+								<option value="CE">Ceará</option>
+								<option value="DF">Distrito Federal</option>
+								<option value="ES">Espirito Santo</option>
+								<option value="GO">Goiás</option>
+								<option value="MA">Maranhão</option>
+								<option value="MS">Mato Grosso do Sul</option>
+								<option value="MT">Mato Grosso</option>
+								<option value="MG">Minas Gerais</option>
+								<option value="PA">Pará</option>
+								<option value="PB">Paraíba</option>
+								<option value="PR">Paraná</option>
+								<option value="PE">Pernambuco</option>
+								<option value="PI">Piauí</option>
+								<option value="RJ">Rio de Janeiro</option>
+								<option value="RN">Rio Grande do Norte</option>
+								<option value="RS">Rio Grande do Sul</option>
+								<option value="RO">Rondônia</option>
+								<option value="RR">Roraima</option>
+								<option value="SC">Santa Catarina</option>
+								<option value="SP">São Paulo</option>
+								<option value="SE">Sergipe</option>
+								<option value="TO">Tocantins</option>
+							</select>
                         </div>
                     </div>
                     <div class="control-group">
@@ -97,14 +126,14 @@
                             <input class="input-xlarge" type="text" name="email" maxlength="255" value="" />
                         </div>
                     </div>
-
+<!--
                     <div class="control-group">
                         <label for="logo" class="control-label"><span class="required">Logomarca*</span></label>
                         <div class="controls">
                             <input type="file" name="userfile" value="" />
                         </div>
                     </div>
-               
+-->               
                     <div class="control-group" class="control-label">
                         <label for="observacaoEmitente" class="control-label">Observação</label>
                         <div class="controls">
@@ -136,14 +165,14 @@
                 <table class="table table-bordered">
                     <tbody>
                         <tr>
-                            <td style="width: 25%"><img src=" <?php echo $dados[0]->url_logo; ?> "></td>
+<!--                            <td style="width: 25%"><img src=" <?php echo $dados[0]->url_logo; ?> "></td> -->
                             <td> <span style="font-size: 20px; "> <?php echo $dados[0]->nome; ?> </span> </br><span><?php echo $dados[0]->cnpj; ?> </br> <?php echo $dados[0]->rua.', nº:'.$dados[0]->numero.', '.$dados[0]->bairro.' - '.$dados[0]->cidade.' - '.$dados[0]->uf; ?> </span> </br> <span> E-mail: <?php echo $dados[0]->email.' - Fone: '.$dados[0]->telefone; ?></span></td>
                         </tr>
                     </tbody>
                 </table>
 
                 <a href="#modalAlterar" data-toggle="modal" role="button" class="btn btn-primary">Alterar Dados</a>
-                <a href="#modalLogo" data-toggle="modal" role="button" class="btn btn-inverse">Alterar Logo</a>
+<!--                <a href="#modalLogo" data-toggle="modal" role="button" class="btn btn-inverse">Alterar Logo</a>-->
             </div>
         </div>
     </div>
@@ -207,7 +236,36 @@
                     <div class="control-group">
                         <label for="descricao" class="control-label"><span class="required">UF*</span></label>
                         <div class="controls">
-                            <input class="input-mini" type="text" name="uf" maxlength="2" value="<?php echo $dados[0]->uf; ?>"  />
+							<select name="uf" class="span5">
+								<option value="value="<?php echo $result->estado; ?>""><?php echo $result->estado; ?></option>
+								<option value="AC">Acre</option>
+								<option value="AL">Alagoas</option>
+								<option value="AP">Amapá</option>
+								<option value="AM">Amazonas</option>
+								<option value="BA">Bahia</option>
+								<option value="CE">Ceará</option>
+								<option value="DF">Distrito Federal</option>
+								<option value="ES">Espirito Santo</option>
+								<option value="GO">Goiás</option>
+								<option value="MA">Maranhão</option>
+								<option value="MS">Mato Grosso do Sul</option>
+								<option value="MT">Mato Grosso</option>
+								<option value="MG">Minas Gerais</option>
+								<option value="PA">Pará</option>
+								<option value="PB">Paraíba</option>
+								<option value="PR">Paraná</option>
+								<option value="PE">Pernambuco</option>
+								<option value="PI">Piauí</option>
+								<option value="RJ">Rio de Janeiro</option>
+								<option value="RN">Rio Grande do Norte</option>
+								<option value="RS">Rio Grande do Sul</option>
+								<option value="RO">Rondônia</option>
+								<option value="RR">Roraima</option>
+								<option value="SC">Santa Catarina</option>
+								<option value="SP">São Paulo</option>
+								<option value="SE">Sergipe</option>
+								<option value="TO">Tocantins</option>
+							</select>
                         </div>
                     </div>
                     <div class="control-group">

@@ -102,7 +102,7 @@
                                         <table class="table table-bordered">
                                             <tbody>
                                                 <tr>
-                                                    <td style="text-align: right; width: 30%"><strong>Rua</strong></td>
+                                                    <td style="text-align: right; width: 30%"><strong>Logradouro</strong></td>
                                                     <td><?php echo $result->rua ?></td>
                                                 </tr>
                                                 <tr>

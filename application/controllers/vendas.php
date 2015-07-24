@@ -99,11 +99,12 @@ class Vendas extends CI_Controller {
                 'faturado' => 0,
                 'observacaoVenda' => $this->input->post('observacaoVenda'),
                 'documentoVenda' => $this->input->post('documentoVenda'),
-                'dataDocumentoVenda' => $dataDocumentoVenda,
+                'setorVenda' => $this->input->post('setorVenda'),
+                'dataDocumentoVenda' => $dataDocumentoVenda
             );
 
             if (is_numeric($id = $this->vendas_model->add('vendas', $data, true)) ) {
-				auditoria('Inclusão de vendas', 'Venda de documento "'.$this->input->post('documentoVenda').'" cadastrada no sistema');
+				auditoria('Inclusão de vendas', 'Venda "'.$id.'" cadastrada no sistema');
                 $this->session->set_flashdata('success','Venda iniciada com sucesso, adicione os produtos.');
                 redirect('vendas/editar/'.$id);
 
@@ -154,11 +155,12 @@ class Vendas extends CI_Controller {
                 'clientes_id' => $this->input->post('clientes_id'),
                 'observacaoVenda' => $this->input->post('observacaoVenda'),
                 'dataDocumentoVenda' => $dataDocumentoVenda,
+                'setorVenda' => $this->input->post('setorVenda'),
                 'documentoVenda' => $this->input->post('documentoVenda')
             );
 
             if ($this->vendas_model->edit('vendas', $data, 'idVendas', $this->input->post('idVendas')) == TRUE) {
-				auditoria('Alteração de vendas', 'Alterada venda de documento "'.$this->input->post('documentoVenda').'"');
+				auditoria('Alteração de vendas', 'Alterada venda "'.$this->input->post('idVendas').'"');
                 $this->session->set_flashdata('success','Venda editada com sucesso!');
                 redirect(base_url() . 'index.php/vendas/editar/'.$this->input->post('idVendas'));
             } else {
@@ -200,7 +202,7 @@ class Vendas extends CI_Controller {
         $id =  $this->input->post('id');
         $documentoVenda = $this->vendas_model->getById($id)->documentoVenda;
         if ($id == null){
-            $this->session->set_flashdata('error','Erro ao tentar excluir venda.');            
+            $this->session->set_flashdata('error','Erro ao excluir venda.');            
             redirect(base_url().'index.php/vendas/gerenciar/');
         }
 
@@ -212,26 +214,28 @@ class Vendas extends CI_Controller {
         }
 
 		if($this->vendas_model->delete('itens_de_vendas','vendas_id', $id) == FALSE){
-			$this->session->set_flashdata('error','Ocorreu um erro ao excluir venda.');
+			$this->session->set_flashdata('error','Erro ao excluir item da venda.');
 	        redirect(base_url().'index.php/vendas/gerenciar/');
 		}
-
-		if($this->vendas_model->delete('vendas','idVendas', $id) == FALSE){
-			$this->session->set_flashdata('error','Ocorreu um erro ao excluir venda.');
-	        redirect(base_url().'index.php/vendas/gerenciar/');
-		}
+		auditoria('Exclusão de vendas', 'Excluídos produtos da venda "'.$id.'"');
 
 		if($this->vendas_model->delete('lancamentos','vendas_id', $id) == FALSE){
-			$this->session->set_flashdata('error','Ocorreu um erro ao excluir venda.');
+			$this->session->set_flashdata('error','Erro ao excluir faturamento da venda.');
 	        redirect(base_url().'index.php/vendas/gerenciar/');
 		}
+		auditoria('Exclusão de vendas', 'Excluído faturamento da venda "'.$id.'"');
 
 		if($this->vendas_model->delete('estoque','vendas_id', $id) == FALSE){
-			$this->session->set_flashdata('error','Ocorreu um erro ao excluir venda.');
+			$this->session->set_flashdata('error','Erro ao excluir estoque da venda.');
 	        redirect(base_url().'index.php/vendas/gerenciar/');
 		}
+		auditoria('Exclusão de vendas', 'Excluído estoque da venda "'.$id.'"');
 
-		auditoria('Exclusão de vendas', 'Excluída venda de documento "'.$documentoVenda.'"');
+		if($this->vendas_model->delete('vendas','idVendas', $id) == FALSE){
+			$this->session->set_flashdata('error','Erro ao excluir venda.');
+	        redirect(base_url().'index.php/vendas/gerenciar/');
+		}
+		auditoria('Exclusão de vendas', 'Excluída venda "'.$id.'"');
 
         $this->session->set_flashdata('success','Venda excluída com sucesso!');            
         redirect(base_url().'index.php/vendas/gerenciar/');
@@ -285,9 +289,8 @@ class Vendas extends CI_Controller {
            echo json_encode(array('result'=> false)); 
         }
         else{
-
-            $preco = $this->input->post('preco');
-            $quantidade = $this->input->post('quantidade');
+		    $preco = str_replace(",",".", $this->input->post('preco'));
+    	    $quantidade = str_replace(",",".", $this->input->post('quantidade'));
             $subtotal = $preco * $quantidade;
             $produto = $this->input->post('idProduto');
             $data = array(
@@ -318,6 +321,7 @@ class Vendas extends CI_Controller {
 					'quantidade' => $quantidade,
 					'valor' => $preco,
 					'subTotal' => $subtotal,
+	                'setorEstoque' => $this->input->post('setorVenda'),
 					'observacaoEstoque' => $this->input->post('observacaoItem')
 	            );
 	    	    if($this->estoque_model->add('estoque',$data2)){
@@ -391,6 +395,13 @@ class Vendas extends CI_Controller {
             $vencimento6 = $this->input->post('vencimento6');
             $recebimento = $this->input->post('recebimento');
 
+            $valor = str_replace(",",".", $this->input->post('valor'));
+   	        $valor2 = str_replace(",",".", $this->input->post('valor2'));
+   	        $valor3 = str_replace(",",".", $this->input->post('valor3'));
+   	        $valor4 = str_replace(",",".", $this->input->post('valor4'));
+   	        $valor5 = str_replace(",",".", $this->input->post('valor5'));
+   	        $valor6 = str_replace(",",".", $this->input->post('valor6'));
+
             try {
                 
                 $vencimento = explode('/', $vencimento);
@@ -432,7 +443,7 @@ class Vendas extends CI_Controller {
 
             $data = array(
                 'descricao' => set_value('descricao'),
-                'valor' => $this->input->post('valor'),
+                'valor' => $valor,
                 'clientes_id' => $this->input->post('clientes_id'),
                 'data_vencimento' => $vencimento,
                 'baixado' => $this->input->post('recebido'),
@@ -442,6 +453,7 @@ class Vendas extends CI_Controller {
                 'documento' => $this->input->post('documentoVenda'),
                 'grupo' => 'Vendas',
                 'observacao' => $this->input->post('observacaoVenda'),
+                'setor' => $this->input->post('setorVenda'),
                 'vendas_id' => $this->input->post('vendas_id')
             );
 
@@ -449,17 +461,17 @@ class Vendas extends CI_Controller {
                 $venda = $this->input->post('vendas_id');
 	            $data = array(
     	            'faturado' => 1,
-        	        'valorTotal' => $this->input->post('valor'));
+       	        	'valorTotal' => $valor);
 
 				if ($this->vendas_model->edit('vendas', $data, 'idVendas', $venda) == FALSE){
-	                $this->session->set_flashdata('error','Ocorreu um erro ao tentar faturar venda.');
+	                $this->session->set_flashdata('error','Erro ao faturar venda.');
     	            $json = array('result'=>  false);
    	    	        echo json_encode($json);
        	    	    die();
 				}	
 
             } else {
-                $this->session->set_flashdata('error','Ocorreu um erro ao tentar faturar venda.');
+                $this->session->set_flashdata('error','Erro ao faturar venda.');
                 $json = array('result'=>  false);
                 echo json_encode($json);
                 die();
@@ -468,7 +480,7 @@ class Vendas extends CI_Controller {
 			if ((rtrim($vencimento2) <> '') && ($this->input->post('valor2') > 0)){
 	            $data = array(
 	                'descricao' => set_value('descricao'),
-	                'valor' => $this->input->post('valor2'),
+	                'valor' => $valor2,
 	                'clientes_id' => $this->input->post('clientes_id'),
 	                'data_vencimento' => $vencimento2,
 	                'baixado' => $this->input->post('recebido'),
@@ -478,6 +490,7 @@ class Vendas extends CI_Controller {
 	                'documento' => $this->input->post('documentoVenda'),
 	                'grupo' => 'Vendas',
 	                'observacao' => $this->input->post('observacaoVenda'),
+	                'setor' => $this->input->post('setorVenda'),
     	            'vendas_id' => $this->input->post('vendas_id')
 	            );
 	
@@ -485,17 +498,17 @@ class Vendas extends CI_Controller {
 	                $venda = $this->input->post('vendas_id');
 		            $data = array(
 	    	            'faturado' => 1,
-	        	        'valorTotal' => ($this->input->post('valor') + $this->input->post('valor2')));
+        	        	'valorTotal' => ($valor + $valor2));
 
 					if ($this->vendas_model->edit('vendas', $data, 'idVendas', $venda) == FALSE){
-	            	    $this->session->set_flashdata('error','Ocorreu um erro ao tentar faturar venda.');
+	            	    $this->session->set_flashdata('error','Erro ao faturar venda.');
     	    	        $json = array('result'=>  false);
    	    		        echo json_encode($json);
     	   	    	    die();
 					}	
 
 	            } else {
-	                $this->session->set_flashdata('error','Ocorreu um erro ao tentar faturar venda.');
+	                $this->session->set_flashdata('error','Erro ao faturar venda.');
 	                $json = array('result'=>  false);
 	                echo json_encode($json);
 	                die();
@@ -505,7 +518,7 @@ class Vendas extends CI_Controller {
 			if ((rtrim($vencimento3) <> '') && ($this->input->post('valor3') > 0)){
 	            $data = array(
 	                'descricao' => set_value('descricao'),
-	                'valor' => $this->input->post('valor3'),
+	                'valor' => $valor3,
 	                'clientes_id' => $this->input->post('clientes_id'),
 	                'data_vencimento' => $vencimento3,
 	                'baixado' => $this->input->post('recebido'),
@@ -514,6 +527,7 @@ class Vendas extends CI_Controller {
 	                'tipo' => $this->input->post('tipo'),
 	                'documento' => $this->input->post('documentoVenda'),
 	                'grupo' => 'Vendas',
+	                'setor' => $this->input->post('setorVenda'),
 	                'observacao' => $this->input->post('observacaoVenda'),
     	            'vendas_id' => $this->input->post('vendas_id')
 	            );
@@ -522,18 +536,17 @@ class Vendas extends CI_Controller {
 	                $venda = $this->input->post('vendas_id');
 		            $data = array(
 	    	            'faturado' => 1,
-	        	        'valorTotal' => ($this->input->post('valor') + $this->input->post('valor2') + 
-	        	        $this->input->post('valor3')));
+        	        	'valorTotal' => ($valor + $valor2 + $valor3));
 
 					if ($this->vendas_model->edit('vendas', $data, 'idVendas', $venda) == FALSE){
-	            	    $this->session->set_flashdata('error','Ocorreu um erro ao tentar faturar venda.');
+	            	    $this->session->set_flashdata('error','Erro ao faturar venda.');
     	    	        $json = array('result'=>  false);
    	    		        echo json_encode($json);
     	   	    	    die();
 					}	
 
 	            } else {
-	                $this->session->set_flashdata('error','Ocorreu um erro ao tentar faturar venda.');
+	                $this->session->set_flashdata('error','Erro ao faturar venda.');
 	                $json = array('result'=>  false);
 	                echo json_encode($json);
 	                die();
@@ -543,7 +556,7 @@ class Vendas extends CI_Controller {
 			if ((rtrim($vencimento4) <> '') && ($this->input->post('valor4') > 0)){
 	            $data = array(
 	                'descricao' => set_value('descricao'),
-	                'valor' => $this->input->post('valor4'),
+	                'valor' => $valor4,
 	                'clientes_id' => $this->input->post('clientes_id'),
 	                'data_vencimento' => $vencimento4,
 	                'baixado' => $this->input->post('recebido'),
@@ -553,6 +566,7 @@ class Vendas extends CI_Controller {
 	                'documento' => $this->input->post('documentoVenda'),
 	                'grupo' => 'Vendas',
 	                'observacao' => $this->input->post('observacaoVenda'),
+	                'setor' => $this->input->post('setorVenda'),
     	            'vendas_id' => $this->input->post('vendas_id')
 	            );
 	
@@ -560,18 +574,17 @@ class Vendas extends CI_Controller {
 	                $venda = $this->input->post('vendas_id');
 		            $data = array(
 	    	            'faturado' => 1,
-	        	        'valorTotal' => ($this->input->post('valor') + $this->input->post('valor2') + 
-	        	        $this->input->post('valor3') + $this->input->post('valor4')));
+        	        	'valorTotal' => ($valor + $valor2 + $valor3 + $valor4));
 
 					if ($this->vendas_model->edit('vendas', $data, 'idVendas', $venda) == FALSE){
-	            	    $this->session->set_flashdata('error','Ocorreu um erro ao tentar faturar venda.');
+	            	    $this->session->set_flashdata('error','Erro ao faturar venda.');
     	    	        $json = array('result'=>  false);
    	    		        echo json_encode($json);
     	   	    	    die();
 					}	
 
 	            } else {
-	                $this->session->set_flashdata('error','Ocorreu um erro ao tentar faturar venda.');
+	                $this->session->set_flashdata('error','Erro ao faturar venda.');
 	                $json = array('result'=>  false);
 	                echo json_encode($json);
 	                die();
@@ -581,7 +594,7 @@ class Vendas extends CI_Controller {
 			if ((rtrim($vencimento5) <> '') && ($this->input->post('valor5') > 0)){
 	            $data = array(
 	                'descricao' => set_value('descricao'),
-	                'valor' => $this->input->post('valor5'),
+	                'valor' => $valor5,
 	                'clientes_id' => $this->input->post('clientes_id'),
 	                'data_vencimento' => $vencimento5,
 	                'baixado' => $this->input->post('recebido'),
@@ -591,6 +604,7 @@ class Vendas extends CI_Controller {
 	                'documento' => $this->input->post('documentoVenda'),
 	                'grupo' => 'Vendas',
 	                'observacao' => $this->input->post('observacaoVenda'),
+	                'setor' => $this->input->post('setorVenda'),
     	            'vendas_id' => $this->input->post('vendas_id')
 	            );
 	
@@ -598,19 +612,17 @@ class Vendas extends CI_Controller {
 	                $venda = $this->input->post('vendas_id');
 		            $data = array(
 	    	            'faturado' => 1,
-	        	        'valorTotal' => ($this->input->post('valor') + $this->input->post('valor2') + 
-	        	        $this->input->post('valor3') + $this->input->post('valor4') + 
-	        	        $this->input->post('valor5')));
+        	        	'valorTotal' => ($valor + $valor2 + $valor3 + $valor4 + $valor5));
 
 					if ($this->vendas_model->edit('vendas', $data, 'idVendas', $venda) == FALSE){
-	            	    $this->session->set_flashdata('error','Ocorreu um erro ao tentar faturar venda.');
+	            	    $this->session->set_flashdata('error','Erro ao faturar venda.');
     	    	        $json = array('result'=>  false);
    	    		        echo json_encode($json);
     	   	    	    die();
 					}	
 
 	            } else {
-	                $this->session->set_flashdata('error','Ocorreu um erro ao tentar faturar venda.');
+	                $this->session->set_flashdata('error','Erro ao faturar venda.');
 	                $json = array('result'=>  false);
 	                echo json_encode($json);
 	                die();
@@ -620,7 +632,7 @@ class Vendas extends CI_Controller {
 			if ((rtrim($vencimento6) <> '') && ($this->input->post('valor6') > 0)){
 	            $data = array(
 	                'descricao' => set_value('descricao'),
-	                'valor' => $this->input->post('valor6'),
+	                'valor' => $valor6,
 	                'clientes_id' => $this->input->post('clientes_id'),
 	                'data_vencimento' => $vencimento6,
 	                'baixado' => $this->input->post('recebido'),
@@ -630,6 +642,7 @@ class Vendas extends CI_Controller {
 	                'documento' => $this->input->post('documentoVenda'),
 	                'grupo' => 'Vendas',
 	                'observacao' => $this->input->post('observacaoVenda'),
+	                'setor' => $this->input->post('setorVenda'),
     	            'vendas_id' => $this->input->post('vendas_id')
 	            );
 	
@@ -637,19 +650,17 @@ class Vendas extends CI_Controller {
 	                $venda = $this->input->post('vendas_id');
 		            $data = array(
 	    	            'faturado' => 1,
-	        	        'valorTotal' => ($this->input->post('valor') + $this->input->post('valor2') + 
-	        	        $this->input->post('valor3') + $this->input->post('valor4') + $this->input->post('valor5') + 
-	        	        $this->input->post('valor6')));
+        	        	'valorTotal' => ($valor + $valor2 + $valor3 + $valor4 + $valor5 + $valor6));
 
 					if ($this->vendas_model->edit('vendas', $data, 'idVendas', $venda) == FALSE){
-	            	    $this->session->set_flashdata('error','Ocorreu um erro ao tentar faturar venda.');
+	            	    $this->session->set_flashdata('error','Erro ao faturar venda.');
     	    	        $json = array('result'=>  false);
    	    		        echo json_encode($json);
     	   	    	    die();
 					}	
 
 	            } else {
-	                $this->session->set_flashdata('error','Ocorreu um erro ao tentar faturar venda.');
+	                $this->session->set_flashdata('error','Erro ao faturar venda.');
 	                $json = array('result'=>  false);
 	                echo json_encode($json);
 	                die();
@@ -657,7 +668,7 @@ class Vendas extends CI_Controller {
 			}
 
 
-			auditoria('Faturamento de vendas', 'Faturada venda de documento "'.$this->input->post('documentoVenda').'"');
+			auditoria('Faturamento de vendas', 'Faturada venda "'.$venda.'"');
 
             $this->session->set_flashdata('success','Venda faturada com sucesso!');
             $json = array('result'=>  true);
@@ -665,7 +676,7 @@ class Vendas extends CI_Controller {
             die();
         }
 
-        $this->session->set_flashdata('error','Ocorreu um erro ao tentar faturar venda.');
+        $this->session->set_flashdata('error','Erro ao faturar venda.');
         $json = array('result'=>  false);
         echo json_encode($json);
         

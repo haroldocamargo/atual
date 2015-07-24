@@ -260,7 +260,7 @@ class Permissoes extends CI_Controller {
         
         $id =  $this->input->post('id');
         if($id == null){
-            $this->session->set_flashdata('error','Erro ao tentar excluir permissão.');            
+            $this->session->set_flashdata('error','Erro ao excluir permissão.');            
             redirect(base_url().'index.php/permissoes/gerenciar/');
         }
 

@@ -52,9 +52,11 @@
                                             <label for="dataDocumentoCompra">Data documento<span class="required">*</span></label>
                                             <input id="dataDocumentoCompra" class="span12 datepicker" type="text" name="dataDocumentoCompra" value=""  />
                                         </div>
-
-
-                                        <div class="span8">
+                                        <div class="span2">
+                                            <label for="setorCompra">Setor</label>
+                                            <input id="setorCompra" class="span12" type="text" name="setorCompra" maxlength="20" value=""  />
+                                        </div>
+                                        <div class="span6">
                                             <label for="observacaoCompra">Observação</label>
                                             <input id="observacaoCompra" class="span12" type="text" name="observacaoCompra" maxlength="255" value=""  />
                                         </div>

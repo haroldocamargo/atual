@@ -34,6 +34,7 @@ class Estoque extends CI_Controller {
 
 		$where = '';
 		$tipo = $this->input->get('tipo');
+		$setor = $this->input->get('setorEstoque');
 		$documento = $this->input->get('documento');
 		$produto = $this->input->get('produtos_id');
 		$data = $this->input->get('data');
@@ -59,6 +60,11 @@ class Estoque extends CI_Controller {
 	    if(rtrim($documento) <> ''){
 	    	if (rtrim($where) <> '') {$where = $where.' and ';}
 	        $where = $where.'documentoEstoque = "'.$documento.'"';
+        };
+
+	    if(rtrim($setor) <> ''){
+	    	if (rtrim($where) <> '') {$where = $where.' and ';}
+	        $where = $where.'setorEstoque = "'.$setor.'"';
         };
 
 		if (rtrim($data) <> '') {
@@ -139,6 +145,9 @@ class Estoque extends CI_Controller {
                $data = date('Y/m/d'); 
             }
 
+            $valor = str_replace(",",".", set_value('valor'));
+            $subtotal = str_replace(",",".", set_value('subtotal'));
+
             $data = array(
 				'data' => $data,
 				'tipo' => $this->input->post('tipo'),
@@ -146,8 +155,9 @@ class Estoque extends CI_Controller {
 				'serie' => $this->input->post('serie'),
 				'produtos_id' => $this->input->post('produtosIncluir_id'),
 				'quantidade' => $this->input->post('quantidade'),
-				'valor' => $this->input->post('valor'),
-				'subTotal' => $this->input->post('subtotal'),
+				'valor' => $valor,
+				'subTotal' => $subtotal,
+				'setorEstoque' => $this->input->post('setorEstoque'),
 				'observacaoEstoque' => $this->input->post('observacao')
             );
 
@@ -157,7 +167,7 @@ class Estoque extends CI_Controller {
 					$this->estoque_model->somaEstoque($this->input->post('quantidade'), $idProduto);
         		}
 
-				auditoria('Inclusão de entradas', 'Entrada "'.$this->input->post('produto').'" cadastrada no sistema');
+				auditoria('Inclusão de entradas', 'Entrada do produto "'.$idProduto.'" cadastrada no sistema');
                 $this->session->set_flashdata('success','Entrada adicionada com sucesso!');
                 redirect($urlAtual);
             } else {
@@ -165,7 +175,7 @@ class Estoque extends CI_Controller {
             }
         }
 
-        $this->session->set_flashdata('error','Ocorreu um erro ao tentar adicionar entrada.');
+        $this->session->set_flashdata('error','Erro ao adicionar entrada.');
         redirect($urlAtual);
         
     }
@@ -203,6 +213,9 @@ class Estoque extends CI_Controller {
                $data = date('Y/m/d'); 
             }
 
+            $valor = str_replace(",",".", set_value('valor'));
+            $subtotal = str_replace(",",".", set_value('subtotal'));
+
             $data = array(
 				'data' => $data,
 				'tipo' => $this->input->post('tipo'),
@@ -210,8 +223,9 @@ class Estoque extends CI_Controller {
 				'serie' => $this->input->post('serie'),
 				'produtos_id' => $this->input->post('produtos2Incluir_id'),
 				'quantidade' => $this->input->post('quantidade'),
-				'valor' => $this->input->post('valor'),
-				'subTotal' => $this->input->post('subtotal'),
+				'valor' => $valor,
+				'subTotal' => $subtotal,
+				'setorEstoque' => $this->input->post('setorEstoque'),
 				'observacaoEstoque' => $this->input->post('observacao')
             );
 
@@ -221,7 +235,7 @@ class Estoque extends CI_Controller {
 					$this->estoque_model->subtraiEstoque($this->input->post('quantidade'), $idProduto);
         		}
 
-				auditoria('Inclusão de saídas', 'Saída "'.$this->input->post('produto2').'" cadastrada no sistema');
+				auditoria('Inclusão de saídas', 'Saída do produto "'.$idProduto.'" cadastrada no sistema');
                 $this->session->set_flashdata('success','Saída adicionada com sucesso!');
                 redirect($urlAtual);
             } else {
@@ -229,7 +243,7 @@ class Estoque extends CI_Controller {
             }
         }
 
-        $this->session->set_flashdata('error','Ocorreu um erro ao tentar adicionar saída.');
+        $this->session->set_flashdata('error','Erro ao adicionar saída.');
         redirect($urlAtual);
         
     }
@@ -272,7 +286,7 @@ class Estoque extends CI_Controller {
 					}
         		}
 
-				auditoria('Exclusão de estoque', 'Excluído estoque de documento "'.$documento.'"');
+				auditoria('Exclusão de estoque', 'Excluído lançamento de estoque do produto "'.$idProduto.'"');
     			$json = array('result'=>  true);
     			echo json_encode($json);
     		}

@@ -239,7 +239,7 @@ class Arquivos extends CI_Controller {
         }
         else{
 
-        	$this->session->set_flashdata('error','Ocorreu um erro ao tentar excluir o arquivo.');
+        	$this->session->set_flashdata('error','Erro ao excluir o arquivo.');
             redirect(base_url() . 'index.php/arquivos/');
         }
 

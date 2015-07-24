@@ -28,6 +28,7 @@
 	
 <div class="span12" style="margin-left: 0">
 	<form action="<?php echo current_url(); ?>" method="get" >
+	<div class="span12" style="margin-left: 0">
 		<div class="span1" style="margin-left: 0">
 			<label>Tipo <i class="icon-info-sign tip-top" title="Lançamentos com tipo específico ou todos."></i></label>
 			<select name="tipo" class="span12">
@@ -61,23 +62,30 @@
 		</div>
 
 		<div class="span1">
+			<label>Setor <i class="icon-info-sign tip-top" title="Lançamentos com setor específico ou todos."></i></label>
+    	    <div class="controls">
+        	    <input id="setor" class="input-small" type="text" name="setor" />
+            </div>
+		</div>
+
+		<div class="span1">
 			<label>Dcto <i class="icon-info-sign tip-top" title="Lançamentos com documento específico ou todos."></i></label>
     	    <div class="controls">
         	    <input id="documento" class="input-small" type="text" name="documento" />
             </div>
 		</div>
 
-		<div class="span2">
+		<div class="span1">
 			<label>Data de: </label>
     	    <div class="controls">
-	    		<input class="span12 datepicker" id="vencimento" type="text" name="vencimento" />
+	    		<input class="input-small datepicker" id="vencimento" type="text" name="vencimento" />
             </div>
 		</div>
 		
-		<div class="span2">
+		<div class="span1">
 			<label>Data até: </label>
     	    <div class="controls">
-	    		<input class="span12 datepicker" id="vencimento2" type="text" name="vencimento2"  />
+	    		<input class="input-small datepicker" id="vencimento2" type="text" name="vencimento2"  />
             </div>
 		</div>
 		
@@ -85,6 +93,7 @@
 			&nbsp
 			<button type="submit" class="span12 btn btn-primary">Filtrar</button>
 		</div>
+    </div>
 		
 	</form>
 </div>
@@ -112,6 +121,7 @@ if(!$results){?>
             <th>#</th>
             <th>Tipo</th>
             <th>Grupo</th>
+            <th>Setor</th>
             <th>Documento</th>
             <th>Pessoa</th>
             <th>Vencimento</th>
@@ -151,6 +161,7 @@ if(!$results){?>
             <th>#</th>
             <th>Tipo</th>
             <th>Grupo</th>
+            <th>Setor</th>
             <th>Documento</th>
             <th>Pessoa</th>
             <th>Vencimento</th>
@@ -173,6 +184,7 @@ if(!$results){?>
             echo '<td>'.$r->idLancamentos.'</td>';
             echo '<td><span class="label label-'.$label.'">'.ucfirst($r->tipo).'</span></td>';
             echo '<td>'.$r->grupo.'</td>';
+            echo '<td>'.$r->setor.'</td>';
             echo '<td>'.$r->documento.'</td>';
             echo '<td>'.$r->cliente_fornecedor.'</td>';
             echo '<td>'.$vencimento.'</td>';   
@@ -182,7 +194,7 @@ if(!$results){?>
             
             echo '<td>';
             if($this->permission->checkPermission($this->session->userdata('permissao'),'eLancamento')){
-                echo '<a href="#modalEditar" style="margin-right: 1%" data-toggle="modal" role="button" idLancamento="'.$r->idLancamentos.'" descricao="'.$r->descricao.'" valor="'.$r->valor.'" vencimento="'.date('d/m/Y',strtotime($r->data_vencimento)).'" pagamento="'.date('d/m/Y', strtotime($r->data_pagamento)).'" baixado="'.$r->baixado.'" cliente="'.$r->cliente_fornecedor.'" formaPgto="'.$r->forma_pgto.'" tipo="'.$r->tipo.'" grupo="'.$r->grupo.'" documento="'.$r->documento.'" observacao="'.$r->observacao.'" class="btn btn-info tip-top editar" title="Editar Lançamento"><i class="icon-pencil icon-white"></i></a>'; 
+                echo '<a href="#modalEditar" style="margin-right: 1%" data-toggle="modal" role="button" idLancamento="'.$r->idLancamentos.'" descricao="'.$r->descricao.'" valor="'.$r->valor.'" vencimento="'.date('d/m/Y',strtotime($r->data_vencimento)).'" pagamento="'.date('d/m/Y', strtotime($r->data_pagamento)).'" baixado="'.$r->baixado.'" cliente="'.$r->cliente_fornecedor.'" formaPgto="'.$r->forma_pgto.'" tipo="'.$r->tipo.'" grupo="'.$r->grupo.'" setor="'.$r->setor.'" documento="'.$r->documento.'" observacao="'.$r->observacao.'" class="btn btn-info tip-top editar" title="Editar Lançamento"><i class="icon-pencil icon-white"></i></a>'; 
             }
             if($this->permission->checkPermission($this->session->userdata('permissao'),'dLancamento')){
                 echo '<a href="#modalExcluir" data-toggle="modal" role="button" idLancamento="'.$r->idLancamentos.'" class="btn btn-danger tip-top excluir" title="Excluir Lançamento"><i class="icon-remove icon-white"></i></a>'; 
@@ -243,12 +255,17 @@ if(!$results){?>
     	</div>
 
         <div class="span12" style="margin-left: 0"> 
-	        <div class="span6"> 
+	        <div class="span4"> 
 	          <label for="grupo">Grupo</label>
 	          <input class="span12" id="grupo" type="text" name="grupo"  />
 	        </div>  
 	
-	        <div class="span6"> 
+	        <div class="span4"> 
+	          <label for="setor">Setor</label>
+	          <input class="span12" id="setor" type="text" name="setor"  />
+	        </div>  
+	
+	        <div class="span4"> 
 	          <label for="documento">Documento</label>
 	          <input class="span12" id="documento" type="text" name="documento"  />
 	        </div>  
@@ -332,12 +349,17 @@ if(!$results){?>
     	</div>
 
         <div class="span12" style="margin-left: 0"> 
-	        <div class="span6"> 
+	        <div class="span4"> 
 	          <label for="grupo">Grupo</label>
 	          <input class="span12" id="grupo" type="text" name="grupo"  />
   	        </div>  
 	
-	        <div class="span6"> 
+	        <div class="span4"> 
+	          <label for="setor">Setor</label>
+	          <input class="span12" id="setor" type="text" name="setor"  />
+  	        </div>  
+	
+	        <div class="span4"> 
 	          <label for="documento">Documento</label>
 	          <input class="span12" id="documento" type="text" name="documento"  />
 	        </div>  
@@ -371,7 +393,7 @@ if(!$results){?>
     		<div id="divPagamento" class="span8" style=" display: none">
 	    		<div class="span6">
 	    			<label for="pagamento">Data Pagamento</label>
-		    		<input class="span12 datepicker" id="pagamento" type="text" name="pagamento" />	
+		    		<input class="span12 datepicker" id="pagamento" type="text" name="pagamento" value=""/>	
 	    		</div>
 
 	    		<div class="span6">
@@ -419,12 +441,17 @@ if(!$results){?>
         </div>
         
       <div class="span12" style="margin-left: 0"> 
-	      <div class="span6"> 
+	      <div class="span4"> 
 	        <label for="grupo">Grupo</label>
 	        <input class="span12" id="grupoEditar" type="text" name="grupo"  />
 	      </div>  
 	
-	      <div class="span6"> 
+	      <div class="span4"> 
+	        <label for="setor">Setor</label>
+	        <input class="span12" id="setorEditar" type="text" name="setor"  />
+	      </div>  
+	
+	      <div class="span4"> 
 	        <label for="documento">Documento</label>
 	        <input class="span12" id="documentoEditar" type="text" name="documento"  />
 	      </div>  
@@ -555,7 +582,8 @@ if(!$results){?>
 	            }
 	      });
 
-		$(".money").maskMoney();
+		$(".money").maskMoney({decimal:",", thousands:"."});
+
 
 		$('#pago').click(function(event) {
 			var flag = $(this).is(':checked');
@@ -641,6 +669,7 @@ if(!$results){?>
       $("#urlAtualEditar").val($(location).attr('href'));
       $("#documentoEditar").val($(this).attr('documento'));
       $("#grupoEditar").val($(this).attr('grupo'));
+      $("#setorEditar").val($(this).attr('setor'));
       $("#observacaoEditar").val($(this).attr('observacao'));
       var baixado = $(this).attr('baixado');
       if(baixado == 1){
@@ -673,7 +702,7 @@ if(!$results){?>
             }
             else{
                 $("#btnCancelExcluir").trigger('click');
-                alert('Ocorreu um erro ao tentar excluir produto.');
+                alert('Ocorreu um erro ao excluir produto.');
             }
           }
         });
