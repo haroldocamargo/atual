@@ -29,10 +29,10 @@
                                 <?php } else {?>
 
                                 <tr>
-                                    <td style="width: 25%"><img src="<?php echo base_url()?>assets/img/logocliente.png"></td>
-                                    <td> <span style="font-size: 20px; "> <?php echo $emitente[0]->nome; ?></span> </br><span><?php echo $emitente[0]->cnpj; ?> </br> <?php echo $emitente[0]->rua.', nº:'.$emitente[0]->numero.', '.$emitente[0]->bairro.' - '.$emitente[0]->cidade.' - '.$emitente[0]->uf; ?> </span> </br> <span> E-mail: <?php echo $emitente[0]->email.' - Fone: '.$emitente[0]->telefone; ?></span></td>
-                                    <td style="width: 18%; text-align: center">#Compra: <span ><?php echo $result->idCompras?></span></br> </br> <span>Emissão: <?php echo date('d/m/Y');?></span></td>
-                                    <td style="width: 18%; text-align: center">Documento: <span ><?php echo $result->documentoCompra?></span></br> </br> <span>Data: <?php echo date('d/m/Y', strtotime($result->dataDocumentoCompra));?></span></br> </br><span>Setor: <?php echo $result->setorCompra;?></span></td>
+                                    <td style="width: 15%"><img src="<?php echo base_url()?>assets/img/logocliente.png"></td>
+                                    <td> <span style="font-size: 15px; "> <?php echo $emitente[0]->nome; ?></span> </br><span><?php echo $emitente[0]->cnpj; ?> </br> <?php echo $emitente[0]->rua.', nº:'.$emitente[0]->numero.', '.$emitente[0]->bairro.' - '.$emitente[0]->cidade.' - '.$emitente[0]->uf; ?> </span> </br> <span> E-mail: <?php echo $emitente[0]->email.' - Fone: '.$emitente[0]->telefone; ?></span></td>
+                                    <td style="width: 25%; text-align: center">#Compra: <span ><?php echo $result->idCompras?></span></br> </br> <span>Emissão: <?php echo date('d/m/Y');?></span></td>
+                                    <td style="width: 25%; text-align: center">Documento: <span ><?php echo $result->documentoCompra?></span></br> </br> <span>Data: <?php echo date('d/m/Y h:m:s', strtotime($result->dataDocumentoCompra));?></span></br> </br><span>Setor: <?php echo $result->setorCompra;?></span></td>
                                 </tr>
 
                                 <tr>
