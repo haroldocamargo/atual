@@ -180,11 +180,11 @@
                                             
                                             $total = $total + $p->subTotal;
                                             echo '<td>'.$p->descricao.'</td>';
-                                            echo '<td>R$ '.number_format($p->valor,2,',','.').'</td>';
+                                            echo '<td>'.number_format($p->valor,2,',','.').'</td>';
                                             echo '<td>'.$p->quantidade.'</td>';
                                             echo '<td>'.$p->serie.'</td>';
                                             echo '<td>'.$p->observacaoItem.'</td>';
-                                            echo '<td>R$ '.number_format($p->subTotal,2,',','.').'</td>';
+                                            echo '<td>'.number_format($p->subTotal,2,',','.').'</td>';
                                             if($result->faturado == 0){                                        
 	                                            echo '<td><a href="" idAcao="'.$p->idProdutos_os.'" idOs="'.$p->os_id.'" prodAcao="'.$p->idProdutos.'" quantAcao="'.$p->quantidade.'" title="Excluir Produto" class="btn btn-danger"><i class="icon-remove icon-white"></i></a></td>';
   											}
@@ -196,7 +196,7 @@
                                        
                                         <tr>
                                             <td colspan="5" style="text-align: right"><strong>Total:</strong></td>
-                                            <td><strong>R$ <?php echo number_format($total,2,',','.');?><input type="hidden" id="total-venda" value="<?php echo number_format($total,2); ?>"></strong></td>
+                                            <td><strong><?php echo number_format($total,2,',','.');?><input type="hidden" id="total-venda" value="<?php echo number_format($total,2); ?>"></strong></td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -251,7 +251,7 @@
                                             $total = $total + $preco;
                                             echo '<tr>';
                                             echo '<td>'.$s->nome.'</td>';
-											echo '<td>R$ '.number_format($s->valor,2,',','.').'</td>';
+											echo '<td>'.number_format($s->valor,2,',','.').'</td>';
                                             echo '<td>'.$s->observacaoServicoOs.'</td>';
                                             if($result->faturado == 0){                                        
                                             	echo '<td><span idAcao="'.$s->idServicos_os.'" idOs="'.$s->os_id.'" title="Excluir Serviço" class="btn btn-danger"><i class="icon-remove icon-white"></i></span></td>';
@@ -264,7 +264,7 @@
 
                                         <tr>
                                             <td colspan="1" style="text-align: right"><strong>Total:</strong></td>
-                                            <td><strong>R$ <?php echo number_format($total,2,',','.');?><input type="hidden" id="total-servico" value="<?php echo number_format($total,2); ?>"></strong></td>
+                                            <td><strong><?php echo number_format($total,2,',','.');?><input type="hidden" id="total-servico" value="<?php echo number_format($total,2); ?>"></strong></td>
                                         </tr>
                                         </tbody>
                                     </table>

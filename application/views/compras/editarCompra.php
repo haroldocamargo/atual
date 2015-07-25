@@ -145,11 +145,11 @@
                                                     $total = $total + $p->subTotal;
                                                     echo '<tr>';
                                                     echo '<td>'.$p->descricao.'</td>';
-                                                    echo '<td>R$ '.number_format($p->valor,2,',','.').'</td>';
+                                                    echo '<td>'.number_format($p->valor,2,',','.').'</td>';
                                                     echo '<td>'.$p->quantidade.'</td>';
                                                     echo '<td>'.$p->serie.'</td>';
                                                     echo '<td>'.$p->observacaoItem.'</td>';
-                                                    echo '<td>R$ '.number_format($p->subTotal,2,',','.').'</td>';
+                                                    echo '<td>'.number_format($p->subTotal,2,',','.').'</td>';
 		                                            if($result->faturado == 0){                                        
 	                                                    echo '<td><a href="" idAcao="'.$p->idItens.'" idCompra="'.$p->compras_id.'" prodAcao="'.$p->idProdutos.'" quantAcao="'.$p->quantidade.'" title="Excluir Produto" class="btn btn-danger"><i class="icon-remove icon-white"></i></a></td>';
   													}
@@ -161,7 +161,7 @@
                                                
                                                 <tr>
                                                     <td colspan="5" style="text-align: right"><strong>Total:</strong></td>
-                                                    <td><strong>R$ <?php echo number_format($total,2,',','.');?></strong> <input type="hidden" id="total-compra" value="<?php echo number_format($total,2); ?>"></td>
+                                                    <td><strong><?php echo number_format($total,2,',','.');?></strong> <input type="hidden" id="total-compra" value="<?php echo number_format($total,2); ?>"></td>
                                                 </tr>
                                             </tbody>
                                         </table>

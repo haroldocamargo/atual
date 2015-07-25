@@ -100,13 +100,13 @@
                                             echo '<td>'.$p->quantidade.'</td>';
                                             echo '<td>'.$p->serie.'</td>';
                                             echo '<td>'.$p->observacaoItem.'</td>';
-                                            echo '<td>R$ '.number_format($p->subTotal,2,',','.').'</td>';
+                                            echo '<td>'.number_format($p->subTotal,2,',','.').'</td>';
                                             echo '</tr>';
                                         }?>
 
                                         <tr>
                                             <td colspan="5" style="text-align: right"><strong>Total:</strong></td>
-                                            <td><strong>R$ <?php echo number_format($totalProdutos,2,',','.');?></strong></td>
+                                            <td><strong><?php echo number_format($totalProdutos,2,',','.');?></strong></td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -115,7 +115,7 @@
                 
                         <hr />
                     
-                        <h4 style="text-align: right">Valor Total: R$ <?php echo number_format($totalProdutos,2,',','.');?></h4>
+                        <h4 style="text-align: right">Valor Total: <?php echo number_format($totalProdutos,2,',','.');?></h4>
 
                     </div>
             

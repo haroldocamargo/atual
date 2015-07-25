@@ -29,8 +29,8 @@
 <div class="span12" style="margin-left: 0">
 	<form action="<?php echo current_url(); ?>" method="get" >
 	<div class="span12" style="margin-left: 0">
-		<div class="span1" style="margin-left: 0">
-			<label>Tipo <i class="icon-info-sign tip-top" title="Lançamentos com tipo específico ou todos."></i></label>
+		<div class="span2" style="margin-left: 0">
+			<label>Tipo</label>
 			<select name="tipo" class="span12">
                    <option value="todos">Todos</option>
                    <option value="receita">Receita</option>
@@ -39,7 +39,7 @@
 		</div>
 
 		<div class="span2">
-			<label>Situação <i class="icon-info-sign tip-top" title="Lançamentos com situação específica ou todos."></i></label>
+			<label>Situação</label>
 			<select name="situacao" class="span12">
                             <option value="todos">Todos</option>
                             <option value="pago">Pago</option>
@@ -49,43 +49,43 @@
 
 
         <div class="span2">
-            <label for="cliente">Pessoa <i class="icon-info-sign tip-top" title="Lançamentos com pessoa específica ou todos."></i></label>
+            <label for="cliente">Pessoa</label>
             <input id="cliente" class="span12" type="text" name="cliente" value=""  />
             <input id="clientes_id" class="span12" type="hidden" name="clientes_id" value=""  />
         </div>
 		
 		<div class="span1">
-			<label>Grupo <i class="icon-info-sign tip-top" title="Lançamentos com grupo específico ou todos."></i></label>
+			<label>Grupo</label>
     	    <div class="controls">
-        	    <input id="grupo" class="input-small" type="text" name="grupo" />
+        	    <input id="grupo" class="input-mini" type="text" name="grupo" />
             </div>
 		</div>
 
 		<div class="span1">
-			<label>Setor <i class="icon-info-sign tip-top" title="Lançamentos com setor específico ou todos."></i></label>
+			<label>Setor</label>
     	    <div class="controls">
-        	    <input id="setor" class="input-small" type="text" name="setor" />
+        	    <input id="setor" class="input-mini" type="text" name="setor" />
             </div>
 		</div>
 
 		<div class="span1">
-			<label>Dcto <i class="icon-info-sign tip-top" title="Lançamentos com documento específico ou todos."></i></label>
+			<label>Dcto</label>
     	    <div class="controls">
-        	    <input id="documento" class="input-small" type="text" name="documento" />
+        	    <input id="documento" class="input-mini" type="text" name="documento" />
             </div>
 		</div>
 
 		<div class="span1">
-			<label>Data de: </label>
+			<label>Data de</label>
     	    <div class="controls">
-	    		<input class="input-small datepicker" id="vencimento" type="text" name="vencimento" />
+	    		<input class="input-mini datepicker" id="vencimento" type="text" name="vencimento" />
             </div>
 		</div>
 		
 		<div class="span1">
-			<label>Data até: </label>
+			<label>Data até</label>
     	    <div class="controls">
-	    		<input class="input-small datepicker" id="vencimento2" type="text" name="vencimento2"  />
+	    		<input class="input-mini datepicker" id="vencimento2" type="text" name="vencimento2"  />
             </div>
 		</div>
 		
@@ -189,7 +189,7 @@ if(!$results){?>
             echo '<td>'.$r->cliente_fornecedor.'</td>';
             echo '<td>'.$vencimento.'</td>';   
             echo '<td>'.$status.'</td>';
-            echo '<td> R$ '.number_format($r->valor,2,',','.').'</td>';
+            echo '<td>'.number_format($r->valor,2,',','.').'</td>';
             echo '<td>'.$r->observacao.'</td>';
             
             echo '<td>';
@@ -210,15 +210,15 @@ if(!$results){?>
     <tfoot>
     	<tr>
     		<td colspan="8" style="text-align: right; color: green"> <strong>Total Receitas:</strong></td>
-    		<td colspan="2" style="text-align: left; color: green"><strong>R$ <?php echo number_format($totalReceita,2,',','.') ?></strong></td>
+    		<td colspan="2" style="text-align: left; color: green"><strong><?php echo number_format($totalReceita,2,',','.') ?></strong></td>
     	</tr>
     	<tr>
     		<td colspan="8" style="text-align: right; color: red"> <strong>Total Despesas:</strong></td>
-    		<td colspan="2" style="text-align: left; color: red"><strong>R$ <?php echo number_format($totalDespesa,2,',','.') ?></strong></td>
+    		<td colspan="2" style="text-align: left; color: red"><strong><?php echo number_format($totalDespesa,2,',','.') ?></strong></td>
     	</tr>
     	<tr>
     		<td colspan="8" style="text-align: right"> <strong>Saldo:</strong></td>
-    		<td colspan="2" style="text-align: left;"><strong>R$ <?php echo number_format($totalReceita - $totalDespesa,2,',','.') ?></strong></td>
+    		<td colspan="2" style="text-align: left;"><strong><?php echo number_format($totalReceita - $totalDespesa,2,',','.') ?></strong></td>
     	</tr>
     </tfoot>
 </table>

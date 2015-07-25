@@ -29,7 +29,7 @@
 <div class="span12" style="margin-left: 0">
 	<form action="<?php echo current_url(); ?>" method="get" >
 		<div class="span2" style="margin-left: 0">
-			<label>Tipo <i class="icon-info-sign tip-top" title="Lançamentos com tipo específico ou todos."></i></label>
+			<label>Tipo</label>
 			<select name="tipo" class="span12">
                    <option value="todos">Todos</option>
                    <option value="entrada">Entrada</option>
@@ -38,36 +38,43 @@
 		</div>
 
 		<div class="span1">
-			<label>Setor <i class="icon-info-sign tip-top" title="Lançamentos com setor específico ou todos."></i></label>
+			<label>Setor</label>
     	    <div class="controls">
-        	    <input id="setorEstoque" class="input-small" type="text" name="setorEstoque" />
+        	    <input class="input-mini" id="setorEstoque"type="text" name="setorEstoque" />
             </div>
 		</div>
 
         <div class="span3">
-            <label for="produto">Produto <i class="icon-info-sign tip-top" title="Lançamentos com pessoa específica ou todos."></i></label>
+            <label for="produto">Produto</label>
             <input id="produto" class="span12" type="text" name="produto" value=""  />
             <input id="produtos_id" class="span12" type="hidden" name="produtos_id" value=""  />
         </div>
 		
 		<div class="span1">
-			<label>Dcto <i class="icon-info-sign tip-top" title="Lançamentos com documento específico ou todos."></i></label>
+			<label>Dcto</label>
     	    <div class="controls">
-        	    <input id="documento" class="input-small" type="text" name="documento" />
+        	    <input class="input-mini" id="documento" type="text" name="documento" />
             </div>
 		</div>
 
 		<div class="span1">
-			<label>Data de: </label>
+			<label>Serie</label>
     	    <div class="controls">
-	    		<input class="input-small  datepicker" id="data" type="text" name="data" />
+        	    <input class="input-mini" id="serie" type="text" name="serie" />
+            </div>
+		</div>
+
+		<div class="span1">
+			<label>Data de</label>
+    	    <div class="controls">
+	    		<input class="input-mini datepicker" id="data" type="text" name="data" />
             </div>
 		</div>
 		
 		<div class="span1">
-			<label>Data até: </label>
+			<label>Data até</label>
     	    <div class="controls">
-	    		<input class="input-small  datepicker" id="data2" type="text" name="data2"  />
+	    		<input class="input-mini datepicker" id="data2" type="text" name="data2"  />
             </div>
 		</div>
 		
@@ -175,8 +182,8 @@ if(!$results){?>
             echo '<td>'.$r->setorEstoque.'</td>';
             echo '<td>'.$r->descricao.'</td>';
             echo '<td>'.$r->quantidade.'</td>';
-            echo '<td> R$ '.number_format($r->valor,2,',','.').'</td>';
-            echo '<td> R$ '.number_format($r->subTotal,2,',','.').'</td>';
+            echo '<td>'.number_format($r->valor,2,',','.').'</td>';
+            echo '<td>'.number_format($r->subTotal,2,',','.').'</td>';
             echo '<td>'.$r->os_id.'</td>';
             echo '<td>'.$r->compras_id.'</td>';
             echo '<td>'.$r->vendas_id.'</td>';

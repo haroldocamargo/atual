@@ -70,17 +70,17 @@
                        <tfoot>
                           <tr>
                             <td colspan="5" style="text-align: right; color: green"> <strong>Total Entradas:</strong></td>
-                            <td colspan="1" style="text-align: left; color: green"><strong>R$ <?php echo number_format($totalEntrada,2,',','.') ?></strong></td>
+                            <td colspan="1" style="text-align: left; color: green"><strong><?php echo number_format($totalEntrada,2,',','.') ?></strong></td>
 				    		<td colspan="9" style="text-align: right"> <strong> </strong></td>
                           </tr>
                           <tr>
                             <td colspan="5" style="text-align: right; color: red"> <strong>Total Saídas:</strong></td>
-                            <td colspan="1" style="text-align: left; color: red"><strong>R$ <?php echo number_format($totalSaida,2,',','.') ?></strong></td>
+                            <td colspan="1" style="text-align: left; color: red"><strong><?php echo number_format($totalSaida,2,',','.') ?></strong></td>
 				    		<td colspan="9" style="text-align: right"> <strong> </strong></td>
                           </tr>
                           <tr>
                             <td colspan="5" style="text-align: right"> <strong>Saldo:</strong></td>
-                            <td colspan="1" style="text-align: left;"><strong>R$ <?php echo number_format($totalEntrada - $totalSaida,2,',','.') ?></strong></td>
+                            <td colspan="1" style="text-align: left;"><strong><?php echo number_format($totalEntrada - $totalSaida,2,',','.') ?></strong></td>
 				    		<td colspan="9" style="text-align: right"> <strong> </strong></td>
                           </tr>
                         </tfoot>

@@ -37,6 +37,7 @@ class Estoque extends CI_Controller {
 		$setor = $this->input->get('setorEstoque');
 		$documento = $this->input->get('documento');
 		$produto = $this->input->get('produtos_id');
+		$serie = $this->input->get('serie');
 		$data = $this->input->get('data');
 		$data2 = $this->input->get('data2');
 
@@ -60,6 +61,11 @@ class Estoque extends CI_Controller {
 	    if(rtrim($documento) <> ''){
 	    	if (rtrim($where) <> '') {$where = $where.' and ';}
 	        $where = $where.'documentoEstoque = "'.$documento.'"';
+        };
+
+	    if(rtrim($serie) <> ''){
+	    	if (rtrim($where) <> '') {$where = $where.' and ';}
+	        $where = $where.'estoque.serie = "'.$serie.'"';
         };
 
 	    if(rtrim($setor) <> ''){

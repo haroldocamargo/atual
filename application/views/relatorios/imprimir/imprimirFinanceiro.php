@@ -62,15 +62,15 @@
                        <tfoot>
                           <tr>
                             <td colspan="5" style="text-align: right; color: green"> <strong>Total Receitas:</strong></td>
-                            <td colspan="2" style="text-align: left; color: green"><strong>R$ <?php echo number_format($totalReceita,2,',','.') ?></strong></td>
+                            <td colspan="2" style="text-align: left; color: green"><strong><?php echo number_format($totalReceita,2,',','.') ?></strong></td>
                           </tr>
                           <tr>
                             <td colspan="5" style="text-align: right; color: red"> <strong>Total Despesas:</strong></td>
-                            <td colspan="2" style="text-align: left; color: red"><strong>R$ <?php echo number_format($totalDespesa,2,',','.') ?></strong></td>
+                            <td colspan="2" style="text-align: left; color: red"><strong><?php echo number_format($totalDespesa,2,',','.') ?></strong></td>
                           </tr>
                           <tr>
                             <td colspan="5" style="text-align: right"> <strong>Saldo:</strong></td>
-                            <td colspan="2" style="text-align: left;"><strong>R$ <?php echo number_format($totalReceita - $totalDespesa,2,',','.') ?></strong></td>
+                            <td colspan="2" style="text-align: left;"><strong><?php echo number_format($totalReceita - $totalDespesa,2,',','.') ?></strong></td>
                           </tr>
                         </tfoot>
                   </table>

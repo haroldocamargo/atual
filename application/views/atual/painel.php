@@ -66,7 +66,7 @@
                                 echo '<tr>';
                                 echo '<td>'.$p->idProdutos.'</td>';
                                 echo '<td>'.$p->descricao.'</td>';
-                                echo '<td>R$ '.$p->precoVenda.'</td>';
+                                echo '<td>'.$p->precoVenda.'</td>';
                                 echo '<td>'.$p->estoque.'</td>';
                                 echo '<td>'.$p->estoqueMinimo.'</td>';
                                 echo '<td>';

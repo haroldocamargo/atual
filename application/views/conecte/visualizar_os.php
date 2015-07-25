@@ -117,13 +117,13 @@
                                             echo '<td>'.$p->descricao.'</td>';
                                             echo '<td>'.$p->quantidade.'</td>';
                                             
-                                            echo '<td>R$ '.number_format($p->subTotal,2,',','.').'</td>';
+                                            echo '<td>'.number_format($p->subTotal,2,',','.').'</td>';
                                             echo '</tr>';
                                         }?>
 
                                         <tr>
                                             <td colspan="2" style="text-align: right"><strong>Total:</strong></td>
-                                            <td><strong>R$ <?php echo number_format($totalProdutos,2,',','.');?></strong></td>
+                                            <td><strong><?php echo number_format($totalProdutos,2,',','.');?></strong></td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -145,20 +145,20 @@
                                             $totalServico = $totalServico + $preco;
                                             echo '<tr>';
                                             echo '<td>'.$s->nome.'</td>';
-                                            echo '<td>R$ '.number_format($s->preco, 2, ',', '.').'</td>';
+                                            echo '<td>'.number_format($s->preco, 2, ',', '.').'</td>';
                                             echo '</tr>';
                                         }?>
 
                                         <tr>
                                             <td colspan="1" style="text-align: right"><strong>Total:</strong></td>
-                                            <td><strong>R$ <?php  echo number_format($totalServico, 2, ',', '.');?></strong></td>
+                                            <td><strong><?php  echo number_format($totalServico, 2, ',', '.');?></strong></td>
                                         </tr>
                                         </tbody>
                                     </table>
                         <?php }?>
                         <hr />
                     
-                        <h4 style="text-align: right">Valor Total: R$ <?php echo number_format($totalProdutos + $totalServico,2,',','.');?></h4>
+                        <h4 style="text-align: right">Valor Total: <?php echo number_format($totalProdutos + $totalServico,2,',','.');?></h4>
 
                     </div>
             
