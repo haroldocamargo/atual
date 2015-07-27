@@ -370,13 +370,13 @@ $(document).ready(function(){
      });
 
      $("#produto").autocomplete({
-            source: "<?php echo base_url(); ?>index.php/os/autoCompleteProduto",
+            source: "<?php echo base_url(); ?>index.php/vendas/autoCompleteProduto",
             minLength: 5,
             select: function( event, ui ) {
 
                  $("#idProduto").val(ui.item.id);
                  $("#estoque").val(ui.item.estoque);
-                 $("#preco").val(ui.item.preco);
+                 $("#preco").val(ui.item.preco.replace(".",","));
                  $("#preco").focus();
             }
       });
@@ -384,7 +384,7 @@ $(document).ready(function(){
 
 
       $("#cliente").autocomplete({
-            source: "<?php echo base_url(); ?>index.php/os/autoCompleteCliente",
+            source: "<?php echo base_url(); ?>index.php/vendas/autoCompleteCliente",
             minLength: 5,
             select: function( event, ui ) {
 
@@ -393,7 +393,7 @@ $(document).ready(function(){
       });
 
       $("#tecnico").autocomplete({
-            source: "<?php echo base_url(); ?>index.php/os/autoCompleteUsuario",
+            source: "<?php echo base_url(); ?>index.php/vendas/autoCompleteUsuario",
             minLength: 5,
             select: function( event, ui ) {
 

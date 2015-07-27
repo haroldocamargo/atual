@@ -63,14 +63,14 @@
                     <div class="control-group">
                         <label for="precoCompra" class="control-label">Preço de Compra<span class="required">*</span></label>
                         <div class="controls">
-                            <input id="precoCompra" class="input-small" class="money" type="text" name="precoCompra" value="<?php echo $result->precoCompra; ?>"  />
+                            <input id="precoCompra" class="input-small" class="money" type="text" name="precoCompra" value="<?php echo number_format($result->precoCompra, 2, ',', '.'); ?>"  />
                         </div>
                     </div>
 
                     <div class="control-group">
                         <label for="precoVenda" class="control-label">Preço de Venda<span class="required">*</span></label>
                         <div class="controls">
-                            <input id="precoVenda" class="input-small" class="money" type="text" name="precoVenda" value="<?php echo $result->precoVenda; ?>"  />
+                            <input id="precoVenda" class="input-small" class="money" type="text" name="precoVenda" value="<?php echo number_format($result->precoVenda, 2, ',', '.'); ?>"  />
                         </div>
                     </div>
 

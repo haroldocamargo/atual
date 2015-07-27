@@ -65,14 +65,14 @@
 		</div>
 
 		<div class="span1">
-			<label>Data de</label>
+			<label>De</label>
     	    <div class="controls">
 	    		<input class="input-mini datepicker" id="data" type="text" name="data" />
             </div>
 		</div>
 		
 		<div class="span1">
-			<label>Data até</label>
+			<label>Até</label>
     	    <div class="controls">
 	    		<input class="input-mini datepicker" id="data2" type="text" name="data2"  />
             </div>
@@ -107,19 +107,15 @@ if(!$results){?>
     <thead>
         <tr style="backgroud-color: #2D335B">
             <th>#</th>
-            <th>Data</th>
             <th>Tipo</th>
             <th>Setor</th>
             <th>Produto</th>
+            <th>Documento</th>
+            <th>Serie</th>
+            <th>Data</th>
             <th>Qtd</th>
             <th>Valor</th>
             <th>SubTotal</th>
-            <th>Os</th>
-            <th>Compra</th>
-            <th>Venda</th>
-            <th>Documento</th>
-            <th>Serie</th>
-            <th>Observação</th>
             <th>Ações</th>
         </tr>
     </thead>
@@ -151,19 +147,15 @@ if(!$results){?>
     <thead>
         <tr style="backgroud-color: #2D335B">
             <th>#</th>
-            <th>Data</th>
             <th>Tipo</th>
             <th>Setor</th>
             <th>Produto</th>
+            <th>Documento</th>
+            <th>Serie</th>
+            <th>Data</th>
             <th>Qtd</th>
             <th>Valor</th>
             <th>SubTotal</th>
-            <th>Os</th>
-            <th>Compra</th>
-            <th>Venda</th>
-            <th>Documento</th>
-            <th>Serie</th>
-            <th>Observação</th>
             <th>Ações</th>
         </tr>
     </thead>
@@ -177,23 +169,24 @@ if(!$results){?>
             if($r->tipo == 'entrada'){ $label = 'success'; $totalEntrada += $r->quantidade;} else{$label = 'important'; $totalSaida += $r->quantidade;}
             echo '<tr>'; 
             echo '<td>'.$r->idEstoque.'</td>';
-            echo '<td>'.$data.'</td>';   
             echo '<td><span class="label label-'.$label.'">'.ucfirst($r->tipo).'</span></td>';
             echo '<td>'.$r->setorEstoque.'</td>';
             echo '<td>'.$r->descricao.'</td>';
+            echo '<td>'.$r->documentoEstoque.'</td>';
+            echo '<td>'.$r->serie.'</td>';
+            echo '<td>'.$data.'</td>';   
             echo '<td>'.$r->quantidade.'</td>';
             echo '<td>'.number_format($r->valor,2,',','.').'</td>';
             echo '<td>'.number_format($r->subTotal,2,',','.').'</td>';
-            echo '<td>'.$r->os_id.'</td>';
-            echo '<td>'.$r->compras_id.'</td>';
-            echo '<td>'.$r->vendas_id.'</td>';
-            echo '<td>'.$r->documentoEstoque.'</td>';
-            echo '<td>'.$r->serie.'</td>';
-            echo '<td>'.$r->observacaoEstoque.'</td>';
             
             echo '<td>';
+
+            if($this->permission->checkPermission($this->session->userdata('permissao'),'vEstoque')){
+                echo '<a style="margin-right: 1%" href="'.base_url().'index.php/estoque/visualizar/'.$r->idEstoque.'" class="btn tip-top" title="Visualizar Estoque"><i class="icon-eye-open"></i></a>  '; 
+            }
+
             if($this->permission->checkPermission($this->session->userdata('permissao'),'dEstoque')){
-                echo '<a href="#modalExcluir" data-toggle="modal" role="button" idEstoque="'.$r->idEstoque.'" class="btn btn-danger tip-top excluir" title="Excluir Lançamento"><i class="icon-remove icon-white"></i></a>'; 
+                echo '<a href="#modalExcluir" data-toggle="modal" role="button" idEstoque="'.$r->idEstoque.'" class="btn btn-danger tip-top excluir" title="Excluir Estoque"><i class="icon-remove icon-white"></i></a>'; 
             }
                      
             echo '</td>';
@@ -381,8 +374,6 @@ if(!$results){?>
 
 
 
-
-
 <!-- Modal Excluir lançamento-->
 <div id="modalExcluir" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-header">
@@ -398,9 +389,6 @@ if(!$results){?>
     <button class="btn btn-danger" id="btnExcluir">Excluir Lançamento</button>
   </div>
 </div>
-
-
-
 
 
 <script src="<?php echo base_url()?>js/jquery.validate.js"></script>

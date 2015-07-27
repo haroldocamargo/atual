@@ -63,7 +63,7 @@
                                                       <div class="control-group">
                                                             <label for="preco" class="control-label">Preço<span class="required">*</span></label>
                                                             <div class="controls">
-                                                                <input id="preco" class="input-small" class="money" type="text" name="preco" value="<?php echo $result->preco ?>"  />
+                                                                <input id="preco" class="input-small" class="money" type="text" name="preco" value="<?php echo number_format($result->preco, 2, ',', '.') ?>"  />
                                                             </div>
                                                       </div>
 

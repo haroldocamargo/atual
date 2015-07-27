@@ -25,6 +25,7 @@ if(!$results){?>
             <th>Pessoa</th>
             <th>Documento</th>
             <th>Faturado</th>
+            <th>SubTotal</th>
             <th>Ações</th>
         </tr>
     </thead>
@@ -60,6 +61,7 @@ if(!$results){?>
             <th>Pessoa</th>
             <th>Documento</th>
             <th>Faturado</th>
+            <th>SubTotal</th>
             <th>Ações</th>
         </tr>
     </thead>
@@ -73,6 +75,7 @@ if(!$results){?>
             echo '<td><a href="'.base_url().'index.php/clientes/visualizar/'.$r->idClientes.'">'.$r->nomeCliente.'</a></td>';
             echo '<td>'.$r->documentoCompra.'</td>';
             echo '<td>'.$faturado.'</td>';
+            echo '<td>'.$r->valorTotal.'</td>';
             
             echo '<td>';
             if($this->permission->checkPermission($this->session->userdata('permissao'),'vCompra')){

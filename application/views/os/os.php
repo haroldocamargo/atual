@@ -26,6 +26,7 @@ if(!$results){?>
             <th>Data Inicial</th>
             <th>Data Final</th>
             <th>Status</th>
+            <th>SubTotal</th>
             <th>Ações</th>
         </tr>
     </thead>
@@ -62,6 +63,7 @@ if(!$results){?>
             <th>Data Inicial</th>
             <th>Data Final</th>
             <th>Status</th>
+            <th>SubTotal</th>
             <th>Ações</th>
         </tr>
     </thead>
@@ -76,6 +78,7 @@ if(!$results){?>
             echo '<td>'.$dataInicial.'</td>';
             echo '<td>'.$dataFinal.'</td>';
             echo '<td>'.$r->status.'</td>';
+            echo '<td>'.$r->valorTotal.'</td>';
             
             
             echo '<td>';

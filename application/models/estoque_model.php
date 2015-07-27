@@ -25,10 +25,14 @@ class Estoque_model extends CI_Model {
 
 
     function getById($id){
-        $this->db->where('idEstoque',$id);
+        $this->db->select('produtos.descricao, estoque.*');
+        $this->db->from('estoque');
+        $this->db->join('produtos','produtos.idProdutos = estoque.produtos_id');
+        $this->db->where('estoque.idEstoque',$id);
         $this->db->limit(1);
-        return $this->db->get('estoque')->row();
+        return $this->db->get()->row();
     }
+
     
     function add($table,$data){
         $this->db->insert($table, $data);         
@@ -70,7 +74,7 @@ class Estoque_model extends CI_Model {
         $query = $this->db->get('produtos');
         if($query->num_rows > 0){
             foreach ($query->result_array() as $row){
-                $row_set[] = array('label'=>$row['descricao'].' | Preço: '.$row['precoVenda'].' | Estoque: '.$row['estoque'],'estoque'=>$row['estoque'],'id'=>$row['idProdutos'],'preco'=>$row['precoVenda']);
+                $row_set[] = array('label'=>$row['descricao'].' | Preço: '.str_replace(".",",", $row['precoVenda']).' | Estoque: '.$row['estoque'],'estoque'=>$row['estoque'],'id'=>$row['idProdutos'],'preco'=>$row['precoVenda']);
             }
             echo json_encode($row_set);
         }

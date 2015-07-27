@@ -41,11 +41,11 @@
                         </tr>
                         <tr>
                             <td style="text-align: right"><strong>Preço de Compra</strong></td>
-                            <td><?php echo $result->precoCompra; ?></td>
+                            <td><?php echo number_format($result->precoCompra, 2, ',', '.'); ?></td>
                         </tr>
                         <tr>
                             <td style="text-align: right"><strong>Preço de Venda</strong></td>
-                            <td><?php echo $result->precoVenda; ?></td>
+                            <td><?php echo number_format($result->precoVenda, 2, ',', '.'); ?></td>
                         </tr>
                         <tr>
                             <td style="text-align: right"><strong>Estoque</strong></td>

@@ -38,22 +38,6 @@
 			</select>
 		</div>
 
-		<div class="span2">
-			<label>Situação</label>
-			<select name="situacao" class="span12">
-                            <option value="todos">Todos</option>
-                            <option value="pago">Pago</option>
-                            <option value="pendente">Pendente</option>
-			</select>
-		</div>
-
-
-        <div class="span2">
-            <label for="cliente">Pessoa</label>
-            <input id="cliente" class="span12" type="text" name="cliente" value=""  />
-            <input id="clientes_id" class="span12" type="hidden" name="clientes_id" value=""  />
-        </div>
-		
 		<div class="span1">
 			<label>Grupo</label>
     	    <div class="controls">
@@ -75,20 +59,35 @@
             </div>
 		</div>
 
+        <div class="span2">
+            <label for="cliente">Pessoa</label>
+            <input id="cliente" class="span12" type="text" name="cliente" value=""  />
+            <input id="clientes_id" class="span12" type="hidden" name="clientes_id" value=""  />
+        </div>
+		
 		<div class="span1">
-			<label>Data de</label>
+			<label>De</label>
     	    <div class="controls">
 	    		<input class="input-mini datepicker" id="vencimento" type="text" name="vencimento" />
             </div>
 		</div>
 		
 		<div class="span1">
-			<label>Data até</label>
+			<label>Até</label>
     	    <div class="controls">
 	    		<input class="input-mini datepicker" id="vencimento2" type="text" name="vencimento2"  />
             </div>
 		</div>
 		
+		<div class="span2">
+			<label>Situação</label>
+			<select name="situacao" class="span12">
+                            <option value="todos">Todos</option>
+                            <option value="pago">Pago</option>
+                            <option value="pendente">Pendente</option>
+			</select>
+		</div>
+
 		<div class="span1" >
 			&nbsp
 			<button type="submit" class="span12 btn btn-primary">Filtrar</button>
@@ -125,9 +124,8 @@ if(!$results){?>
             <th>Documento</th>
             <th>Pessoa</th>
             <th>Vencimento</th>
-            <th>Status</th>
+            <th>Situação</th>
             <th>Valor</th>
-            <th>Observação</th>
             <th>Ações</th>
         </tr>
     </thead>
@@ -165,9 +163,8 @@ if(!$results){?>
             <th>Documento</th>
             <th>Pessoa</th>
             <th>Vencimento</th>
-            <th>Status</th>
+            <th>Situação</th>
             <th>Valor</th>
-            <th>Observação</th>
             <th>Ações</th>
         </tr>
     </thead>
@@ -190,7 +187,6 @@ if(!$results){?>
             echo '<td>'.$vencimento.'</td>';   
             echo '<td>'.$status.'</td>';
             echo '<td>'.number_format($r->valor,2,',','.').'</td>';
-            echo '<td>'.$r->observacao.'</td>';
             
             echo '<td>';
             if($this->permission->checkPermission($this->session->userdata('permissao'),'eLancamento')){

@@ -9,9 +9,10 @@ class Estoque extends CI_Controller {
 		if((!$this->session->userdata('session_id')) || (!$this->session->userdata('logado'))){
         	redirect('atual/login');
         }
+        $this->load->helper(array('form', 'codegen_helper'));
         $this->load->model('estoque_model','',TRUE);
-        $this->data['menuEstoque'] = 'estoque';
         $this->load->helper(array('codegen_helper'));
+        $this->data['menuEstoque'] = 'estoque';
 	}
 	public function index(){
 		$this->estoque();
@@ -305,6 +306,24 @@ class Estoque extends CI_Controller {
     }
 
 
+    function visualizar() {
+      
+        if(!$this->permission->checkPermission($this->session->userdata('permissao'),'vEstoque')){
+           $this->session->set_flashdata('error','Você não tem permissão para visualizar estoque.');
+           redirect(base_url());
+        }
+
+        $this->data['result'] = $this->estoque_model->getById($this->uri->segment(3));
+
+        if($this->data['result'] == null){
+            $this->session->set_flashdata('error','Produto não encontrado.');
+            redirect(base_url() . 'index.php/produtos/editar/'.$this->input->post('idProdutos'));
+        }
+
+        $this->data['view'] = 'estoque/visualizarEstoque';
+        $this->load->view('tema/topo', $this->data);
+    }
+	
 	protected function getThisYear() {
 
         $dias = date("z");

@@ -568,7 +568,7 @@ $(document).ready(function(){
 
                  $("#idProduto").val(ui.item.id);
                  $("#estoque").val(ui.item.estoque);
-                 $("#preco").val(ui.item.preco);
+                 $("#preco").val(ui.item.preco.replace(".",","));
                  $("#preco").focus();
                  
 
@@ -581,7 +581,7 @@ $(document).ready(function(){
             select: function( event, ui ) {
 
                  $("#idServico").val(ui.item.id);
-                 $("#precoServico").val(ui.item.preco);
+                 $("#precoServico").val(ui.item.preco.replace(".",","));
                  $("#precoServico").focus();
                  
 

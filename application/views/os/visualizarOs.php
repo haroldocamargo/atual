@@ -54,7 +54,7 @@
                                     <td style="width: 50%; padding-left: 0">
                                         <ul>
                                             <li>
-                                                <span style="font-size: 12px;" >Responsável</h5></span>
+                                                <span style="font-size: 12px;" >Responsável</span><br/>
                                                 <span style="font-size: 10px;" ><?php echo $result->nome?></span> <br/>
                                                 <span style="font-size: 10px;">Telefone: <?php echo $result->telefone?></span><br/>
                                                 <span style="font-size: 10px;">Email: <?php echo $result->email?></span>
@@ -112,7 +112,7 @@
                                             $totalProdutos = $totalProdutos + $p->subTotal;
                                             echo '<tr>';
                                             echo '<td>'.$p->descricao.'</td>';
-                                            echo '<td>'.$p->valor.'</td>';
+                                            echo '<td>'.number_format($p->valor,2,',','.').'</td>';
                                             echo '<td>'.$p->quantidade.'</td>';
                                             echo '<td>'.$p->serie.'</td>';
                                             echo '<td>'.$p->observacaoItem.'</td>';

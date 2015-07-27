@@ -41,7 +41,7 @@
                                                 </tr>
 						                        <tr>
 						                            <td style="text-align: right"><strong>Limite</strong></td>
-						                            <td><?php echo $result->limite; ?></td>
+						                            <td><?php echo number_format($result->limite, 2, ',', '.'); ?></td>
 						                        </tr>
                                                 <tr>
                                                     <td style="text-align: right"><strong>Data de Cadastro</strong></td>

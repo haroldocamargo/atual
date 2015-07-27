@@ -29,14 +29,10 @@
                                 <?php } else {?>
 
                                 <tr>
-                                    <td style="width: 15%"><img src="<?php echo base_url()?>assets/img/logocliente.png"></td>
-                                    <td> <span style="font-size: 15px; "> <?php echo $emitente[0]->nome; ?></span> </br><span><?php echo $emitente[0]->cnpj; ?> </br> <?php echo $emitente[0]->rua.', nº:'.$emitente[0]->numero.', '.$emitente[0]->bairro.' - '.$emitente[0]->cidade.' - '.$emitente[0]->uf; ?> </span> </br> <span> E-mail: <?php echo $emitente[0]->email.' - Fone: '.$emitente[0]->telefone; ?></span></td>
-                                    <td style="width: 25%; text-align: center">#Venda: <span ><?php echo $result->idVendas?></span></br> </br> <span>Emissão: <?php echo date('d/m/Y h:m:s');?></span></td>
-                                    <td style="width: %; text-align: center">Documento: <span ><?php echo $result->documentoVenda?></span></br> </br> <span>Data: <?php echo date('d/m/Y', strtotime($result->dataDocumentoVenda));?></span></br> </br><span>Setor: <?php echo $result->setorVenda;?></span></td>
-                                </tr>
-
-                                <tr>
-                                    <td colspan="4"><span>Observação: <?php echo $result->observacaoVenda;?></span></td>
+                                    <td style="width: 10%"><img src="<?php echo base_url()?>assets/img/logocliente.png"></td>
+                                    <td> <span style="font-size: 12px; "> <?php echo $emitente[0]->nome; ?></span> </br><span style="font-size: 10px; "><?php echo $emitente[0]->cnpj; ?> </br> <?php echo $emitente[0]->rua.', nº:'.$emitente[0]->numero.', '.$emitente[0]->bairro.' - '.$emitente[0]->cidade.' - '.$emitente[0]->uf; ?> </span> </br> <span style="font-size: 10px; "> E-mail: <?php echo $emitente[0]->email.' - Fone: '.$emitente[0]->telefone; ?></span></td>
+                                    <td style="width: 15%; text-align: center; font-size: 10px; ">#Venda: <span  style="font-size: 10px; "><?php echo $result->idVendas?></span></br> <span style="font-size: 10px; ">Emissão: <?php echo date('d/m/Y');?></span></td>
+                                    <td style="width: 15%; text-align: center; font-size: 10px; ">Documento: <span  style="font-size: 10px; "><?php echo $result->documentoVenda?></span></br><span style="font-size: 10px; ">Data: <?php echo date('d/m/Y h:m:s', strtotime($result->dataDocumentoVenda));?></span></br><span style="font-size: 10px; ">Setor: <?php echo $result->setorVenda;?></span></td>
                                 </tr>
 
                                 <?php } ?>
@@ -49,20 +45,20 @@
                                     <td style="width: 50%; padding-left: 0">
                                         <ul>
                                             <li>
-                                                <span><h5>Pessoa</h5>
-                                                <span><?php echo $result->nomeCliente?></span><br/>
-                                                <span><?php echo $result->rua?>, <?php echo $result->numero?>, <?php echo $result->bairro?></span><br/>
-                                                <span><?php echo $result->cidade?> - <?php echo $result->estado?></span>
+                                                <span style="font-size: 12px;">Pessoa</span><br/>
+                                                <span style="font-size: 10px;"><?php echo $result->nomeCliente?></span><br/>
+                                                <span style="font-size: 10px;"><?php echo $result->rua?>, <?php echo $result->numero?>, <?php echo $result->bairro?></span><br/>
+                                                <span style="font-size: 10px;"><?php echo $result->cidade?> - <?php echo $result->estado?></span>
                                             </li>
                                         </ul>
                                     </td>
                                     <td style="width: 50%; padding-left: 0">
                                         <ul>
                                             <li>
-                                                <span><h5>Vendedor</h5></span>
-                                                <span><?php echo $result->nome?></span> <br/>
-                                                <span>Telefone: <?php echo $result->telefone?></span><br/>
-                                                <span>Email: <?php echo $result->email?></span>
+                                                <span style="font-size: 12px;">Vendedor</span><br/>
+                                                <span style="font-size: 10px;"><?php echo $result->nome?></span> <br/>
+                                                <span style="font-size: 10px;">Telefone: <?php echo $result->telefone?></span><br/>
+                                                <span style="font-size: 10px;">Email: <?php echo $result->email?></span>
                                             </li>
                                         </ul>
                                     </td>
@@ -72,20 +68,26 @@
       
                     </div>
 
+                    <?php if($result->observacaoVenda != null){?>
+			                                            <li>
+	                    <span style="font-size: 12px;">Observações: </span><span style="font-size: 10px;"><?php echo $result->observacaoVenda?></span>
+			                                            </li>
+                    <?php }?>
+
                     <div style="margin-top: 0; padding-top: 0">
 
 
                         <?php if($produtos != null){?>
               
-                        <table class="table table-bordered table-condensed" id="tblProdutos">
+                        <table style="font-size: 10px; " class="table table-bordered table-condensed" id="tblProdutos">
                                     <thead>
                                         <tr>
-                                            <th style="font-size: 15px">Produto</th>
-                                            <th style="font-size: 15px">Valor</th>
-                                            <th style="font-size: 15px">Quantidade</th>
-                                            <th style="font-size: 15px">Série</th>
-                                            <th style="font-size: 15px">Observação</th>
-                                            <th style="font-size: 15px">Sub-total</th>
+                                            <th>Produto</th>
+                                            <th>Valor</th>
+                                            <th>Quantidade</th>
+                                            <th>Série</th>
+                                            <th>Observação</th>
+                                            <th>Sub-total</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -96,7 +98,7 @@
                                             $totalProdutos = $totalProdutos + $p->subTotal;
                                             echo '<tr>';
                                             echo '<td>'.$p->descricao.'</td>';
-                                            echo '<td>'.$p->valor.'</td>';
+                                            echo '<td>'.number_format($p->valor,2,',','.').'</td>';
                                             echo '<td>'.$p->quantidade.'</td>';
                                             echo '<td>'.$p->serie.'</td>';
                                             echo '<td>'.$p->observacaoItem.'</td>';
@@ -115,13 +117,9 @@
                 
                         <hr />
                     
-                        <h4 style="text-align: right">Valor Total: <?php echo number_format($totalProdutos,2,',','.');?></h4>
+                        <h4  style="text-align: right; font-size: 12px; ">Valor Total: <?php echo number_format($totalProdutos,2,',','.');?></h4>
 
                     </div>
-            
-
-                    
-                    
               
                 </div>
             </div>
