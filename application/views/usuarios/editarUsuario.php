@@ -65,7 +65,7 @@
                     <div class="control-group">
                         <label for="estado" class="control-label">Estado<span class="required">*</span></label>
                         <div class="controls">
-							<select name="estado" class="span2">
+							<select name="estado" class="span1">
 								<option value="<?php echo $result->estado; ?>"><?php echo $result->estado; ?></option>
 								<option value="AC">AC</option>
 								<option value="AL">AL</option>

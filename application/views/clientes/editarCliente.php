@@ -93,7 +93,7 @@
                     <div class="control-group" class="control-label">
                         <label for="estado" class="control-label">Estado</label>
                         <div class="controls">
-							<select name="estado" class="span2">
+							<select name="estado" class="span1">
 								<option value="<?php echo $result->estado; ?>"><?php echo $result->estado; ?></option>
 								<option value="AC">AC</option>
 								<option value="AL">AL</option>

@@ -64,8 +64,8 @@
                     <div class="control-group">
                         <label for="estado" class="control-label">Estado<span class="required">*</span></label>
                         <div class="controls">
-							<select name="estado" class="span2">
-								<option value="">Selecione</option>
+							<select name="estado" class="span1">
+								<option value=""></option>
 								<option value="AC">AC</option>
 								<option value="AL">AL</option>
 								<option value="AP">AP</option>

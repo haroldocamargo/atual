@@ -92,8 +92,8 @@
                     <div class="control-group" class="control-label">
                         <label for="estado" class="control-label">Estado</label>
                         <div class="controls">
-							<select name="estado" class="span2">
-								<option value="">Selecione</option>
+							<select name="estado" class="span1">
+								<option value=""></option>
 								<option value="AC">AC</option>
 								<option value="AL">AL</option>
 								<option value="AP">AP</option>
