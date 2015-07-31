@@ -73,10 +73,8 @@ class Produtos extends CI_Controller {
         if ($this->form_validation->run('produtos') == false) {
             $this->data['custom_error'] = (validation_errors() ? '<div class="form_error">' . validation_errors() . '</div>' : false);
         } else {
-            $precoCompra = $this->input->post('precoCompra');
-            $precoCompra = str_replace(",","", $precoCompra);
-            $precoVenda = $this->input->post('precoVenda');
-            $precoVenda = str_replace(",", "", $precoVenda);
+            $precoCompra = str_replace(",",".", $this->input->post('precoCompra'));
+            $precoVenda = str_replace(",", ".", $this->input->post('precoVenda'));
             $data = array(
                 'descricao' => set_value('descricao'),
                 'unidade' => set_value('unidade'),
@@ -117,10 +115,9 @@ class Produtos extends CI_Controller {
         if ($this->form_validation->run('produtos') == false) {
             $this->data['custom_error'] = (validation_errors() ? '<div class="form_error">' . validation_errors() . '</div>' : false);
         } else {
-            $precoCompra = $this->input->post('precoCompra');
-            $precoCompra = str_replace(",","", $precoCompra);
-            $precoVenda = $this->input->post('precoVenda');
-            $precoVenda = str_replace(",", "", $precoVenda);
+            	
+            $precoCompra = str_replace(",",".", $this->input->post('precoCompra'));
+            $precoVenda = str_replace(",", ".", $this->input->post('precoVenda'));
             $data = array(
                 'descricao' => $this->input->post('descricao'),
                 'unidade' => $this->input->post('unidade'),

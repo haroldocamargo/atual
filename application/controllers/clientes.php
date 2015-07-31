@@ -115,6 +115,7 @@ class Clientes extends CI_Controller {
         if ($this->form_validation->run('clientes') == false) {
             $this->data['custom_error'] = (validation_errors() ? '<div class="form_error">' . validation_errors() . '</div>' : false);
         } else {
+            $limite = str_replace(",",".", $this->input->post('limite'));
             $data = array(
                 'nomeCliente' => $this->input->post('nomeCliente'),
                 'documento' => $this->input->post('documento'),
@@ -129,7 +130,7 @@ class Clientes extends CI_Controller {
                 'cidade' => $this->input->post('cidade'),
                 'estado' => $this->input->post('estado'),
                 'cep' => $this->input->post('cep'),
-                'limite' => $this->input->post('limite'),
+                'limite' => $limite,
                 'observacaoCliente' => $this->input->post('observacaoCliente')
             );
 
