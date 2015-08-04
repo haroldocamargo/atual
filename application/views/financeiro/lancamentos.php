@@ -190,7 +190,7 @@ if(!$results){?>
             
             echo '<td>';
             if($this->permission->checkPermission($this->session->userdata('permissao'),'eLancamento')){
-                echo '<a href="#modalEditar" style="margin-right: 1%" data-toggle="modal" role="button" idLancamento="'.$r->idLancamentos.'" descricao="'.$r->descricao.'" valor="'.$r->valor.'" vencimento="'.date('d/m/Y',strtotime($r->data_vencimento)).'" pagamento="'.date('d/m/Y', strtotime($r->data_pagamento)).'" baixado="'.$r->baixado.'" cliente="'.$r->cliente_fornecedor.'" formaPgto="'.$r->forma_pgto.'" tipo="'.$r->tipo.'" grupo="'.$r->grupo.'" setor="'.$r->setor.'" documento="'.$r->documento.'" observacao="'.$r->observacao.'" class="btn btn-info tip-top editar" title="Editar Lançamento"><i class="icon-pencil icon-white"></i></a>'; 
+                echo '<a href="#modalEditar" style="margin-right: 1%" data-toggle="modal" role="button" idLancamento="'.$r->idLancamentos.'" descricao="'.$r->descricao.'" valor="'.$r->valor.'" vencimento="'.date('d/m/Y',strtotime($r->data_vencimento)).'" pagamento="'.date('d/m/Y', strtotime($r->data_pagamento)).'" baixado="'.$r->baixado.'" fornecedoresEditar_id="'.$r->clientes_id.'" fornecedor="'.$r->cliente_fornecedor.'" formaPgto="'.$r->forma_pgto.'" tipo="'.$r->tipo.'" grupo="'.$r->grupo.'" setor="'.$r->setor.'" documento="'.$r->documento.'" observacao="'.$r->observacao.'" class="btn btn-info tip-top editar" title="Editar Lançamento"><i class="icon-pencil icon-white"></i></a>'; 
             }
             if($this->permission->checkPermission($this->session->userdata('permissao'),'dLancamento')){
                 echo '<a href="#modalExcluir" data-toggle="modal" role="button" idLancamento="'.$r->idLancamentos.'" class="btn btn-danger tip-top excluir" title="Excluir Lançamento"><i class="icon-remove icon-white"></i></a>'; 
@@ -431,9 +431,9 @@ if(!$results){?>
       </div>  
       <div class="span12" style="margin-left: 0"> 
         <div class="span12" style="margin-left: 0"> 
-          <label for="fornecedor">Pessoa*</label>
-          <input class="span12" id="fornecedorEditar" type="text" name="fornecedor"  />
-          <input id="fornecedoresEditar_id" class="span12" type="hidden" name="fornecedoresEditar_id" value=""  />
+          <label for="fornecedorEditar">Pessoa<span class="required">*</span></label>
+          <input id="fornecedorEditar" class="span12" type="text" name="fornecedor" value="" />
+          <input id="fornecedoresEditar_id" class="span12" type="hidden" name="fornecedoresEditar_id" value="" />
         </div>
         
       <div class="span12" style="margin-left: 0"> 
@@ -656,10 +656,10 @@ if(!$results){?>
     $(document).on('click', '.editar', function(event) {
       $("#idEditar").val($(this).attr('idLancamento'));
       $("#descricaoEditar").val($(this).attr('descricao'));
-      $("#fornecedorEditar").val($(this).attr('cliente'));
+      $("#fornecedorEditar").val($(this).attr('fornecedor'));
+      $("#fornecedoresEditar_id").val($(this).attr('fornecedoresEditar_id'));
       $("#valorEditar").val($(this).attr('valor'));
       $("#vencimentoEditar").val($(this).attr('vencimento'));
-      $("#pagamentoEditar").val($(this).attr('pagamento'));
       $("#formaPgtoEditar").val($(this).attr('formaPgto'));
       $("#tipoEditar").val($(this).attr('tipo'));
       $("#urlAtualEditar").val($(location).attr('href'));
@@ -669,10 +669,12 @@ if(!$results){?>
       $("#observacaoEditar").val($(this).attr('observacao'));
       var baixado = $(this).attr('baixado');
       if(baixado == 1){
+        $("#pagamentoEditar").val($(this).attr('pagamento'));
         $("#pagoEditar").attr('checked', true);
         $("#divPagamentoEditar").show();
       }
       else{
+        $("#pagamentoEditar").val('');
         $("#pagoEditar").attr('checked', false); 
         $("#divPagamentoEditar").hide();
       }

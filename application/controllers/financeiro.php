@@ -118,7 +118,7 @@ class Financeiro extends CI_Controller {
         $config['last_tag_close'] = '</li>';
         $this->pagination->initialize($config); 	
 
-		$this->data['results'] = $this->financeiro_model->get('lancamentos','idLancamentos,descricao,valor,data_vencimento,data_pagamento,baixado,cliente_fornecedor,tipo,forma_pgto,documento,observacao,grupo,setor',$where,$config['per_page'],$this->uri->segment(3));
+		$this->data['results'] = $this->financeiro_model->get('lancamentos','idLancamentos,descricao,valor,data_vencimento,data_pagamento,baixado,cliente_fornecedor,tipo,forma_pgto,documento,observacao,grupo,setor,clientes_id',$where,$config['per_page'],$this->uri->segment(3));
        
 	    $this->data['view'] = 'financeiro/lancamentos';
        	$this->load->view('tema/topo',$this->data);
@@ -288,12 +288,7 @@ class Financeiro extends CI_Controller {
 
             $vencimento = $this->input->post('vencimento');
             $pagamento = $this->input->post('pagamento');
-			$fornecedoresEditar_id = $this->input->post('fornecedoresEditar_id');
             $valor = str_replace(",",".", $this->input->post('valor'));
-			
-			if ($fornecedoresEditar_id == '') {
-		        $fornecedoresEditar_id = $this->financeiro_model->getById($this->input->post('id'))->idClientes;
-			};
 			
             try {
                 
@@ -306,22 +301,43 @@ class Financeiro extends CI_Controller {
             } catch (Exception $e) {
                $vencimento = date('Y/m/d'); 
             }
-
-            $data = array(
-                'descricao' => $this->input->post('descricao'),
-                'valor' => $valor,
-                'data_vencimento' => $vencimento,
-                'data_pagamento' => $pagamento,
-                'baixado' => $this->input->post('pago'),
-                'cliente_fornecedor' => $this->input->post('fornecedor'),
-                'forma_pgto' => $this->input->post('formaPgto'),
-                'tipo' => $this->input->post('tipo'),
-                'documento' => $this->input->post('documento'),
-                'grupo' => $this->input->post('grupo'),
-                'observacao' => $this->input->post('observacao'),
-				'setor' => $this->input->post('setor'),
-				'clientes_id' => $fornecedoresEditar_id
-            );
+			
+			if(ltrim(rtrim($pagamento))<>'--'){
+					
+	            $data = array(
+	                'descricao' => $this->input->post('descricao'),
+	                'valor' => $valor,
+	                'data_vencimento' => $vencimento,
+	                'baixado' => $this->input->post('pago'),
+	                'cliente_fornecedor' => $this->input->post('fornecedor'),
+	                'forma_pgto' => $this->input->post('formaPgto'),
+	                'tipo' => $this->input->post('tipo'),
+	                'documento' => $this->input->post('documento'),
+	                'grupo' => $this->input->post('grupo'),
+	                'observacao' => $this->input->post('observacao'),
+					'setor' => $this->input->post('setor'),
+					'clientes_id' => $this->input->post('fornecedoresEditar_id'),
+					'data_pagamento' => $pagamento != null ? $pagamento : date('Y-m-d')
+	            );
+			}
+			else{
+					
+	            $data = array(
+	                'descricao' => $this->input->post('descricao'),
+	                'valor' => $valor,
+	                'data_vencimento' => $vencimento,
+	                'baixado' => $this->input->post('pago'),
+	                'cliente_fornecedor' => $this->input->post('fornecedor'),
+	                'forma_pgto' => $this->input->post('formaPgto'),
+	                'tipo' => $this->input->post('tipo'),
+	                'documento' => $this->input->post('documento'),
+	                'grupo' => $this->input->post('grupo'),
+	                'observacao' => $this->input->post('observacao'),
+					'setor' => $this->input->post('setor'),
+					'clientes_id' => $this->input->post('fornecedoresEditar_id')
+	            );
+				
+			}
 
             if ($this->financeiro_model->edit('lancamentos',$data,'idLancamentos',$this->input->post('id')) == TRUE) {
 				auditoria('Alteração de lançamentos', 'Alterado lançamento "'.$this->input->post('descricao').'"');
