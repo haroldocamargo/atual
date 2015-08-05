@@ -386,7 +386,24 @@ class Financeiro extends CI_Controller {
     }
 
 
+    function visualizar() {
+      
+        if(!$this->permission->checkPermission($this->session->userdata('permissao'),'vLancamento')){
+           $this->session->set_flashdata('error','Você não tem permissão para visualizar lançamento.');
+           redirect(base_url());
+        }
 
+        $this->data['result'] = $this->financeiro_model->getById($this->uri->segment(3));
+
+        if($this->data['result'] == null){
+            $this->session->set_flashdata('error','Lançamento não encontrado.');
+            redirect(base_url() . 'index.php/financeiro/editar/'.$this->input->post('idLancamentos'));
+        }
+
+        $this->data['view'] = 'financeiro/visualizarLancamentos';
+        $this->load->view('tema/topo', $this->data);
+    }
+	
 
 	protected function getThisYear() {
 

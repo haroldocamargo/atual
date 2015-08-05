@@ -175,7 +175,7 @@ if(!$results){?>
             echo '<td>'.$r->documentoEstoque.'</td>';
             echo '<td>'.$r->serie.'</td>';
             echo '<td>'.$data.'</td>';   
-            echo '<td>'.$r->quantidade.'</td>';
+            echo '<td>'.number_format($r->quantidade,2,',','.').'</td>';
             echo '<td>'.number_format($r->valor,2,',','.').'</td>';
             echo '<td>'.number_format($r->subTotal,2,',','.').'</td>';
             
@@ -183,6 +183,10 @@ if(!$results){?>
 
             if($this->permission->checkPermission($this->session->userdata('permissao'),'vEstoque')){
                 echo '<a style="margin-right: 1%" href="'.base_url().'index.php/estoque/visualizar/'.$r->idEstoque.'" class="btn tip-top" title="Visualizar Estoque"><i class="icon-eye-open"></i></a>  '; 
+            }
+
+            if($this->permission->checkPermission($this->session->userdata('permissao'),'eEstoque')){
+                echo '<a href="#modalEditar" style="margin-right: 1%" data-toggle="modal" role="button" idEstoque="'.$r->idEstoque.'" quantidade="'.number_format($r->quantidade,2,',','.').'" valor="'.number_format($r->valor,2,',','.').'" subtotal="'.number_format($r->subTotal,2,',','.').'" data="'.date('d/m/Y',strtotime($r->data)).'" produtosEditar_id="'.$r->produtos_id.'" produto="'.$r->descricao.'" tipo="'.$r->tipo.'" setor="'.$r->setorEstoque.'" serie="'.$r->serie.'"documento="'.$r->documentoEstoque.'" observacao="'.$r->observacaoEstoque.'" class="btn btn-info tip-top editar" title="Editar Estoque"><i class="icon-pencil icon-white"></i></a>'; 
             }
 
             if($this->permission->checkPermission($this->session->userdata('permissao'),'dEstoque')){
@@ -220,6 +224,83 @@ if(!$results){?>
 </div>
 	
 <!-- <?php echo $this->pagination->create_links();}?> --> 
+
+<!-- Modal editar estoque -->
+<div id="modalEditar" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <form id="formEditar" action="<?php echo base_url() ?>index.php/estoque/editar" method="post">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <h3 id="myModalLabel">Atual ERP - Sistema Administrativo - Editar Estoque</h3>
+  </div>
+  <div class="modal-body">
+<!--      <div class="span12 alert alert-info" style="margin-left: 0"> Obrigatório o preenchimento dos campos com asterisco.</div>-->
+
+      <div class="span12" style="margin-left: 0"> 
+        <div class="span4">
+          <label for="tipo">Tipo*</label>
+          <select class="span12" name="tipo" id="tipoEditar">
+            <option value="entrada">Entrada</option>
+            <option value="saida">Saída</option>
+          </select>
+          <input id="urlAtualEditar" type="hidden" name="urlAtual" value=""  />
+        </div>
+
+        <div class="span8"> 
+          <label for="produtoEditar">Produto<span class="required">*</span></label>
+          <input id="produtoEditar" class="span12" type="text" name="produto" value="" />
+          <input id="produtosEditar_id" class="span12" type="hidden" name="produtosEditar_id" value="" />
+        </div>
+      </div>
+
+      <div class="span12" style="margin-left: 0"> 
+          <div class="span3" >
+            <label for="data">Data*</label>
+            <input class="span12 datepicker"  type="text" name="data" id="dataEditar"  />
+            <input type="hidden"  id="idEditar" name="id" value="" /> 
+	      </div>
+	      <div class="span3"> 
+	        <label for="setor">Setor</label>
+	        <input class="span12" id="setorEditar" type="text" name="setor"  />
+	      </div>  
+	      <div class="span3"> 
+	        <label for="documento">Documento</label>
+	        <input class="span12" id="documentoEditar" type="text" name="documento"  />
+	      </div>  
+	      <div class="span3"> 
+	        <label for="serie">Série</label>
+	        <input class="span12" id="serieEditar" type="text" name="serie"  />
+	      </div>  
+      </div>  
+
+      <div class="span12" style="margin-left: 0"> 
+	      <div class="span4"> 
+	        <label for="quantidade">Quantidade*</label>
+	        <input class="span12" id="quantidadeEditar" type="text" name="quantidade"  />
+	      </div>  
+          <div class="span4">  
+            <label for="valor">Valor*</label>
+            <input class="span12 money"  type="text" name="valor" id="valorEditar" />
+          </div>
+	      <div class="span4"> 
+	        <label for="subtotal">SubTotal*</label>
+	        <input class="span12" id="subtotalEditar" type="text" name="subtotal"  />
+	      </div>  
+      </div>
+
+      <div class="span12" style="margin-left: 0"> 
+	      <div class="span12"> 
+	        <label for="observacao">Observação</label>
+	        <input class="span12" type="text" name="observacao" id="observacaoEditar" />
+	      </div>  
+      </div>  
+
+  </div>
+  <div class="modal-footer">
+    <button class="btn" data-dismiss="modal" aria-hidden="true" id="btnCancelarEditar">Cancelar</button>
+    <button class="btn btn-primary">Salvar Alterações</button>
+  </div>
+  </form>
+</div>
 
 
 
@@ -428,6 +509,14 @@ if(!$results){?>
 	            }
 	      });
 	
+	      $("#produtoEditar").autocomplete({
+	            source: "<?php echo base_url(); ?>index.php/estoque/autoCompleteProduto",
+	            minLength: 5,
+	            select: function( event, ui ) {
+	                 $("#produtosEditar_id").val(ui.item.id);
+	            }
+	      });
+
 		$(".money").maskMoney({decimal:",", thousands:"."});
 
 		$('#pago').click(function(event) {
@@ -485,11 +574,46 @@ if(!$results){?>
           }
        	});
     
+		$("#formEditar").validate({
+          rules:{
+             descricao: {required:true},
+             produto: {required:true},
+             valor: {required:true},
+             quantidade: {required:true},
+             subtotal: {required:true},
+             data: {required:true}
+      
+          },
+          messages:{
+             descricao: {required: 'Campo Requerido.'},
+             produto: {required: 'Campo Requerido.'},
+             valor: {required: 'Campo Requerido.'},
+             quantidade: {required: 'Campo Requerido.'},
+             subtotal: {required: 'Campo Requerido.'},
+             data: {required: 'Campo Requerido.'}
+          }
+       	});
+    
 
     $(document).on('click', '.excluir', function(event) {
       $("#idExcluir").val($(this).attr('idEstoque'));
     });
 
+    $(document).on('click', '.editar', function(event) {
+      $("#idEditar").val($(this).attr('idEstoque'));
+      $("#dataEditar").val($(this).attr('data'));
+      $("#setorEditar").val($(this).attr('setor'));
+      $("#documentoEditar").val($(this).attr('documento'));
+      $("#serieEditar").val($(this).attr('serie'));
+      $("#tipoEditar").val($(this).attr('tipo'));
+      $("#produtoEditar").val($(this).attr('produto'));
+      $("#produtosEditar_id").val($(this).attr('produtosEditar_id'));
+      $("#quantidadeEditar").val($(this).attr('quantidade'));
+      $("#valorEditar").val($(this).attr('valor'));
+      $("#subtotalEditar").val($(this).attr('subtotal'));
+      $("#observacaoEditar").val($(this).attr('observacao'));
+      $("#urlAtualEditar").val($(location).attr('href'));
+    });
 
     $(document).on('click', '#btnExcluir', function(event) {
         var id = $("#idExcluir").val();

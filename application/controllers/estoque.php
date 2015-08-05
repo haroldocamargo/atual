@@ -255,6 +255,68 @@ class Estoque extends CI_Controller {
         
     }
 
+    public function editar(){   
+        if(!$this->permission->checkPermission($this->session->userdata('permissao'),'eLancamento')){
+           $this->session->set_flashdata('error','Você não tem permissão para editar lançamentos.');
+           redirect(base_url());
+        }
+
+        $this->load->library('form_validation');
+        $this->data['custom_error'] = '';
+        $urlAtual = $this->input->post('urlAtual');
+        $this->form_validation->set_rules('data', '', 'trim|required|xss_clean');
+
+        if ($this->form_validation->run() == false) {
+            $this->data['custom_error'] = (validation_errors() ? '<div class="form_error">' . validation_errors() . '</div>' : false);
+        } else {
+
+            $valor = str_replace(",",".", $this->input->post('valor'));
+            $data = $this->input->post('data');
+			
+            if($data == null){
+                $data = date('d/m/Y');
+            }
+            
+            try {
+                
+                $data = explode('/', $data);
+                $data = $data[2].'-'.$data[1].'-'.$data[0];   
+
+            } catch (Exception $e) {
+               $data = date('Y/m/d'); 
+            }
+
+            $quantidade = str_replace(",",".", $this->input->post('quantidade'));
+            $valor = str_replace(",",".", $this->input->post('valor'));
+            $subtotal = str_replace(",",".", $this->input->post('subtotal'));
+
+            $data = array(
+				'data' => $data,
+				'tipo' => $this->input->post('tipo'),
+				'documentoEstoque' => $this->input->post('documento'),
+				'serie' => $this->input->post('serie'),
+				'produtos_id' => $this->input->post('produtosEditar_id'),
+				'quantidade' => $quantidade,
+				'valor' => $valor,
+				'subTotal' => $subtotal,
+				'setorEstoque' => $this->input->post('setor'),
+				'observacaoEstoque' => $this->input->post('observacao')
+            );
+				
+            if ($this->estoque_model->edit('Estoque',$data,'idEstoque',$this->input->post('id')) == TRUE) {
+				auditoria('Alteração de estoque', 'Alterado estoque "'.$this->input->post('produto').'"');
+                $this->session->set_flashdata('success','Estoque editado com sucesso!');
+                redirect($urlAtual);
+            } else {
+                $this->session->set_flashdata('error','Erro ao editar estoque!');
+                redirect($urlAtual);
+            }
+        }
+
+        $this->session->set_flashdata('error','Erro ao editar estoque.'.$data);
+        redirect($urlAtual);
+
+    }
 
     public function excluirEstoque(){   
 
@@ -316,8 +378,8 @@ class Estoque extends CI_Controller {
         $this->data['result'] = $this->estoque_model->getById($this->uri->segment(3));
 
         if($this->data['result'] == null){
-            $this->session->set_flashdata('error','Produto não encontrado.');
-            redirect(base_url() . 'index.php/produtos/editar/'.$this->input->post('idProdutos'));
+            $this->session->set_flashdata('error','Estoque não encontrado.');
+            redirect(base_url() . 'index.php/estoque/editar/'.$this->input->post('idEstoque'));
         }
 
         $this->data['view'] = 'estoque/visualizarEstoque';

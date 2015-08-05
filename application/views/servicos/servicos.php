@@ -73,6 +73,9 @@ else{ ?>
             echo '<td>'.number_format($r->preco,2,',','.').'</td>';
             echo '<td>'.$r->descricao.'</td>';
             echo '<td>';
+            if($this->permission->checkPermission($this->session->userdata('permissao'),'vServico')){
+                echo '<a style="margin-right: 1%" href="'.base_url().'index.php/servicos/visualizar/'.$r->idServicos.'" class="btn tip-top" title="Visualizar Serviço"><i class="icon-eye-open"></i></a>  '; 
+            }
             if($this->permission->checkPermission($this->session->userdata('permissao'),'eServico')){
                 echo '<a style="margin-right: 1%" href="'.base_url().'index.php/servicos/editar/'.$r->idServicos.'" class="btn btn-info tip-top" title="Editar Serviço"><i class="icon-pencil icon-white"></i></a>'; 
             }

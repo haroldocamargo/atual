@@ -170,5 +170,25 @@ class Servicos extends CI_Controller {
         $this->session->set_flashdata('success','Serviço excluido com sucesso!');            
         redirect(base_url().'index.php/servicos/gerenciar/');
     }
+
+    function visualizar() {
+      
+        if(!$this->permission->checkPermission($this->session->userdata('permissao'),'vServico')){
+           $this->session->set_flashdata('error','Você não tem permissão para visualizar serviços.');
+           redirect(base_url());
+        }
+
+        $this->data['result'] = $this->servicos_model->getById($this->uri->segment(3));
+
+        if($this->data['result'] == null){
+            $this->session->set_flashdata('error','Serviço não encontrado.');
+            redirect(base_url() . 'index.php/servicos/editar/'.$this->input->post('idServicoos'));
+        }
+
+        $this->data['view'] = 'servicos/visualizarServico';
+        $this->load->view('tema/topo', $this->data);
+     
+    }
+	
 }
 
