@@ -37,10 +37,9 @@
                       <tbody>
                           <?php
                           foreach ($vendas as $c) {
-
                               echo '<tr>';
                               echo '<td>' . $c->nomeCliente . '</td>';
-                              echo '<td>' . $c->valorTotal. '</td>';
+                              echo '<td>'.number_format($c->valorTotal,2,',','.').'</td>';
                               echo '<td>' . date('d/m/Y',  strtotime($c->dataVenda)) . '</td>';
                               echo '<td>' . $c->nome. '</td>';
                               echo '</tr>';

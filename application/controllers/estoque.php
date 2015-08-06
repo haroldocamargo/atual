@@ -154,6 +154,7 @@ class Estoque extends CI_Controller {
 
             $valor = str_replace(",",".", set_value('valor'));
             $subtotal = str_replace(",",".", set_value('subtotal'));
+	        $quantidade = str_replace(",",".", $this->input->post('quantidade'));
 
             $data = array(
 				'data' => $data,
@@ -161,7 +162,7 @@ class Estoque extends CI_Controller {
 				'documentoEstoque' => $this->input->post('documento'),
 				'serie' => $this->input->post('serie'),
 				'produtos_id' => $this->input->post('produtosIncluir_id'),
-				'quantidade' => $this->input->post('quantidade'),
+				'quantidade' => $quantidade,
 				'valor' => $valor,
 				'subTotal' => $subtotal,
 				'setorEstoque' => $this->input->post('setorEstoque'),
@@ -171,7 +172,7 @@ class Estoque extends CI_Controller {
             if ($this->estoque_model->add('estoque',$data) == TRUE) {
 
         		if($idProduto != null){
-					$this->estoque_model->somaEstoque($this->input->post('quantidade'), $idProduto);
+					$this->estoque_model->somaEstoque($quantidade, $idProduto);
         		}
 
 				auditoria('Inclusão de entradas', 'Entrada do produto "'.$idProduto.'" cadastrada no sistema');
@@ -222,6 +223,7 @@ class Estoque extends CI_Controller {
 
             $valor = str_replace(",",".", set_value('valor'));
             $subtotal = str_replace(",",".", set_value('subtotal'));
+	        $quantidade = str_replace(",",".", $this->input->post('quantidade'));
 
             $data = array(
 				'data' => $data,
@@ -229,7 +231,7 @@ class Estoque extends CI_Controller {
 				'documentoEstoque' => $this->input->post('documento'),
 				'serie' => $this->input->post('serie'),
 				'produtos_id' => $this->input->post('produtos2Incluir_id'),
-				'quantidade' => $this->input->post('quantidade'),
+				'quantidade' => $quantidade,
 				'valor' => $valor,
 				'subTotal' => $subtotal,
 				'setorEstoque' => $this->input->post('setorEstoque'),
@@ -239,7 +241,7 @@ class Estoque extends CI_Controller {
             if ($this->estoque_model->add('estoque',$data) == TRUE) {
 
         		if($idProduto != null){
-					$this->estoque_model->subtraiEstoque($this->input->post('quantidade'), $idProduto);
+					$this->estoque_model->subtraiEstoque($quantidade, $idProduto);
         		}
 
 				auditoria('Inclusão de saídas', 'Saída do produto "'.$idProduto.'" cadastrada no sistema');

@@ -40,8 +40,7 @@
                               echo '<tr>';
                               echo '<td>' . $s->nome. '</td>';
                               echo '<td>' . $s->descricao . '</td>';
-                              echo '<td>' . $s->preco. '</td>';
-     
+                              echo '<td>'.number_format($s->preco,2,',','.').'</td>';
                               echo '</tr>';
                           }
                           ?>

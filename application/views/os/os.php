@@ -78,7 +78,7 @@ if(!$results){?>
             echo '<td>'.$dataInicial.'</td>';
             echo '<td>'.$dataFinal.'</td>';
             echo '<td>'.$r->status.'</td>';
-            echo '<td>'.$r->valorTotal.'</td>';
+            echo '<td>'.number_format($r->valorTotal,2,',','.').'</td>';
             
             
             echo '<td>';

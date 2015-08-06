@@ -37,7 +37,7 @@
                         </tr>
                         <tr>
                             <td style="text-align: right"><strong>Qtd</strong></td>
-                            <td><?php echo $result->quantidade ?></td>
+                            <td><?php echo number_format($result->quantidade, 2, ',', '.'); ?></td>
                         </tr>
                         <tr>
                             <td style="text-align: right"><strong>Valor</strong></td>

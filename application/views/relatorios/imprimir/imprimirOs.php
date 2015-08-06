@@ -32,6 +32,7 @@
                               <th style="font-size: 1.2em; padding: 5px;">Status</th>
                               <th style="font-size: 1.2em; padding: 5px;">Data</th>
                               <th style="font-size: 1.2em; padding: 5px;">Descrição</th>
+                              <th style="font-size: 1.2em; padding: 5px;">Total</th>
                           </tr>
                       </thead>
                       <tbody>
@@ -43,6 +44,7 @@
                               echo '<td>' . $c->status . '</td>';
                               echo '<td>' . date('d/m/Y',  strtotime($c->dataInicial)) . '</td>';
                               echo '<td>' . $c->descricaoProduto. '</td>';
+                              echo '<td>'.number_format($c->valorTotal,2,',','.').'</td>';
                               echo '</tr>';
                           }
                           ?>

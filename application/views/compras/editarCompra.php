@@ -146,7 +146,7 @@
                                                     echo '<tr>';
                                                     echo '<td>'.$p->descricao.'</td>';
                                                     echo '<td>'.number_format($p->valor,2,',','.').'</td>';
-                                                    echo '<td>'.$p->quantidade.'</td>';
+                                                    echo '<td>'.number_format($p->quantidade,2,',','.').'</td>';
                                                     echo '<td>'.$p->serie.'</td>';
                                                     echo '<td>'.$p->observacaoItem.'</td>';
                                                     echo '<td>'.number_format($p->subTotal,2,',','.').'</td>';

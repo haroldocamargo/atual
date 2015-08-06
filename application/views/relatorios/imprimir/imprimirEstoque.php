@@ -33,7 +33,7 @@
                               <th style="font-size: 1.2em; padding: 5px;">Produto</th>
                               <th style="font-size: 1.2em; padding: 5px;">Qtd</th>
                               <th style="font-size: 1.2em; padding: 5px;">Valor</th>
-                              <th style="font-size: 1.2em; padding: 15px;">SubTotal</th>
+                              <th style="font-size: 1.2em; padding: 5px;">SubTotal</th>
                               <th style="font-size: 1.2em; padding: 5px;">Os</th>
                               <th style="font-size: 1.2em; padding: 5px;">Compra</th>
                               <th style="font-size: 1.2em; padding: 5px;">Venda</th>
@@ -54,9 +54,9 @@
                               echo '<td>' . $data. '</td>';
                               echo '<td>' . $l->tipo . '</td>';
                               echo '<td>' . $l->descricao . '</td>';
-                              echo '<td>' . $l->quantidade . '</td>';
-                              echo '<td>' . $l->valor . '</td>';
-                              echo '<td>' . $l->subTotal . '</td>';
+                              echo '<td>'.number_format($l->quantidade,2,',','.').'</td>';
+                              echo '<td>'.number_format($l->valor,2,',','.').'</td>';
+                              echo '<td>'.number_format($l->subTotal,2,',','.').'</td>';
                               echo '<td>' . $l->os_id . '</td>';
                               echo '<td>' . $l->compras_id . '</td>';
                               echo '<td>' . $l->vendas_id . '</td>';

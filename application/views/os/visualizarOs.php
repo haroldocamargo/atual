@@ -113,7 +113,7 @@
                                             echo '<tr>';
                                             echo '<td>'.$p->descricao.'</td>';
                                             echo '<td>'.number_format($p->valor,2,',','.').'</td>';
-                                            echo '<td>'.$p->quantidade.'</td>';
+                                            echo '<td>'.number_format($p->quantidade,2,',','.').'</td>';
                                             echo '<td>'.$p->serie.'</td>';
                                             echo '<td>'.$p->observacaoItem.'</td>';
                                             echo '<td>'.number_format($p->subTotal,2,',','.').'</td>';
@@ -141,11 +141,11 @@
                                             <?php
                                         setlocale(LC_MONETARY, 'en_US');
                                         foreach ($servicos as $s) {
-                                            $preco = $s->preco;
-                                            $totalServico = $totalServico + $preco;
+                                            $valor = $s->subTotal;
+                                            $totalServico = $totalServico + $valor;
                                             echo '<tr>';
                                             echo '<td>'.$s->nome.'</td>';
-                                            echo '<td>'.number_format($s->preco, 2, ',', '.').'</td>';
+                                            echo '<td>'.number_format($s->subTotal, 2, ',', '.').'</td>';
                                             echo '</tr>';
                                         }?>
 

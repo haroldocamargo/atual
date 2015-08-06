@@ -77,14 +77,14 @@
                     <div class="control-group">
                         <label for="estoque" class="control-label">Estoque<span class="required">*</span></label>
                         <div class="controls">
-                            <input id="estoque" class="input-small" type="text" name="estoque" value="<?php echo $result->estoque; ?>"  />
+                            <input id="estoque" class="input-small" type="text" name="estoque" value="<?php echo number_format($result->estoque, 2, ',', '.'); ?>"  />
                         </div>
                     </div>
 
                     <div class="control-group">
                         <label for="estoqueMinimo" class="control-label">Estoque Mínimo<span class="required">*</span></label>
                         <div class="controls">
-                            <input id="estoqueMinimo" class="input-small" type="text" name="estoqueMinimo" value="<?php echo $result->estoqueMinimo; ?>"  />
+                            <input id="estoqueMinimo" class="input-small" type="text" name="estoqueMinimo" value="<?php echo number_format($result->estoqueMinimo, 2, ',', '.'); ?>"  />
                         </div>
                     </div>
 

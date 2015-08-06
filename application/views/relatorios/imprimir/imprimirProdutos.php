@@ -33,6 +33,7 @@
                               <th style="font-size: 1.2em; padding: 5px;">Preço Compra</th>
                               <th style="font-size: 1.2em; padding: 5px;">Preço Venda</th>
                               <th style="font-size: 1.2em; padding: 5px;">Estoque</th>
+                              <th style="font-size: 1.2em; padding: 5px;">Estoque Min</th>
                           </tr>
                       </thead>
                       <tbody>
@@ -41,9 +42,10 @@
                               echo '<tr>';
                               echo '<td>' . $p->descricao. '</td>';
                               echo '<td>' . $p->unidade . '</td>';
-                              echo '<td>' . $p->precoCompra . '</td>';
-                              echo '<td>' . $p->precoVenda . '</td>';
-                              echo '<td>' . $p->estoque. '</td>';
+                              echo '<td>'.number_format($p->precoCompra,2,',','.').'</td>';
+                              echo '<td>'.number_format($p->precoVenda,2,',','.').'</td>';
+                              echo '<td>'.number_format($p->estoque,2,',','.').'</td>';
+                              echo '<td>'.number_format($p->estoqueMinimo,2,',','.').'</td>';
                               echo '</tr>';
                           }
                           ?>

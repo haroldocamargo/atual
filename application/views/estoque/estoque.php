@@ -247,7 +247,7 @@ if(!$results){?>
 
         <div class="span8"> 
           <label for="produtoEditar">Produto<span class="required">*</span></label>
-          <input id="produtoEditar" class="span12" type="text" name="produto" value="" />
+          <input id="produtoEditar" class="span12" type="text" name="produto" value="" readonly/>
           <input id="produtosEditar_id" class="span12" type="hidden" name="produtosEditar_id" value="" />
         </div>
       </div>
@@ -275,7 +275,7 @@ if(!$results){?>
       <div class="span12" style="margin-left: 0"> 
 	      <div class="span4"> 
 	        <label for="quantidade">Quantidade*</label>
-	        <input class="span12" id="quantidadeEditar" type="text" name="quantidade"  />
+	        <input class="span12" id="quantidadeEditar" type="text" name="quantidade"  readonly/>
 	      </div>  
           <div class="span4">  
             <label for="valor">Valor*</label>

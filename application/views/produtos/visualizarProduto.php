@@ -49,11 +49,11 @@
                         </tr>
                         <tr>
                             <td style="text-align: right"><strong>Estoque</strong></td>
-                            <td><?php echo $result->estoque; ?></td>
+                            <td><?php echo number_format($result->estoque, 2, ',', '.'); ?></td>
                         </tr>
                         <tr>
                             <td style="text-align: right"><strong>Estoque Mínimo</strong></td>
-                            <td><?php echo $result->estoqueMinimo; ?></td>
+                            <td><?php echo number_format($result->estoqueMinimo, 2, ',', '.'); ?></td>
                         </tr>
                         <tr>
                             <td style="text-align: right"><strong>Observação</strong></td>

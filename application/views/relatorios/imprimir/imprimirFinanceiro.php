@@ -50,7 +50,7 @@
                               echo '<tr>';
                               echo '<td>' . $l->cliente_fornecedor . '</td>';
                               echo '<td>' . $l->tipo . '</td>';
-                              echo '<td>' . $l->valor . '</td>';
+                              echo '<td>'.number_format($l->valor,2,',','.').'</td>';
                               echo '<td>' . $vencimento. '</td>';
                               echo '<td>' . $pagamento. '</td>';
                               echo '<td>' . $l->forma_pgto . '</td>';

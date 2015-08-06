@@ -100,14 +100,14 @@
             <?php if($this->permission->checkPermission($this->session->userdata('permissao'),'rServico')){ ?>
                 <li><a href="<?php echo base_url()?>index.php/relatorios/servicos">Serviços</a></li>
             <?php } ?>
+            <?php if($this->permission->checkPermission($this->session->userdata('permissao'),'rCompra')){ ?>
+                <li><a href="<?php echo base_url()?>index.php/relatorios/compras">Compras</a></li>
+            <?php } ?>
             <?php if($this->permission->checkPermission($this->session->userdata('permissao'),'rOs')){ ?>
                  <li><a href="<?php echo base_url()?>index.php/relatorios/os">Ordens de Serviço</a></li>
             <?php } ?>
             <?php if($this->permission->checkPermission($this->session->userdata('permissao'),'rVenda')){ ?>
                 <li><a href="<?php echo base_url()?>index.php/relatorios/vendas">Vendas</a></li>
-            <?php } ?>
-            <?php if($this->permission->checkPermission($this->session->userdata('permissao'),'rCompra')){ ?>
-                <li><a href="<?php echo base_url()?>index.php/relatorios/compras">Compras</a></li>
             <?php } ?>
             <?php if($this->permission->checkPermission($this->session->userdata('permissao'),'rEstoque')){ ?>
                 <li><a href="<?php echo base_url()?>index.php/relatorios/estoque">Estoque</a></li>

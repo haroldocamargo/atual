@@ -75,6 +75,8 @@ class Produtos extends CI_Controller {
         } else {
             $precoCompra = str_replace(",",".", $this->input->post('precoCompra'));
             $precoVenda = str_replace(",", ".", $this->input->post('precoVenda'));
+            $estoque = str_replace(",", ".", $this->input->post('estoque'));
+            $estoqueMinimo = str_replace(",", ".", $this->input->post('estoqueMinimo'));
             $data = array(
                 'descricao' => set_value('descricao'),
                 'unidade' => set_value('unidade'),
@@ -86,8 +88,8 @@ class Produtos extends CI_Controller {
                 'observacaoProduto' => set_value('observacaoProduto'),
                 'precoCompra' => $precoCompra,
                 'precoVenda' => $precoVenda,
-                'estoque' => set_value('estoque'),
-                'estoqueMinimo' => set_value('estoqueMinimo')
+                'estoque' => $estoque,
+                'estoqueMinimo' => $estoqueMinimo
             );
 
             if ($this->produtos_model->add('produtos', $data) == TRUE) {
@@ -118,6 +120,8 @@ class Produtos extends CI_Controller {
             	
             $precoCompra = str_replace(",",".", $this->input->post('precoCompra'));
             $precoVenda = str_replace(",", ".", $this->input->post('precoVenda'));
+            $estoque = str_replace(",", ".", $this->input->post('estoque'));
+            $estoqueMinimo = str_replace(",", ".", $this->input->post('estoqueMinimo'));
             $data = array(
                 'descricao' => $this->input->post('descricao'),
                 'unidade' => $this->input->post('unidade'),
@@ -129,8 +133,8 @@ class Produtos extends CI_Controller {
                 'observacaoProduto' => set_value('observacaoProduto'),
                 'precoCompra' => $precoCompra,
                 'precoVenda' => $precoVenda,
-                'estoque' => $this->input->post('estoque'),
-                'estoqueMinimo' => $this->input->post('estoqueMinimo')
+                'estoque' => $estoque,
+                'estoqueMinimo' => $estoqueMinimo
             );
 
             if ($this->produtos_model->edit('produtos', $data, 'idProdutos', $this->input->post('idProdutos')) == TRUE) {
