@@ -187,7 +187,7 @@
 <div class="modal-body">
     <div class="span12" style="margin-left: 0"> 
       <label for="descricao">Descrição</label>
-      <input class="span12" id="descricao" type="text" name="descricao" value="Fatura de Venda - #<?php echo $result->idVendas; ?> "  />
+      <input class="span12" id="descricao" type="text" name="descricao" value="Fatura da Venda - #<?php echo $result->idVendas; ?> "  />
     </div>  
 
     <div class="span12" style="margin-left: 0"> 
@@ -204,68 +204,59 @@
     </div>
 
     <div class="span12" style="margin-left: 0"> 
-      <div class="span4" style="margin-left: 0">  
+      <div class="span3" >  
         <label for="valor">Valor*</label>
         <input type="hidden" id="tipo" name="tipo" value="receita" /> 
         <input class="span12 money" id="valor" type="text" name="valor" value="<?php echo number_format($total,2); ?> "  />
       </div>
-      <div class="span4" >
-        <label for="vencimento">Data Vencimento*</label>
+      <div class="span3" >  
+        <label for="vencimento">Vencimento*</label>
         <input class="span12 datepicker" id="vencimento" type="text" name="vencimento"  />
       </div>
-    </div>
-    
-    <div class="span12" style="margin-left: 0"> 
-      <div class="span4" style="margin-left: 0">  
+      <div class="span3" >  
         <label for="valor2">Valor</label>
         <input class="span12 money" id="valor2" type="text" name="valor2" value=""  />
       </div>
-      <div class="span4" >
-        <label for="vencimento2">Data Vencimento</label>
+      <div class="span3" >  
+        <label for="vencimento2">Vencimento</label>
         <input class="span12 datepicker" id="vencimento2" type="text" name="vencimento2"  />
       </div>
     </div>
     
     <div class="span12" style="margin-left: 0"> 
-      <div class="span4" style="margin-left: 0">  
+      <div class="span3" >  
         <label for="valor3">Valor</label>
         <input class="span12 money" id="valor3" type="text" name="valor3" value=""  />
       </div>
-      <div class="span4" >
-        <label for="vencimento3">Data Vencimento</label>
+      <div class="span3" >  
+        <label for="vencimento3">Vencimento</label>
         <input class="span12 datepicker" id="vencimento3" type="text" name="vencimento3"  />
       </div>
-    </div>
-    
-    <div class="span12" style="margin-left: 0"> 
-      <div class="span4" style="margin-left: 0">  
+      <div class="span3" >  
         <label for="valor4">Valor</label>
         <input class="span12 money" id="valor4" type="text" name="valor4" value=""  />
       </div>
-      <div class="span4" >
-        <label for="vencimento4">Data Vencimento</label>
+      <div class="span3" >  
+        <label for="vencimento4">Vencimento</label>
         <input class="span12 datepicker" id="vencimento4" type="text" name="vencimento4"  />
       </div>
     </div>
     
     <div class="span12" style="margin-left: 0"> 
-      <div class="span4" style="margin-left: 0">  
+      <div class="span3" >  
         <label for="valor5">Valor</label>
         <input class="span12 money" id="valor5" type="text" name="valor5" value=""  />
       </div>
-      <div class="span4" >
-        <label for="vencimento5">Data Vencimento</label>
+      <div class="span3" >  
+        <label for="vencimento5">Vencimento</label>
         <input class="span12 datepicker" id="vencimento5" type="text" name="vencimento5"  />
       </div>
-    </div>
-    
-    <div class="span12" style="margin-left: 0"> 
-      <div class="span4" style="margin-left: 0">  
+      <div class="span3" >  
         <label for="valor6">Valor</label>
         <input class="span12 money" id="valor6" type="text" name="valor6" value=""  />
       </div>
-      <div class="span4" >
-        <label for="vencimento6">Data Vencimento</label>
+      <div class="span3" >  
+        <label for="vencimento6">Vencimento</label>
         <input class="span12 datepicker" id="vencimento6" type="text" name="vencimento6"  />
       </div>
     </div>

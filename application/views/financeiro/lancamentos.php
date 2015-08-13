@@ -126,6 +126,9 @@ if(!$results){?>
             <th>Vencimento</th>
             <th>Situação</th>
             <th>Valor</th>
+            <th>Compra</th>
+            <th>OS</th>
+            <th>Venda</th>
             <th>Ações</th>
         </tr>
     </thead>
@@ -165,6 +168,9 @@ if(!$results){?>
             <th>Vencimento</th>
             <th>Situação</th>
             <th>Valor</th>
+            <th>Compra</th>
+            <th>OS</th>
+            <th>Venda</th>
             <th>Ações</th>
         </tr>
     </thead>
@@ -187,6 +193,9 @@ if(!$results){?>
             echo '<td>'.$vencimento.'</td>';   
             echo '<td>'.$status.'</td>';
             echo '<td>'.number_format($r->valor,2,',','.').'</td>';
+            echo '<td>'.$r->compras_id.'</td>';
+            echo '<td>'.$r->os_id.'</td>';
+            echo '<td>'.$r->vendas_id.'</td>';
             
             echo '<td>';
             if($this->permission->checkPermission($this->session->userdata('permissao'),'vLancamento')){
@@ -194,7 +203,10 @@ if(!$results){?>
             }
 
             if($this->permission->checkPermission($this->session->userdata('permissao'),'eLancamento')){
-                echo '<a href="#modalEditar" style="margin-right: 1%" data-toggle="modal" role="button" idLancamento="'.$r->idLancamentos.'" descricao="'.$r->descricao.'" valor="'.$r->valor.'" vencimento="'.date('d/m/Y',strtotime($r->data_vencimento)).'" pagamento="'.date('d/m/Y', strtotime($r->data_pagamento)).'" baixado="'.$r->baixado.'" fornecedoresEditar_id="'.$r->clientes_id.'" fornecedor="'.$r->cliente_fornecedor.'" formaPgto="'.$r->forma_pgto.'" tipo="'.$r->tipo.'" grupo="'.$r->grupo.'" setor="'.$r->setor.'" documento="'.$r->documento.'" observacao="'.$r->observacao.'" class="btn btn-info tip-top editar" title="Editar Lançamento"><i class="icon-pencil icon-white"></i></a>'; 
+                echo '<a href="#modalEditar" style="margin-right: 1%" data-toggle="modal" role="button" idLancamento="'.$r->idLancamentos.'" descricao="'.$r->descricao.'" valor="'.$r->valor.'" vencimento="'.
+                  date('d/m/Y',strtotime($r->data_vencimento)).'" pagamento="'.date('d/m/Y', strtotime($r->data_pagamento)).'" baixado="'.$r->baixado.'" compras_id="'.$r->compras_id.'"fornecedoresEditar_id="'.$r->clientes_id.
+                  '" fornecedor="'.$r->cliente_fornecedor.'" formaPgto="'.$r->forma_pgto.'" tipo="'.$r->tipo.'" grupo="'.$r->grupo.'" setor="'.$r->setor.'" documento="'.$r->documento.'" os_id="'.$r->os_id.
+                  '" vendas_id="'.$r->vendas_id.'" observacao="'.$r->observacao.'" class="btn btn-info tip-top editar" title="Editar Lançamento"><i class="icon-pencil icon-white"></i></a>'; 
             }
 
             if($this->permission->checkPermission($this->session->userdata('permissao'),'dLancamento')){
@@ -211,15 +223,18 @@ if(!$results){?>
     <tfoot>
     	<tr>
     		<td colspan="8" style="text-align: right; color: green"> <strong>Total Receitas:</strong></td>
-    		<td colspan="2" style="text-align: left; color: green"><strong><?php echo number_format($totalReceita,2,',','.') ?></strong></td>
+    		<td colspan="1" style="text-align: left; color: green"><strong><?php echo number_format($totalReceita,2,',','.') ?></strong></td>
+    		<td colspan="4" style="text-align: left; color: green"><strong></strong></td>
     	</tr>
     	<tr>
     		<td colspan="8" style="text-align: right; color: red"> <strong>Total Despesas:</strong></td>
-    		<td colspan="2" style="text-align: left; color: red"><strong><?php echo number_format($totalDespesa,2,',','.') ?></strong></td>
+    		<td colspan="1" style="text-align: left; color: red"><strong><?php echo number_format($totalDespesa,2,',','.') ?></strong></td>
+    		<td colspan="4" style="text-align: left; color: green"><strong></strong></td>
     	</tr>
     	<tr>
     		<td colspan="8" style="text-align: right"> <strong>Saldo:</strong></td>
-    		<td colspan="2" style="text-align: left;"><strong><?php echo number_format($totalReceita - $totalDespesa,2,',','.') ?></strong></td>
+    		<td colspan="1" style="text-align: left;"><strong><?php echo number_format($totalReceita - $totalDespesa,2,',','.') ?></strong></td>
+    		<td colspan="4" style="text-align: left; color: green"><strong></strong></td>
     	</tr>
     </tfoot>
 </table>
@@ -481,12 +496,27 @@ if(!$results){?>
       </div>
 
       <div class="span12" style="margin-left: 0"> 
-	      <div class="span12"> 
+	      <div class="span2"> 
+	        <label for="compras_id">Compra</label>
+	        <input class="span12" id="compras_id" type="text" name="compras_id" readonly />
+	      </div>  
+	
+	      <div class="span2"> 
+	        <label for="os_id">Os</label>
+	        <input class="span12" id="os_id" type="text" name="os_id" readonly />
+	      </div>  
+	
+	      <div class="span2"> 
+	        <label for="vendas_id">Venda</label>
+	        <input class="span12" id="vendas_id" type="text" name="vendas_id" readonly />
+	      </div>  
+
+	      <div class="span6"> 
 	        <label for="observacao">Observação</label>
 	        <input class="span12" type="text" name="observacao" id="observacaoEditar" />
 	      </div>  
       </div>  
-
+        
       <div class="span12" style="margin-left: 0"> 
         <div class="span4" style="margin-left: 0">
           <label for="pago">Foi Pago?</label>
@@ -510,7 +540,6 @@ if(!$results){?>
             </select>
           </div>
         </div>
-        
       </div>
 
   </div>
@@ -672,6 +701,9 @@ if(!$results){?>
       $("#grupoEditar").val($(this).attr('grupo'));
       $("#setorEditar").val($(this).attr('setor'));
       $("#observacaoEditar").val($(this).attr('observacao'));
+      $("#compras_id").val($(this).attr('compras_id'));
+      $("#os_id").val($(this).attr('os_id'));
+      $("#vendas_id").val($(this).attr('vendas_id'));
       var baixado = $(this).attr('baixado');
       if(baixado == 1){
         $("#pagamentoEditar").val($(this).attr('pagamento'));

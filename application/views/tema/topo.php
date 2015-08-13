@@ -75,21 +75,34 @@
     <?php } ?>
     
     <?php if($this->permission->checkPermission($this->session->userdata('permissao'),'vEstoque')){ ?>
+        <li class="<?php if(isset($menuEstoque)){echo 'active';};?>"><a href="<?php echo base_url()?>index.php/estoque"><i class="icon icon icon-folder-close"></i> <span>Estoque</span></a></li>
+    <?php } ?>
+    
+    <?php if($this->permission->checkPermission($this->session->userdata('permissao'),'vLancamento')){ ?>
+        <li class="<?php if(isset($menuFinanceiro)){echo 'active';};?>"><a href="<?php echo base_url()?>index.php/financeiro/lancamentos"><i class="icon icon icon-money"></i> <span>Financeiro</span></a></li>
+    <?php } ?>
+    
+
+    <?php if($this->permission->checkPermission($this->session->userdata('permissao'),'vEstoque')){ ?>
+<!--
         <li class="submenu <?php if(isset($menuEstoque)){echo 'active open';};?>">
           <a href="#"><i class="icon icon-folder-close"></i> <span>Estoque</span> <span class="label"><i class="icon-chevron-down"></i></span></a>
           <ul>
             <li><a href="<?php echo base_url()?>index.php/estoque">Lançamentos</a></li>
           </ul>
         </li>
+-->
     <?php } ?>
 
     <?php if($this->permission->checkPermission($this->session->userdata('permissao'),'vLancamento')){ ?>
+<!--
         <li class="submenu <?php if(isset($menuFinanceiro)){echo 'active open';};?>">
           <a href="#"><i class="icon icon-money"></i> <span>Financeiro</span> <span class="label"><i class="icon-chevron-down"></i></span></a>
           <ul>
             <li><a href="<?php echo base_url()?>index.php/financeiro/lancamentos">Lançamentos</a></li>
           </ul>
         </li>
+-->
     <?php } ?>
 
     <?php if($this->permission->checkPermission($this->session->userdata('permissao'),'rCliente') || $this->permission->checkPermission($this->session->userdata('permissao'),'rProduto') || $this->permission->checkPermission($this->session->userdata('permissao'),'rServico') || $this->permission->checkPermission($this->session->userdata('permissao'),'rOs') || $this->permission->checkPermission($this->session->userdata('permissao'),'rFinanceiro') || $this->permission->checkPermission($this->session->userdata('permissao'),'rVenda') || $this->permission->checkPermission($this->session->userdata('permissao'),'rCompra')){ ?>
