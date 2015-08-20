@@ -167,7 +167,7 @@ class Conecte extends CI_Controller {
         
         $config['base_url'] = base_url().'index.php/conecte/compras/';
         $config['total_rows'] = $this->Conecte_model->count('vendas',$this->session->userdata('id'));
-        $config['per_page'] = 10;
+        $config['per_page'] = 500;
         $config['next_link'] = 'Próxima';
         $config['prev_link'] = 'Anterior';
         $config['full_tag_open'] = '<div class="pagination alternate"><ul>';
@@ -208,7 +208,7 @@ class Conecte extends CI_Controller {
         
         $config['base_url'] = base_url().'index.php/conecte/os/';
         $config['total_rows'] = $this->Conecte_model->count('os',$this->session->userdata('id'));
-        $config['per_page'] = 10;
+        $config['per_page'] = 500;
         $config['next_link'] = 'Próxima';
         $config['prev_link'] = 'Anterior';
         $config['full_tag_open'] = '<div class="pagination alternate"><ul>';

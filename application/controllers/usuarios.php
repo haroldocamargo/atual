@@ -29,7 +29,7 @@ class Usuarios extends CI_Controller {
 
         $config['base_url'] = base_url().'index.php/usuarios/gerenciar/';
         $config['total_rows'] = $this->usuarios_model->count('usuarios');
-        $config['per_page'] = 10;
+        $config['per_page'] = 500;
         $config['next_link'] = 'Próxima';
         $config['prev_link'] = 'Anterior';
         $config['full_tag_open'] = '<div class="pagination alternate"><ul>';

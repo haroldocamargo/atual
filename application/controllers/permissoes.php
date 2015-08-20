@@ -29,7 +29,7 @@ class Permissoes extends CI_Controller {
         
         $config['base_url'] = base_url().'index.php/permissoes/gerenciar/';
         $config['total_rows'] = $this->permissoes_model->count('permissoes');
-        $config['per_page'] = 10;
+        $config['per_page'] = 500;
         $config['next_link'] = 'Próxima';
         $config['prev_link'] = 'Anterior';
         $config['full_tag_open'] = '<div class="pagination alternate"><ul>';

@@ -65,6 +65,8 @@ class Atual extends CI_Controller {
         $this->data['servicos'] = $data['results']['servicos'];
         $this->data['os'] = $data['results']['os'];
         $this->data['clientes'] = $data['results']['clientes'];
+        $this->data['compras'] = $data['results']['compras'];
+        $this->data['vendas'] = $data['results']['vendas'];
         $this->data['view'] = 'atual/pesquisa';
         $this->load->view('tema/topo',  $this->data);
       

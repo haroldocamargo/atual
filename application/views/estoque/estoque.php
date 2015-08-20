@@ -225,6 +225,7 @@ if(!$results){?>
 	
 <!-- <?php echo $this->pagination->create_links();}?> --> 
 
+
 <!-- Modal editar estoque -->
 <div id="modalEditar" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <form id="formEditar" action="<?php echo base_url() ?>index.php/estoque/editar" method="post">

@@ -243,8 +243,8 @@ if(!$results){?>
 
 </div>
 	
-<!-- <?php echo $this->pagination->create_links();}?> --> 
-
+<!--?php echo $this->pagination->create_links();}?-->
+<?php }?>
 
 
 <!-- Modal nova receita -->

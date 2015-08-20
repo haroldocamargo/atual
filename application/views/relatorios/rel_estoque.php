@@ -28,7 +28,7 @@
                 <div class="span12 well">
                     
                     <div class="span6">
-                        <label for="">Vencimento de:</label>
+                        <label for="">Data de:</label>
                         <input type="date" name="dataInicial" class="span12" />
                     </div>
                     <div class="span6">

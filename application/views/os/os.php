@@ -1,6 +1,86 @@
+<link rel="stylesheet" href="<?php echo base_url();?>js/jquery-ui/css/smoothness/jquery-ui-1.9.2.custom.css" />
+<script type="text/javascript" src="<?php echo base_url()?>js/jquery-ui/js/jquery-ui-1.9.2.custom.js"></script>
+<script type="text/javascript" src="<?php echo base_url()?>js/jquery.validate.js"></script>
+
 <?php if($this->permission->checkPermission($this->session->userdata('permissao'),'aOs')){ ?>
     <a href="<?php echo base_url();?>index.php/os/adicionar" class="btn btn-success"><i class="icon-plus icon-white"></i> Adicionar OS</a>
 <?php } ?>
+
+
+<div class="span12" style="margin-left: 0">
+	<form action="<?php echo current_url(); ?>" method="get" >
+	<div class="span12" style="margin-left: 0">
+		<div class="span1">
+			<label>Os</label>
+    	    <div class="controls">
+        	    <input id="os" class="span12" type="text" name="os" />
+            </div>
+		</div>
+
+        <div class="span2">
+            <label for="cliente">Pessoa</label>
+            <input id="cliente" class="span12" type="text" name="cliente" value=""  />
+            <input id="clientes_id" class="span12" type="hidden" name="clientes_id" value=""  />
+        </div>
+		
+		<div class="span1">
+			<label>Dcto</label>
+    	    <div class="controls">
+        	    <input id="documento" class="span12" type="text" name="documento" />
+            </div>
+		</div>
+
+		<div class="span1">
+			<label>De</label>
+    	    <div class="controls">
+	    		<input class="input-mini datepicker" id="vencimento" type="text" name="vencimento" />
+            </div>
+		</div>
+		
+		<div class="span1">
+			<label>Até</label>
+    	    <div class="controls">
+	    		<input class="input-mini datepicker" id="vencimento2" type="text" name="vencimento2"  />
+            </div>
+		</div>
+
+        <div class="span2">
+            <label for="status">Status</label>
+            <select class="span12" name="status" id="status" value="">
+                <option value="">&nbsp</option>
+                <option value="Orçamento">Orçamento</option>
+                <option value="Aberto">Aberto</option>
+                <option value="Em Andamento">Em Andamento</option>
+                <option value="Finalizado">Finalizado</option>
+                <option value="Cancelado">Cancelado</option>
+            </select>
+        </div>
+
+        <div class="span2">
+            <label for="tecnico">Técnico / Responsável</label>
+            <input id="tecnico" class="span12" type="text" name="tecnico" value=""  />
+            <input id="usuarios_id" class="span12" type="hidden" name="usuarios_id" value=""  />
+        </div>
+
+		<div class="span1">
+			<label>Setor</label>
+    	    <div class="controls">
+        	    <input id="setor" class="input-mini" type="text" name="setor" />
+            </div>
+		</div>
+
+		<div class="span1" >
+			&nbsp
+			<button type="submit" class="span12 btn btn-primary">Filtrar</button>
+		</div>
+    </div>
+		
+	</form>
+</div>
+
+<div class="span12" style="margin-left: 0;">
+
+
 
 <?php
 
@@ -105,7 +185,8 @@ if(!$results){?>
 </div>
 </div>
 	
-<?php echo $this->pagination->create_links();}?>
+<!--?php echo $this->pagination->create_links();}?-->
+<?php }?>
 
 
 <!-- Modal -->
@@ -127,20 +208,42 @@ if(!$results){?>
 </div>
 
 
-
-
-
-
+<script src="<?php echo base_url()?>js/jquery.validate.js"></script>
+<script src="<?php echo base_url();?>js/maskmoney.js"></script>
 <script type="text/javascript">
-$(document).ready(function(){
+jQuery(document).ready(function($) {
 
+	$(document).ready(function(){
 
-   $(document).on('click', 'a', function(event) {
+   		$(document).on('click', 'a', function(event) {
         
-        var os = $(this).attr('os');
-        $('#idOs').val(os);
+	        var os = $(this).attr('os');
+    	    $('#idOs').val(os);
 
+    	});
+
+	});
+
+
+    $("#tecnico").autocomplete({
+          source: "<?php echo base_url(); ?>index.php/os/autoCompleteUsuario",
+          minLength: 5,
+          select: function( event, ui ) {
+
+               $("#usuarios_id").val(ui.item.id);
+          }
     });
+
+    $("#cliente").autocomplete({
+          source: "<?php echo base_url(); ?>index.php/os/autoCompleteCliente",
+          minLength: 5,
+          select: function( event, ui ) {
+
+               $("#clientes_id").val(ui.item.id);
+          }
+    });
+
+    $(".datepicker" ).datepicker({ dateFormat: 'dd/mm/yy' });
 
 });
 

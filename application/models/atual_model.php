@@ -50,24 +50,73 @@ class Atual_model extends CI_Model {
 
     function pesquisar($termo){
          $data = array();
+
          // buscando clientes
          $this->db->like('nomeCliente',$termo);
-         $this->db->limit(5);
+         $this->db->limit(10);
          $data['clientes'] = $this->db->get('clientes')->result();
 
          // buscando os
-         $this->db->like('idOs',$termo);
-         $this->db->limit(5);
-         $data['os'] = $this->db->get('os')->result();
+		 $this->db->distinct();
+         $this->db->select('os.*');
+         $this->db->join('produtos_os', 'produtos_os.os_id = os.idOs');
+         $this->db->join('produtos', 'produtos.idProdutos = produtos_os.produtos_id');
+         $this->db->like('produtos.descricao',$termo);
+         $this->db->limit(10);
+		 $query1 =  $this->db->get('os')->result();
+		 $this->db->distinct();
+         $this->db->select('os.*');
+         $this->db->join('servicos_os', 'servicos_os.os_id = os.idOs');
+         $this->db->join('servicos', 'servicos.idServicos = servicos_os.servicos_id');
+         $this->db->like('servicos.descricao',$termo);
+         $this->db->limit(10);
+		 $query2 =  $this->db->get('os')->result();
+		 $this->db->distinct();
+         $this->db->select('os.*');
+         $this->db->join('clientes', 'clientes.idClientes = os.clientes_id');
+         $this->db->like('clientes.nomeCliente',$termo);
+         $this->db->limit(10);
+		 $query3 =  $this->db->get('os')->result();
+         $data['os'] = array_merge($query1, $query2, $query3);
+
+         // buscando compras
+         $this->db->select('compras.*, clientes.nomeCliente');
+         $this->db->join('clientes', 'clientes.idClientes = compras.clientes_id');
+         $this->db->join('itens_de_compras', 'itens_de_compras.compras_id = compras.idCompras');
+         $this->db->join('produtos', 'produtos.idProdutos = itens_de_compras.produtos_id');
+         $this->db->like('produtos.descricao',$termo);
+         $this->db->limit(10);
+         $query1 = $this->db->get('compras')->result();
+         $this->db->select('compras.*, clientes.nomeCliente');
+         $this->db->join('clientes', 'clientes.idClientes = compras.clientes_id');
+         $this->db->like('clientes.nomeCliente',$termo);
+         $this->db->limit(10);
+         $query2 = $this->db->get('compras')->result();
+         $data['compras'] = array_merge($query1, $query2);
+
+         // buscando vendas
+         $this->db->select('vendas.*, clientes.nomeCliente');
+         $this->db->join('clientes', 'clientes.idClientes = vendas.clientes_id');
+         $this->db->join('itens_de_vendas', 'itens_de_vendas.vendas_id = vendas.idVendas');
+         $this->db->join('produtos', 'produtos.idProdutos = itens_de_vendas.produtos_id');
+         $this->db->like('produtos.descricao',$termo);
+         $this->db->limit(10);
+         $query1 = $this->db->get('vendas')->result();
+         $this->db->select('vendas.*, clientes.nomeCliente');
+         $this->db->join('clientes', 'clientes.idClientes = vendas.clientes_id');
+         $this->db->like('clientes.nomeCliente',$termo);
+         $this->db->limit(10);
+         $query2 = $this->db->get('vendas')->result();
+         $data['vendas'] = array_merge($query1, $query2);
 
          // buscando produtos
          $this->db->like('descricao',$termo);
-         $this->db->limit(5);
+         $this->db->limit(10);
          $data['produtos'] = $this->db->get('produtos')->result();
 
          //buscando serviços
          $this->db->like('nome',$termo);
-         $this->db->limit(5);
+         $this->db->limit(10);
          $data['servicos'] = $this->db->get('servicos')->result();
 
          return $data;

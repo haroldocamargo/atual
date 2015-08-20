@@ -27,12 +27,66 @@ class Vendas extends CI_Controller {
            redirect(base_url());
         }
 
+		$where = '';
+		$vendas = $this->input->get('venda');
+		$cliente = $this->input->get('clientes_id');
+		$documento = $this->input->get('documento');
+		$vencimento = $this->input->get('vencimento');
+		$vencimento2 = $this->input->get('vencimento2');
+		$status = $this->input->get('status');
+		$usuario = $this->input->get('usuarios_id');
+		$setor = $this->input->get('setor');
+
+        
+        // busca os lançamentos
+	    if(rtrim($vendas) <> ''){
+	        $where = 'idVendas = '.$vendas;
+        };
+
+	    if(rtrim($cliente) <> ''){
+	    	if (rtrim($where) <> '') {$where = $where.' and ';}
+	        $where = $where.'clientes_id = '.$cliente;
+        };
+	
+	    if(rtrim($documento) <> ''){
+	    	if (rtrim($where) <> '') {$where = $where.' and ';}
+	        $where = $where.'documentoVenda = "'.$documento.'"';
+        };
+
+		if (rtrim($vencimento) <> '') {
+           	$vencimento = explode('/', $vencimento);
+            $vencimento = $vencimento[2].'-'.$vencimento[1].'-'.$vencimento[0];
+	    	if (rtrim($where) <> '') {$where = $where.' and ';}
+	        $where = $where.'dataVenda >= "'.$vencimento.'"';
+		};
+		if (rtrim($vencimento2) <> '') {
+           	$vencimento2 = explode('/', $vencimento2);
+            $vencimento2 = $vencimento2[2].'-'.$vencimento2[1].'-'.$vencimento2[0];
+	    	if (rtrim($where) <> '') {$where = $where.' and ';}
+	        $where = $where.'dataVenda <= "'.$vencimento2.'"';
+		};
+        
+	    if(rtrim($status) <> ''){
+	    	if (rtrim($where) <> '') {$where = $where.' and ';}
+	        $where = $where.'faturado = "'.$status.'"';
+        };
+
+	    if(rtrim($usuario) <> ''){
+	    	if (rtrim($where) <> '') {$where = $where.' and ';}
+	        $where = $where.'usuarios_id = "'.$usuario.'"';
+        };
+
+	    if(rtrim($setor) <> ''){
+	    	if (rtrim($where) <> '') {$where = $where.' and ';}
+	        $where = $where.'setorVenda = "'.$setor.'"';
+        };
+
         $this->load->library('pagination');
         
         
         $config['base_url'] = base_url().'index.php/vendas/gerenciar/';
         $config['total_rows'] = $this->vendas_model->count('vendas');
-        $config['per_page'] = 10;
+        $config['per_page'] = 500;
         $config['next_link'] = 'Próxima';
         $config['prev_link'] = 'Anterior';
         $config['full_tag_open'] = '<div class="pagination alternate"><ul>';
@@ -54,7 +108,7 @@ class Vendas extends CI_Controller {
         	
         $this->pagination->initialize($config); 	
 
-		$this->data['results'] = $this->vendas_model->get('vendas','*','',$config['per_page'],$this->uri->segment(3));
+		$this->data['results'] = $this->vendas_model->get('vendas','*',$where,$config['per_page'],$this->uri->segment(3));
        
 	    $this->data['view'] = 'vendas/vendas';
        	$this->load->view('tema/topo',$this->data);

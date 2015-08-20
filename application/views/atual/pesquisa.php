@@ -10,8 +10,66 @@
         </form>
     </div>
     <div class="span12" style="margin-left: 0; margin-top: 0">
-    <!--Produtoss-->
+
+    <!--Pessoas-->
     <div class="span6" style="margin-left: 0; margin-top: 0">
+        <div class="widget-box" style="min-height: 200px">
+            <div class="widget-title">
+                <span class="icon">
+                    <i class="icon-user"></i>
+                </span>
+                <h5>Pessoas</h5>
+
+            </div>
+
+            <div class="widget-content nopadding">
+
+
+                <table class="table table-bordered ">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Nome</th>
+                            <th>CPF/CNPJ</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php
+                        if($clientes == null){
+                            echo '<tr><td colspan="4">Nenhuma pessoa foi encontrada.</td></tr>';
+                        }
+                        foreach ($clientes as $r) {
+                            echo '<tr>';
+                            echo '<td>' . $r->idClientes . '</td>';
+                            echo '<td>' . $r->nomeCliente . '</td>';
+                            echo '<td>' . $r->documento . '</td>';
+                            echo '<td>';
+
+                            if($this->permission->checkPermission($this->session->userdata('permissao'),'vCliente')){
+                                echo '<a style="margin-right: 1%" href="' . base_url() . 'index.php/clientes/visualizar/' . $r->idClientes . '" class="btn tip-top" title="Ver mais detalhes"><i class="icon-eye-open"></i></a>'; 
+                            } 
+                            if($this->permission->checkPermission($this->session->userdata('permissao'),'eCliente')){
+                                echo '<a href="' . base_url() . 'index.php/clientes/editar/' . $r->idClientes . '" class="btn btn-info tip-top" title="Editar Pessoa"><i class="icon-pencil icon-white"></i></a>'; 
+                            } 
+                            
+                            
+                            echo '</td>';
+                            echo '</tr>';
+                        }
+                        ?>
+                        <tr>
+
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+    
+    <!--Produtos-->
+    <div class="span6">
         <div class="widget-box" style="min-height: 200px">
             <div class="widget-title">
                 <span class="icon">
@@ -65,64 +123,6 @@
     </div>
 
 
-    <!--Pessoas-->
-    <div class="span6">
-        <div class="widget-box" style="min-height: 200px">
-            <div class="widget-title">
-                <span class="icon">
-                    <i class="icon-user"></i>
-                </span>
-                <h5>Pessoas</h5>
-
-            </div>
-
-            <div class="widget-content nopadding">
-
-
-                <table class="table table-bordered ">
-                    <thead>
-                        <tr>
-                            <th>#</th>
-                            <th>Nome</th>
-                            <th>CPF/CNPJ</th>
-                            <th></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php
-                        if($clientes == null){
-                            echo '<tr><td colspan="4">Nenhum cliente foi encontrado.</td></tr>';
-                        }
-                        foreach ($clientes as $r) {
-                            echo '<tr>';
-                            echo '<td>' . $r->idClientes . '</td>';
-                            echo '<td>' . $r->nomeCliente . '</td>';
-                            echo '<td>' . $r->documento . '</td>';
-                            echo '<td>';
-
-                            if($this->permission->checkPermission($this->session->userdata('permissao'),'vCliente')){
-                                echo '<a style="margin-right: 1%" href="' . base_url() . 'index.php/clientes/visualizar/' . $r->idClientes . '" class="btn tip-top" title="Ver mais detalhes"><i class="icon-eye-open"></i></a>'; 
-                            } 
-                            if($this->permission->checkPermission($this->session->userdata('permissao'),'eCliente')){
-                                echo '<a href="' . base_url() . 'index.php/clientes/editar/' . $r->idClientes . '" class="btn btn-info tip-top" title="Editar Pessoa"><i class="icon-pencil icon-white"></i></a>'; 
-                            } 
-                            
-                            
-                            echo '</td>';
-                            echo '</tr>';
-                        }
-                        ?>
-                        <tr>
-
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-
-    </div>
-    </div>
-    
     <!--Serviços-->
     <div class="span6" style="margin-left: 0">
         <div class="widget-box" style="min-height: 200px">
@@ -175,8 +175,63 @@
     </div>
 
 
-    <!--Ordens de Serviço-->
+    <!--Compras-->
     <div class="span6">
+        <div class="widget-box" style="min-height: 200px">
+            <div class="widget-title">
+                <span class="icon">
+                    <i class="icon-edit"></i>
+                </span>
+                <h5>Compras</h5>
+            </div>
+
+            <div class="widget-content nopadding">
+
+               
+                <table class="table table-bordered ">
+                    <thead>
+                        <tr style="backgroud-color: #2D335B">
+                            <th>#</th>
+                            <th>Data</th>
+                            <th>Pessoa</th>
+                            <th>Sub Total</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php
+                        if($compras == null){
+                            echo '<tr><td colspan="4">Nenhuma compra foi encontrada.</td></tr>';
+                        }
+                        foreach ($compras as $r) {
+                            $data = date(('d/m/Y'), strtotime($r->dataCompra));
+                            echo '<tr>';
+                            echo '<td>' . $r->idCompras . '</td>';
+                            echo '<td>' . $data. '</td>';
+                            echo '<td>' . $r->nomeCliente . '</td>';
+                            echo '<td>' . $r->valorTotal . '</td>';
+                            echo '<td>';
+                            if($this->permission->checkPermission($this->session->userdata('permissao'),'vCompras')){
+                                echo '<a style="margin-right: 1%" href="' . base_url() . 'index.php/compras/visualizar/' . $r->idCompras . '" class="btn tip-top" title="Ver mais detalhes"><i class="icon-eye-open"></i></a>'; 
+                            } 
+                            if($this->permission->checkPermission($this->session->userdata('permissao'),'eCompras')){
+                                echo '<a href="' . base_url() . 'index.php/compras/editar/' . $r->idCompras . '" class="btn btn-info tip-top" title="Editar Compra"><i class="icon-pencil icon-white"></i></a>'; 
+                            }  
+                            echo '</td>';
+                            echo '</tr>';
+                        }
+                        ?>
+                        <tr>
+
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!--Ordens de Serviço-->
+    <div class="span6" style="margin-left: 0; margin-top: 0">
          <div class="widget-box" style="min-height: 200px">
             <div class="widget-title">
                 <span class="icon">
@@ -201,7 +256,7 @@
                     <tbody>
                         <?php
                         if($os == null){
-                            echo '<tr><td colspan="4">Nenhuma os foi encontrado.</td></tr>';
+                            echo '<tr><td colspan="4">Nenhuma os foi encontrada.</td></tr>';
                         }
                         foreach ($os as $r) {
                             $dataInicial = date(('d/m/Y'), strtotime($r->dataInicial));
@@ -231,6 +286,61 @@
         </div>
     </div>
 
+    <!--Vendas-->
+    <div class="span6">
+         <div class="widget-box" style="min-height: 200px">
+            <div class="widget-title">
+                <span class="icon">
+                    <i class="icon-shopping-cart"></i>
+                </span>
+                <h5>Vendas</h5>
+
+            </div>
+
+            <div class="widget-content nopadding">
+
+
+                <table class="table table-bordered ">
+                    <thead>
+                        <tr style="backgroud-color: #2D335B">
+                            <th>#</th>
+                            <th>Data</th>
+                            <th>Pessoa</th>
+                            <th>Sub Total</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php
+                        if($vendas == null){
+                            echo '<tr><td colspan="4">Nenhuma venda foi encontrada.</td></tr>';
+                        }
+                        foreach ($vendas as $r) {
+                            $data = date(('d/m/Y'), strtotime($r->dataVenda));
+                            echo '<tr>';
+                            echo '<td>' . $r->idVendas . '</td>';
+                            echo '<td>' . $data. '</td>';
+                            echo '<td>' . $r->nomeCliente . '</td>';
+                            echo '<td>' . $r->valorTotal . '</td>';
+                            echo '<td>';
+                            if($this->permission->checkPermission($this->session->userdata('permissao'),'vVendas')){
+                                echo '<a style="margin-right: 1%" href="' . base_url() . 'index.php/vendas/visualizar/' . $r->idVendas . '" class="btn tip-top" title="Ver mais detalhes"><i class="icon-eye-open"></i></a>'; 
+                            } 
+                            if($this->permission->checkPermission($this->session->userdata('permissao'),'eVendas')){
+                                echo '<a href="' . base_url() . 'index.php/vendas/editar/' . $r->idVenda . '" class="btn btn-info tip-top" title="Editar Compra"><i class="icon-pencil icon-white"></i></a>'; 
+                            }  
+                            echo '</td>';
+                            echo '</tr>';
+                        }
+                        ?>
+                        <tr>
+
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
 
 
 </div>

@@ -221,9 +221,10 @@
                         <ul class="site-stats">
                             <li class="bg_lh"><i class="icon-group"></i> <strong><?php echo $this->db->count_all('clientes');?></strong> <small>Pessoas</small></li>
                             <li class="bg_lh"><i class="icon-barcode"></i> <strong><?php echo $this->db->count_all('produtos');?></strong> <small>Produtos </small></li>
-                            <li class="bg_lh"><i class="icon-tags"></i> <strong><?php echo $this->db->count_all('os');?></strong> <small>Ordens de Serviço</small></li>
                             <li class="bg_lh"><i class="icon-wrench"></i> <strong><?php echo $this->db->count_all('servicos');?></strong> <small>Serviços</small></li>
-                            
+                            <li class="bg_lh"><i class="icon-edit"></i> <strong><?php echo $this->db->count_all('compras');?></strong> <small>Compras</small></li>
+                            <li class="bg_lh"><i class="icon-tags"></i> <strong><?php echo $this->db->count_all('os');?></strong> <small>Ordens de Serviço</small></li>
+                            <li class="bg_lh"><i class="icon-shopping-cart"></i> <strong><?php echo $this->db->count_all('vendas');?></strong> <small>Vendas</small></li>
                         </ul>
                  
                     </div>
