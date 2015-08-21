@@ -1,6 +1,70 @@
+<link rel="stylesheet" href="<?php echo base_url();?>js/jquery-ui/css/smoothness/jquery-ui-1.9.2.custom.css" />
+<script type="text/javascript" src="<?php echo base_url()?>js/jquery-ui/js/jquery-ui-1.9.2.custom.js"></script>
+
 <?php if($this->permission->checkPermission($this->session->userdata('permissao'),'aServico')){ ?>
     <a href="<?php echo base_url()?>index.php/servicos/adicionar" class="btn btn-success"><i class="icon-plus icon-white"></i> Adicionar Serviço</a>
 <?php } ?>
+
+<div class="span12" style="margin-left: 0">
+	<form action="<?php echo current_url(); ?>" method="get" >
+		<div class="span1" style="margin-left: 0">
+			<label>Código</label>
+    	    <div class="controls">
+        	    <input id="codigo" class="span12" type="text" name="codigo" />
+            </div>
+		</div>
+
+        <div class="span4">
+            <label for="servico">Serviço</label>
+            <input id="servico" class="span12" type="text" name="servico" value=""  />
+            <input id="servicos_id" class="span12" type="hidden" name="servicos_id" value=""  />
+        </div>
+		
+		<div class="span1">
+			<label>Grupo</label>
+    	    <div class="controls">
+        	    <input id="grupo" class="input-mini" type="text" name="grupo" />
+            </div>
+		</div>
+
+		<div class="span1">
+			<label>SubGrupo</label>
+    	    <div class="controls">
+        	    <input id="subgrupo" class="input-mini" type="text" name="subgrupo" />
+            </div>
+		</div>
+
+		<div class="span1">
+			<label>Categoria</label>
+    	    <div class="controls">
+        	    <input class="input-mini" id="categoria" type="text" name="categoria" />
+            </div>
+		</div>
+
+		<div class="span1">
+			<label>Classe</label>
+    	    <div class="controls">
+        	    <input class="input-mini" id="classe" type="text" name="classe" />
+            </div>
+		</div>
+
+		<div class="span1">
+			<label>Tipo</label>
+    	    <div class="controls">
+        	    <input class="input-mini" id="tipo" type="text" name="tipo" />
+            </div>
+		</div>
+
+		
+		<div class="span1" >
+			&nbsp
+			<button type="submit" class="span12 btn btn-primary">Filtrar</button>
+		</div>
+		
+	</form>
+</div>
+
+<div class="span12" style="margin-left: 0;">
 
 <?php
 
@@ -120,21 +184,33 @@ else{ ?>
   </form>
 </div>
 
-
-
-
-
-
+<script src="<?php echo base_url()?>js/jquery.validate.js"></script>
+<script src="<?php echo base_url();?>js/maskmoney.js"></script>
 <script type="text/javascript">
-$(document).ready(function(){
+jQuery(document).ready(function($) {
 
+	$(document).ready(function(){
 
-   $(document).on('click', 'a', function(event) {
+   		$(document).on('click', 'a', function(event) {
         
-        var servico = $(this).attr('servico');
-        $('#idServico').val(servico);
+	        var servico = $(this).attr('servico');
+	        $('#idServico').val(servico);
 
-    });
+    	});
+
+	});
+
+
+	      $("#servico").autocomplete({
+	            source: "<?php echo base_url(); ?>index.php/servicos/autoCompleteServico",
+	            minLength: 5,
+	            select: function( event, ui ) {
+	                 $("#servicos_id").val(ui.item.id);
+	            }
+	      });
+	
+
+    $(".datepicker" ).datepicker({ dateFormat: 'dd/mm/yy' });
 
 });
 

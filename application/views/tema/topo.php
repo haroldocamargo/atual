@@ -195,9 +195,9 @@
   </div>
 </div>
 <!--Footer-part-->
-<div class="row-fluid">
-  <div id="footer" class="span12">&copy; 2014 | Todos os direitos reservados para <a href="http://www.atualinformaticataubate.com.br">Atual Informática Taubaté Ltda</a></div>
-</div>
+<!--div class="row-fluid"-->
+  <!--div id="footer" class="span12">&copy; 2014 | Todos os direitos reservados para <a href="http://www.atualinformaticataubate.com.br">Atual Informática Taubaté Ltda</a></div-->
+<!--/div-->
 <!--end-Footer-part-->
 
 

@@ -1,6 +1,48 @@
+<link rel="stylesheet" href="<?php echo base_url();?>js/jquery-ui/css/smoothness/jquery-ui-1.9.2.custom.css" />
+<script type="text/javascript" src="<?php echo base_url()?>js/jquery-ui/js/jquery-ui-1.9.2.custom.js"></script>
+
 <?php if($this->permission->checkPermission($this->session->userdata('permissao'),'aCliente')){ ?>
     <a href="<?php echo base_url();?>index.php/clientes/adicionar" class="btn btn-success"><i class="icon-plus icon-white"></i> Adicionar Pessoa</a>    
 <?php } ?>
+
+<div class="span12" style="margin-left: 0">
+	<form action="<?php echo current_url(); ?>" method="get" >
+		<div class="span1" style="margin-left: 0">
+			<label>Código</label>
+    	    <div class="controls">
+        	    <input id="codigo" class="span12" type="text" name="codigo" />
+            </div>
+		</div>
+
+        <div class="span4">
+            <label for="cliente">Cliente</label>
+            <input id="cliente" class="span12" type="text" name="cliente" value=""  />
+            <input id="clientes_id" class="span12" type="hidden" name="clientes_id" value=""  />
+        </div>
+		
+		<div class="span2">
+			<label>CNPJ/CPF</label>
+    	    <div class="controls">
+        	    <input id="cnpjcpf" class="span12" type="text" name="cnpjcpf" />
+            </div>
+		</div>
+
+		<div class="span2">
+			<label>IE/RG</label>
+    	    <div class="controls">
+        	    <input id="iergcompleto" class="span12" type="text" name="iergcompleto" />
+            </div>
+		</div>
+
+		<div class="span1" >
+			&nbsp
+			<button type="submit" class="span12 btn btn-primary">Filtrar</button>
+		</div>
+		
+	</form>
+</div>
+
+<div class="span12" style="margin-left: 0;">
 
 <?php
 if(!$results){?>
@@ -21,6 +63,7 @@ if(!$results){?>
                         <th>#</th>
                         <th>Nome</th>
                         <th>CPF/CNPJ</th>
+                        <th>IE/RG</th>
                         <th>Telefone</th>
                         <th>Ações</th>
                     </tr>
@@ -56,6 +99,7 @@ if(!$results){?>
             <th>#</th>
             <th>Nome</th>
             <th>CPF/CNPJ</th>
+            <th>IE/RG</th>
             <th>Telefone</th>
             <th>Ações</th>
         </tr>
@@ -66,6 +110,7 @@ if(!$results){?>
             echo '<td>'.$r->idClientes.'</td>';
             echo '<td>'.$r->nomeCliente.'</td>';
             echo '<td>'.$r->documento.'</td>';
+            echo '<td>'.$r->documento2.'</td>';
             echo '<td>'.$r->telefone.'</td>';
             echo '<td>';
 
@@ -114,20 +159,33 @@ if(!$results){?>
 </div>
 
 
-
-
-
-
+<script src="<?php echo base_url()?>js/jquery.validate.js"></script>
+<script src="<?php echo base_url();?>js/maskmoney.js"></script>
 <script type="text/javascript">
-$(document).ready(function(){
+jQuery(document).ready(function($) {
 
+	$(document).ready(function(){
 
-   $(document).on('click', 'a', function(event) {
+   		$(document).on('click', 'a', function(event) {
         
-        var cliente = $(this).attr('cliente');
-        $('#idCliente').val(cliente);
+	        var cliente = $(this).attr('cliente');
+    	    $('#idCliente').val(cliente);
 
-    });
+    	});
+
+	});
+
+
+	      $("#cliente").autocomplete({
+	            source: "<?php echo base_url(); ?>index.php/clientes/autoCompleteCliente",
+	            minLength: 5,
+	            select: function( event, ui ) {
+	                 $("#clientes_id").val(ui.item.id);
+	            }
+	      });
+	
+
+    $(".datepicker" ).datepicker({ dateFormat: 'dd/mm/yy' });
 
 });
 

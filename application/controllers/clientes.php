@@ -18,12 +18,47 @@ class Clientes extends CI_Controller {
 		$this->gerenciar();
 	}
 
+    public function autoCompleteCliente(){
+
+        if (isset($_GET['term'])){
+            $q = strtolower($_GET['term']);
+            $this->clientes_model->autoCompleteCliente($q);
+        }
+    }
+
+
 	function gerenciar(){
 
         if(!$this->permission->checkPermission($this->session->userdata('permissao'),'vCliente')){
            $this->session->set_flashdata('error','Você não tem permissão para visualizar pessoas.');
            redirect(base_url());
         }
+
+        $where = '';
+		$codigo = $this->input->get('codigo');
+		$cliente = $this->input->get('clientes_id');
+		$cnpjcpf = $this->input->get('cnpjcpf');
+		$iergcompleto = $this->input->get('iergcompleto');
+
+	    if(rtrim($codigo) <> ''){
+	        $where = 'idClientes = '.$codigo;
+        };
+	        
+	    if(rtrim($cliente) <> ''){
+	    	if (rtrim($where) <> '') {$where = $where.' and ';}
+	        $where = $where.'idClientes = '.$cliente;
+        };
+	
+	    if(rtrim($cnpjcpf) <> ''){
+	    	if (rtrim($where) <> '') {$where = $where.' and ';}
+	        $where = $where.'documento = "'.$cnpjcpf.'"';
+        };
+
+	    if(rtrim($iergcompleto) <> ''){
+	    	if (rtrim($where) <> '') {$where = $where.' and ';}
+	        $where = $where.'documento2 = "'.$iergcompleto.'"';
+        };
+
         $this->load->library('table');
         $this->load->library('pagination');
         
@@ -52,7 +87,7 @@ class Clientes extends CI_Controller {
         
         $this->pagination->initialize($config); 	
         
-	    $this->data['results'] = $this->clientes_model->get('clientes','idClientes,nomeCliente,documento,telefone,celular,email,rua,numero,bairro,cidade,estado,cep','',$config['per_page'],$this->uri->segment(3));
+	    $this->data['results'] = $this->clientes_model->get('clientes','*',$where,$config['per_page'],$this->uri->segment(3));
        	
        	$this->data['view'] = 'clientes/clientes';
        	$this->load->view('tema/topo',$this->data);

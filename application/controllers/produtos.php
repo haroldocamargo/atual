@@ -17,6 +17,15 @@ class Produtos extends CI_Controller {
 	   $this->gerenciar();
     }
 
+    public function autoCompleteProduto(){
+
+        if (isset($_GET['term'])){
+            $q = strtolower($_GET['term']);
+            $this->produtos_model->autoCompleteProduto($q);
+        }
+    }
+
+
     function gerenciar(){
         
         if(!$this->permission->checkPermission($this->session->userdata('permissao'),'vProduto')){
@@ -24,9 +33,51 @@ class Produtos extends CI_Controller {
            redirect(base_url());
         }
 
+        $where = '';
+		$codigo = $this->input->get('codigo');
+		$produto = $this->input->get('produtos_id');
+		$grupo = $this->input->get('grupo');
+		$subgrupo = $this->input->get('subgrupo');
+		$categoria = $this->input->get('categoria');
+		$classe = $this->input->get('classe');
+		$tipo = $this->input->get('tipo');
+		
+	    if(rtrim($codigo) <> ''){
+	        $where = 'idProdutos = '.$codigo;
+        };
+	        
+	    if(rtrim($produto) <> ''){
+	    	if (rtrim($where) <> '') {$where = $where.' and ';}
+	        $where = $where.'idProdutos = '.$produto;
+        };
+	
+	    if(rtrim($grupo) <> ''){
+	    	if (rtrim($where) <> '') {$where = $where.' and ';}
+	        $where = $where.'grupo = "'.$grupo.'"';
+        };
+
+	    if(rtrim($subgrupo) <> ''){
+	    	if (rtrim($where) <> '') {$where = $where.' and ';}
+	        $where = $where.'subgrupo = "'.$subgrupo.'"';
+        };
+
+	    if(rtrim($categoria) <> ''){
+	    	if (rtrim($where) <> '') {$where = $where.' and ';}
+	        $where = $where.'categoria = "'.$categoria.'"';
+        };
+        
+	    if(rtrim($classe) <> ''){
+	    	if (rtrim($where) <> '') {$where = $where.' and ';}
+	        $where = $where.'classe = "'.$classe.'"';
+        };
+        
+	    if(rtrim($tipo) <> ''){
+	    	if (rtrim($where) <> '') {$where = $where.' and ';}
+	        $where = $where.'tipo = "'.$tipo.'"';
+        };
+        
         $this->load->library('table');
         $this->load->library('pagination');
-        
         
         $config['base_url'] = base_url().'index.php/produtos/gerenciar/';
         $config['total_rows'] = $this->produtos_model->count('produtos');
@@ -52,7 +103,7 @@ class Produtos extends CI_Controller {
         
         $this->pagination->initialize($config); 	
 
-	    $this->data['results'] = $this->produtos_model->get('produtos','idProdutos,descricao,unidade,precoCompra,precoVenda,estoque,estoqueMinimo','',$config['per_page'],$this->uri->segment(3));
+	    $this->data['results'] = $this->produtos_model->get('produtos','*',$where,$config['per_page'],$this->uri->segment(3));
        
 	    $this->data['view'] = 'produtos/produtos';
        	$this->load->view('tema/topo',$this->data);

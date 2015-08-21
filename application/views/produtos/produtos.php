@@ -1,6 +1,70 @@
+<link rel="stylesheet" href="<?php echo base_url();?>js/jquery-ui/css/smoothness/jquery-ui-1.9.2.custom.css" />
+<script type="text/javascript" src="<?php echo base_url()?>js/jquery-ui/js/jquery-ui-1.9.2.custom.js"></script>
+
 <?php if($this->permission->checkPermission($this->session->userdata('permissao'),'aProduto')){ ?>
     <a href="<?php echo base_url();?>index.php/produtos/adicionar" class="btn btn-success"><i class="icon-plus icon-white"></i> Adicionar Produto</a>
 <?php } ?>
+
+<div class="span12" style="margin-left: 0">
+	<form action="<?php echo current_url(); ?>" method="get" >
+		<div class="span1" style="margin-left: 0">
+			<label>Código</label>
+    	    <div class="controls">
+        	    <input id="codigo" class="span12" type="text" name="codigo" />
+            </div>
+		</div>
+
+        <div class="span4">
+            <label for="produto">Produto</label>
+            <input id="produto" class="span12" type="text" name="produto" value=""  />
+            <input id="produtos_id" class="span12" type="hidden" name="produtos_id" value=""  />
+        </div>
+		
+		<div class="span1">
+			<label>Grupo</label>
+    	    <div class="controls">
+        	    <input id="grupo" class="input-mini" type="text" name="grupo" />
+            </div>
+		</div>
+
+		<div class="span1">
+			<label>SubGrupo</label>
+    	    <div class="controls">
+        	    <input id="subgrupo" class="input-mini" type="text" name="subgrupo" />
+            </div>
+		</div>
+
+		<div class="span1">
+			<label>Categoria</label>
+    	    <div class="controls">
+        	    <input class="input-mini" id="categoria" type="text" name="categoria" />
+            </div>
+		</div>
+
+		<div class="span1">
+			<label>Classe</label>
+    	    <div class="controls">
+        	    <input class="input-mini" id="classe" type="text" name="classe" />
+            </div>
+		</div>
+
+		<div class="span1">
+			<label>Tipo</label>
+    	    <div class="controls">
+        	    <input class="input-mini" id="tipo" type="text" name="tipo" />
+            </div>
+		</div>
+
+		
+		<div class="span1" >
+			&nbsp
+			<button type="submit" class="span12 btn btn-primary">Filtrar</button>
+		</div>
+		
+	</form>
+</div>
+
+<div class="span12" style="margin-left: 0;">
 
 <?php
 
@@ -113,18 +177,33 @@ if(!$results){?>
   </form>
 </div>
 
-
-
+<script src="<?php echo base_url()?>js/jquery.validate.js"></script>
+<script src="<?php echo base_url();?>js/maskmoney.js"></script>
 <script type="text/javascript">
-$(document).ready(function(){
+jQuery(document).ready(function($) {
 
+	$(document).ready(function(){
 
-   $(document).on('click', 'a', function(event) {
+   		$(document).on('click', 'a', function(event) {
         
-        var produto = $(this).attr('produto');
-        $('#idProduto').val(produto);
+	        var produto = $(this).attr('produto');
+    	    $('#idProduto').val(produto);
 
-    });
+    	});
+
+	});
+
+
+	      $("#produto").autocomplete({
+	            source: "<?php echo base_url(); ?>index.php/produtos/autoCompleteProduto",
+	            minLength: 5,
+	            select: function( event, ui ) {
+	                 $("#produtos_id").val(ui.item.id);
+	            }
+	      });
+	
+
+    $(".datepicker" ).datepicker({ dateFormat: 'dd/mm/yy' });
 
 });
 

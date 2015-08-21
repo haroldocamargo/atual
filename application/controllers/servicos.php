@@ -17,6 +17,15 @@ class Servicos extends CI_Controller {
 		$this->gerenciar();
 	}
 
+    public function autoCompleteServico(){
+
+        if (isset($_GET['term'])){
+            $q = strtolower($_GET['term']);
+            $this->servicos_model->autoCompleteServico($q);
+        }
+    }
+
+
 	function gerenciar(){
         
         if(!$this->permission->checkPermission($this->session->userdata('permissao'),'vServico')){
@@ -24,8 +33,53 @@ class Servicos extends CI_Controller {
            redirect(base_url());
         }
 
-        $this->load->library('pagination');
+        $where = '';
+		$codigo = $this->input->get('codigo');
+		$servico = $this->input->get('servicos_id');
+		$grupo = $this->input->get('grupo');
+		$subgrupo = $this->input->get('subgrupo');
+		$categoria = $this->input->get('categoria');
+		$classe = $this->input->get('classe');
+		$tipo = $this->input->get('tipo');
+		
+        // busca os estoque
+	    if(rtrim($codigo) <> ''){
+	        $where = 'idServicos = '.$codigo;
+        };
+	        
+	    if(rtrim($servico) <> ''){
+	    	if (rtrim($where) <> '') {$where = $where.' and ';}
+	        $where = $where.'idServicos = '.$servico;
+        };
+	
+	    if(rtrim($grupo) <> ''){
+	    	if (rtrim($where) <> '') {$where = $where.' and ';}
+	        $where = $where.'grupo = "'.$grupo.'"';
+        };
+
+	    if(rtrim($subgrupo) <> ''){
+	    	if (rtrim($where) <> '') {$where = $where.' and ';}
+	        $where = $where.'subgrupo = "'.$subgrupo.'"';
+        };
+
+	    if(rtrim($categoria) <> ''){
+	    	if (rtrim($where) <> '') {$where = $where.' and ';}
+	        $where = $where.'categoria = "'.$categoria.'"';
+        };
         
+	    if(rtrim($classe) <> ''){
+	    	if (rtrim($where) <> '') {$where = $where.' and ';}
+	        $where = $where.'classe = "'.$classe.'"';
+        };
+        
+	    if(rtrim($tipo) <> ''){
+	    	if (rtrim($where) <> '') {$where = $where.' and ';}
+	        $where = $where.'tipo = "'.$tipo.'"';
+        };
+        
+
+        $this->load->library('table');
+        $this->load->library('pagination');
         
         $config['base_url'] = base_url().'index.php/servicos/gerenciar/';
         $config['total_rows'] = $this->servicos_model->count('servicos');
@@ -51,7 +105,7 @@ class Servicos extends CI_Controller {
 
         $this->pagination->initialize($config); 	
 
-		$this->data['results'] = $this->servicos_model->get('servicos','idServicos,nome,descricao,preco','',$config['per_page'],$this->uri->segment(3));
+		$this->data['results'] = $this->servicos_model->get('servicos','idServicos,nome,descricao,preco',$where,$config['per_page'],$this->uri->segment(3));
        
 	    $this->data['view'] = 'servicos/servicos';
        	$this->load->view('tema/topo',$this->data);
