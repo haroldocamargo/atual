@@ -178,7 +178,7 @@ jQuery(document).ready(function($) {
 
 	      $("#cliente").autocomplete({
 	            source: "<?php echo base_url(); ?>index.php/clientes/autoCompleteCliente",
-	            minLength: 5,
+	            minLength: 3,
 	            select: function( event, ui ) {
 	                 $("#clientes_id").val(ui.item.id);
 	            }

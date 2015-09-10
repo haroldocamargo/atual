@@ -49,7 +49,7 @@ class Compras extends CI_Controller {
 	
 	    if(rtrim($documento) <> ''){
 	    	if (rtrim($where) <> '') {$where = $where.' and ';}
-	        $where = $where.'documentoCompra = "'.$documento.'"';
+	        $where = $where.'documentoCompra like "%'.$documento.'%"';
         };
 
 		if (rtrim($vencimento) <> '') {

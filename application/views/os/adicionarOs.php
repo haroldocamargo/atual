@@ -121,7 +121,7 @@ $(document).ready(function(){
 
       $("#cliente").autocomplete({
             source: "<?php echo base_url(); ?>index.php/os/autoCompleteCliente",
-            minLength: 5,
+            minLength: 3,
             select: function( event, ui ) {
 
                  $("#clientes_id").val(ui.item.id);
@@ -132,7 +132,7 @@ $(document).ready(function(){
 
       $("#tecnico").autocomplete({
             source: "<?php echo base_url(); ?>index.php/os/autoCompleteUsuario",
-            minLength: 5,
+            minLength: 3,
             select: function( event, ui ) {
 
                  $("#usuarios_id").val(ui.item.id);

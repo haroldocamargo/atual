@@ -44,7 +44,7 @@ class Os extends CI_Controller {
 	
 	    if(rtrim($documento) <> ''){
 	    	if (rtrim($where) <> '') {$where = $where.' and ';}
-	        $where = $where.'documentoOs = "'.$documento.'"';
+	        $where = $where.'documentoOs like "%'.$documento.'%"';
         };
 
 		if (rtrim($vencimento) <> '') {

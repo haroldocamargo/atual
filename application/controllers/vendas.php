@@ -50,7 +50,7 @@ class Vendas extends CI_Controller {
 	
 	    if(rtrim($documento) <> ''){
 	    	if (rtrim($where) <> '') {$where = $where.' and ';}
-	        $where = $where.'documentoVenda = "'.$documento.'"';
+	        $where = $where.'documentoVenda like "%'.$documento.'%"';
         };
 
 		if (rtrim($vencimento) <> '') {

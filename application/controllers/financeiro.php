@@ -77,7 +77,7 @@ class Financeiro extends CI_Controller {
 
 	    if(rtrim($documento) <> ''){
 	    	if (rtrim($where) <> '') {$where = $where.' and ';}
-	        $where = $where.'documento = "'.$documento.'"';
+	        $where = $where.'documento like "%'.$documento.'%"';
         };
 
 		if (rtrim($vencimento) <> '') {

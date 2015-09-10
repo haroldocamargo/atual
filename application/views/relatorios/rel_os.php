@@ -88,7 +88,7 @@
         
         $("#cliente").autocomplete({
             source: "<?php echo base_url(); ?>index.php/os/autoCompleteCliente",
-            minLength: 5,
+            minLength: 3,
             select: function( event, ui ) {
 
                  $("#clienteHide").val(ui.item.id);
@@ -99,7 +99,7 @@
 
       $("#tecnico").autocomplete({
             source: "<?php echo base_url(); ?>index.php/os/autoCompleteUsuario",
-            minLength: 5,
+            minLength: 3,
             select: function( event, ui ) {
 
                  $("#responsavelHide").val(ui.item.id);

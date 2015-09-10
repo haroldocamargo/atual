@@ -61,7 +61,7 @@ class Estoque extends CI_Controller {
 	
 	    if(rtrim($documento) <> ''){
 	    	if (rtrim($where) <> '') {$where = $where.' and ';}
-	        $where = $where.'documentoEstoque = "'.$documento.'"';
+	        $where = $where.'documentoEstoque like "%'.$documento.'%"';
         };
 
 	    if(rtrim($serie) <> ''){

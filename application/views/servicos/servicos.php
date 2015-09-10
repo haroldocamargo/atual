@@ -203,7 +203,7 @@ jQuery(document).ready(function($) {
 
 	      $("#servico").autocomplete({
 	            source: "<?php echo base_url(); ?>index.php/servicos/autoCompleteServico",
-	            minLength: 5,
+	            minLength: 3,
 	            select: function( event, ui ) {
 	                 $("#servicos_id").val(ui.item.id);
 	            }

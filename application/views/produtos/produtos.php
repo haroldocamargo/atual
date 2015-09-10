@@ -196,7 +196,7 @@ jQuery(document).ready(function($) {
 
 	      $("#produto").autocomplete({
 	            source: "<?php echo base_url(); ?>index.php/produtos/autoCompleteProduto",
-	            minLength: 5,
+	            minLength: 3,
 	            select: function( event, ui ) {
 	                 $("#produtos_id").val(ui.item.id);
 	            }

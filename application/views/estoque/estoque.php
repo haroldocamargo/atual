@@ -480,7 +480,7 @@ if(!$results){?>
 
 	      $("#produto").autocomplete({
 	            source: "<?php echo base_url(); ?>index.php/estoque/autoCompleteProduto",
-	            minLength: 5,
+	            minLength: 3,
 	            select: function( event, ui ) {
 	                 $("#produtos_id").val(ui.item.id);
 	            }
@@ -488,7 +488,7 @@ if(!$results){?>
 	
 	      $("#produto2").autocomplete({
 	            source: "<?php echo base_url(); ?>index.php/estoque/autoCompleteProduto",
-	            minLength: 5,
+	            minLength: 3,
 	            select: function( event, ui ) {
 	                 $("#produtos_id").val(ui.item.id);
 	            }
@@ -496,7 +496,7 @@ if(!$results){?>
 	
 	      $("#produtoIncluir").autocomplete({
 	            source: "<?php echo base_url(); ?>index.php/estoque/autoCompleteProduto",
-	            minLength: 5,
+	            minLength: 3,
 	            select: function( event, ui ) {
 	                 $("#produtosIncluir_id").val(ui.item.id);
 	            }
@@ -504,7 +504,7 @@ if(!$results){?>
 	
 	      $("#produto2Incluir").autocomplete({
 	            source: "<?php echo base_url(); ?>index.php/estoque/autoCompleteProduto",
-	            minLength: 5,
+	            minLength: 3,
 	            select: function( event, ui ) {
 	                 $("#produtos2Incluir_id").val(ui.item.id);
 	            }
@@ -512,7 +512,7 @@ if(!$results){?>
 	
 	      $("#produtoEditar").autocomplete({
 	            source: "<?php echo base_url(); ?>index.php/estoque/autoCompleteProduto",
-	            minLength: 5,
+	            minLength: 3,
 	            select: function( event, ui ) {
 	                 $("#produtosEditar_id").val(ui.item.id);
 	            }

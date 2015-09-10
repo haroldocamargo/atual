@@ -46,8 +46,8 @@
                                             <li>
                                                 <span style="font-size: 12px;">Pessoa</span><br/>
                                                 <span style="font-size: 10px;"><?php echo $result->nomeCliente?></span><br/>
-                                                <span style="font-size: 10px;"><?php echo $result->rua?>, <?php echo $result->numero?>, <?php echo $result->bairro?></span><br/>
-                                                <span style="font-size: 10px;"><?php echo $result->cidade?> - <?php echo $result->estado?></span>
+                                                <span style="font-size: 10px;"><?php echo $result->rua?> <?php echo $result->numero?> <?php echo $result->bairro?> <?php echo $result->cidade?> <?php echo $result->estado?></span><br/>
+                                                <span style="font-size: 10px;">Telefone: <?php echo $result->telefone?> Email: <?php echo $result->email?></span>
                                             </li>
                                         </ul>
                                     </td>
@@ -56,7 +56,7 @@
                                             <li>
                                                 <span style="font-size: 12px;" >Responsável</span><br/>
                                                 <span style="font-size: 10px;" ><?php echo $result->nome?></span> <br/>
-                                                <span style="font-size: 10px;">Telefone: <?php echo $result->telefone?></span><br/>
+                                                <span style="font-size: 10px;">Telefone: <?php echo $result->telefoneusuario?></span><br/>
                                                 <span style="font-size: 10px;">Email: <?php echo $result->email?></span>
                                             </li>
                                         </ul>

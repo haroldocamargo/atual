@@ -582,7 +582,7 @@ if(!$results){?>
 
 	      $("#cliente").autocomplete({
 	            source: "<?php echo base_url(); ?>index.php/financeiro/autoCompleteCliente",
-	            minLength: 5,
+	            minLength: 3,
 	            select: function( event, ui ) {
 	                 $("#clientes_id").val(ui.item.id);
 	            }
@@ -590,7 +590,7 @@ if(!$results){?>
 	
 	      $("#clienteIncluir").autocomplete({
 	            source: "<?php echo base_url(); ?>index.php/financeiro/autoCompleteCliente",
-	            minLength: 5,
+	            minLength: 3,
 	            select: function( event, ui ) {
 	                 $("#clientesIncluir_id").val(ui.item.id);
 	            }
@@ -598,7 +598,7 @@ if(!$results){?>
 	
 	      $("#fornecedorIncluir").autocomplete({
 	            source: "<?php echo base_url(); ?>index.php/financeiro/autoCompleteCliente",
-	            minLength: 5,
+	            minLength: 3,
 	            select: function( event, ui ) {
 	                 $("#fornecedoresIncluir_id").val(ui.item.id);
 	            }
@@ -606,7 +606,7 @@ if(!$results){?>
 
 	      $("#fornecedorEditar").autocomplete({
 	            source: "<?php echo base_url(); ?>index.php/financeiro/autoCompleteCliente",
-	            minLength: 5,
+	            minLength: 3,
 	            select: function( event, ui ) {
 	                 $("#fornecedoresEditar_id").val(ui.item.id);
 	            }
