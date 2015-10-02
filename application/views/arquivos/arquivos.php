@@ -102,8 +102,8 @@ if(!$results){?>
                         echo  '<a href="'.base_url().'index.php/arquivos/editar/'.$r->idDocumentos.'" class="btn btn-info tip-top" style="margin-right: 1%" title="Editar"><i class="icon-pencil icon-white"></i></a>';
                     }
                     if($this->permission->checkPermission($this->session->userdata('permissao'),'dArquivo')){
-                         echo '<a href="#modal-excluir" style="margin-right: 1%" role="button" data-toggle="modal" arquivo="'.$r->idDocumentos.'" class="btn btn-danger tip-top" title="Excluir Arquivo"><i class="icon-remove icon-white"></i></a>';
-                    }
+                         echo '<a href="'.base_url().'index.php/arquivos/excluir/'.$r->idDocumentos.'" class="btn btn-danger tip-top" title="Excluir Arquivo"><i class="icon-remove icon-white"></i></a>'; 
+					}
                 echo  '</td>';
                 echo '</tr>';
             }?>

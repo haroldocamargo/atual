@@ -221,7 +221,7 @@ class Arquivos extends CI_Controller {
           redirect(base_url());
         }
 
-    	$id = $this->input->post('id');
+        $id =  $this->uri->segment(3);
     	if($id == null || !is_numeric($id)){
     		$this->session->set_flashdata('error','Erro! O arquivo não pode ser localizado.');
             redirect(base_url() . 'index.php/arquivos/');

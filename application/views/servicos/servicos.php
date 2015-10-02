@@ -144,7 +144,7 @@ else{ ?>
                 echo '<a style="margin-right: 1%" href="'.base_url().'index.php/servicos/editar/'.$r->idServicos.'" class="btn btn-info tip-top" title="Editar Serviço"><i class="icon-pencil icon-white"></i></a>'; 
             }
             if($this->permission->checkPermission($this->session->userdata('permissao'),'dServico')){
-                echo '<a href="#modal-excluir" role="button" data-toggle="modal" servico="'.$r->idServicos.'" class="btn btn-danger tip-top" title="Excluir Serviço"><i class="icon-remove icon-white"></i></a>  '; 
+                echo '<a href="'.base_url().'index.php/servicos/excluir/'.$r->idServicos.'" class="btn btn-danger tip-top" title="Excluir Serviço"><i class="icon-remove icon-white"></i></a>'; 
             }    
                       
                       

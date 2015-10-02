@@ -274,7 +274,7 @@ class Os extends CI_Controller {
 	
     function excluir(){
 
-        $id =  $this->input->post('id');
+        $id =  $this->uri->segment(3);
         $documentoOs = $this->os_model->getById($id)->documentoOs;
         if ($id == null){
 

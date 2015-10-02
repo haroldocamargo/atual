@@ -121,10 +121,9 @@ if(!$results){?>
                 echo '<a href="'.base_url().'index.php/clientes/editar/'.$r->idClientes.'" style="margin-right: 1%" class="btn btn-info tip-top" title="Editar Pessoa"><i class="icon-pencil icon-white"></i></a>'; 
             }
             if($this->permission->checkPermission($this->session->userdata('permissao'),'dCliente')){
-                echo '<a href="#modal-excluir" role="button" data-toggle="modal" cliente="'.$r->idClientes.'" style="margin-right: 1%" class="btn btn-danger tip-top" title="Excluir Pessoa"><i class="icon-remove icon-white"></i></a>'; 
+                echo '<a href="'.base_url().'index.php/clientes/excluir/'.$r->idClientes.'" class="btn btn-danger tip-top" title="Excluir Pessoa"><i class="icon-remove icon-white"></i></a>'; 
             }
 
-              
             echo '</td>';
             echo '</tr>';
         }?>

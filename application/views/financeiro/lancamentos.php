@@ -737,7 +737,7 @@ if(!$results){?>
             }
             else{
                 $("#btnCancelExcluir").trigger('click');
-                alert('Ocorreu um erro ao excluir produto.');
+                alert('Ocorreu um erro ao excluir lançamento.');
             }
           }
         });

@@ -67,7 +67,7 @@ if(!$results){?>
             echo '<td>'.$situacao.'</td>';
             echo '<td>
                       <a href="'.base_url().'index.php/permissoes/editar/'.$r->idPermissao.'" class="btn btn-info tip-top" title="Editar Permissão"><i class="icon-pencil icon-white"></i></a>
-                      <a href="#modal-excluir" role="button" data-toggle="modal" permissao="'.$r->idPermissao.'" class="btn btn-danger tip-top" title="Desativar Permissão"><i class="icon-remove icon-white"></i></a>
+                      <a href="'.base_url().'index.php/permissoes/excluir/'.$r->idPermissao.'" class="btn btn-danger tip-top" title="Excluir Permissão"><i class="icon-remove icon-white"></i></a>
                   </td>';
             echo '</tr>';
         }?>

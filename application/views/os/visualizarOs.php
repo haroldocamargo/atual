@@ -134,6 +134,7 @@
                                         <thead>
                                             <tr>
                                                 <th>Serviço</th>
+                                                <th>Observação</th>
                                                 <th>Sub-total</th>
                                             </tr>
                                         </thead>
@@ -145,11 +146,13 @@
                                             $totalServico = $totalServico + $valor;
                                             echo '<tr>';
                                             echo '<td>'.$s->nome.'</td>';
+                                            echo '<td>'.$s->observacaoServicoOs.'</td>';
                                             echo '<td>'.number_format($s->subTotal, 2, ',', '.').'</td>';
                                             echo '</tr>';
                                         }?>
 
                                         <tr>
+                                            <td style="text-align: right"><strong></strong></td>
                                             <td style="text-align: right"><strong>Total:</strong></td>
                                             <td><strong><?php  echo number_format($totalServico, 2, ',', '.');?></strong></td>
                                         </tr>

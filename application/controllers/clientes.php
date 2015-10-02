@@ -208,8 +208,7 @@ class Clientes extends CI_Controller {
                redirect(base_url());
             }
 
-            
-            $id =  $this->input->post('id');
+            $id =  $this->uri->segment(3);
             $nomeCliente = $this->clientes_model->getById($id)->nomeCliente;
             if ($id == null){
                 $this->session->set_flashdata('error','Erro ao excluir pessoa.');            

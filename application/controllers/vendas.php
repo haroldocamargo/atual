@@ -253,7 +253,7 @@ class Vendas extends CI_Controller {
           redirect(base_url());
         }
         
-        $id =  $this->input->post('id');
+        $id =  $this->uri->segment(3);
         $documentoVenda = $this->vendas_model->getById($id)->documentoVenda;
         if ($id == null){
             $this->session->set_flashdata('error','Erro ao excluir venda.');            

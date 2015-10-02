@@ -232,7 +232,7 @@ class Produtos extends CI_Controller {
         }
 
         
-        $id =  $this->input->post('id');
+        $id =  $this->uri->segment(3);
         $nomeProduto = $this->produtos_model->getById($id)->descricao;
         if($id == null){
             $this->session->set_flashdata('error','Erro ao excluir o produto.');            

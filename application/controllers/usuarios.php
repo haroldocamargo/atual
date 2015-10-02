@@ -89,6 +89,7 @@ class Usuarios extends CI_Controller {
 					'situacao' => set_value('situacao'),
                     'permissoes_id' => $this->input->post('permissoes_id'),
 					'dataCadastro' => date('Y-m-d'),
+					'nivel' => 1,
 					'observacaoUsuario' => set_value('observacaoUsuario')
             );
            
