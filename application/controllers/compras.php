@@ -447,6 +447,13 @@ class Compras extends CI_Controller {
             $vencimento4 = $this->input->post('vencimento4');
             $vencimento5 = $this->input->post('vencimento5');
             $vencimento6 = $this->input->post('vencimento6');
+            $vencimento7 = $this->input->post('vencimento7');
+            $vencimento8 = $this->input->post('vencimento8');
+            $vencimento9 = $this->input->post('vencimento9');
+            $vencimento10 = $this->input->post('vencimento10');
+            $vencimento11 = $this->input->post('vencimento11');
+            $vencimento12 = $this->input->post('vencimento12');
+
             $recebimento = $this->input->post('recebimento');
 
             $valor = str_replace(",",".", $this->input->post('valor'));
@@ -455,6 +462,12 @@ class Compras extends CI_Controller {
    	        $valor4 = str_replace(",",".", $this->input->post('valor4'));
    	        $valor5 = str_replace(",",".", $this->input->post('valor5'));
    	        $valor6 = str_replace(",",".", $this->input->post('valor6'));
+   	        $valor7 = str_replace(",",".", $this->input->post('valor7'));
+   	        $valor8 = str_replace(",",".", $this->input->post('valor8'));
+   	        $valor9 = str_replace(",",".", $this->input->post('valor9'));
+   	        $valor10 = str_replace(",",".", $this->input->post('valor10'));
+   	        $valor11 = str_replace(",",".", $this->input->post('valor11'));
+   	        $valor12 = str_replace(",",".", $this->input->post('valor12'));
 
             try {
                 
@@ -484,6 +497,36 @@ class Compras extends CI_Controller {
 				if (rtrim($vencimento6) <> '') {
                 	$vencimento6 = explode('/', $vencimento6);
 	                $vencimento6 = $vencimento6[2].'-'.$vencimento6[1].'-'.$vencimento6[0];
+				}
+
+				if (rtrim($vencimento7) <> '') {
+                	$vencimento7 = explode('/', $vencimento7);
+	                $vencimento7 = $vencimento7[2].'-'.$vencimento7[1].'-'.$vencimento7[0];
+				}
+
+				if (rtrim($vencimento8) <> '') {
+                	$vencimento8 = explode('/', $vencimento8);
+	                $vencimento8 = $vencimento8[2].'-'.$vencimento8[1].'-'.$vencimento8[0];
+				}
+
+				if (rtrim($vencimento9) <> '') {
+                	$vencimento9 = explode('/', $vencimento9);
+	                $vencimento9 = $vencimento9[2].'-'.$vencimento9[1].'-'.$vencimento9[0];
+				}
+
+				if (rtrim($vencimento10) <> '') {
+                	$vencimento10 = explode('/', $vencimento10);
+	                $vencimento10 = $vencimento10[2].'-'.$vencimento10[1].'-'.$vencimento10[0];
+				}
+
+				if (rtrim($vencimento11) <> '') {
+                	$vencimento11 = explode('/', $vencimento11);
+	                $vencimento11 = $vencimento11[2].'-'.$vencimento11[1].'-'.$vencimento11[0];
+				}
+
+				if (rtrim($vencimento12) <> '') {
+                	$vencimento12 = explode('/', $vencimento12);
+	                $vencimento12 = $vencimento12[2].'-'.$vencimento12[1].'-'.$vencimento12[0];
 				}
 
                 if($recebimento != null){
@@ -531,7 +574,7 @@ class Compras extends CI_Controller {
                 die();
             }
 			
-			if ((rtrim($vencimento2) <> '') && ($this->input->post('valor2') > 0)){
+			if ((rtrim($vencimento2) <> '') && ($valor2 <> '')){
 	            $data = array(
 	                'descricao' => set_value('descricao'),
 	                'valor' => $valor2,
@@ -569,7 +612,7 @@ class Compras extends CI_Controller {
 	            }
 			}
 
-			if ((rtrim($vencimento3) <> '') && ($this->input->post('valor3') > 0)){
+			if ((rtrim($vencimento3) <> '') && ($valor3 <> '')){
 	            $data = array(
 	                'descricao' => set_value('descricao'),
 	                'valor' => $valor3,
@@ -607,7 +650,7 @@ class Compras extends CI_Controller {
 	            }
 			}
 
-			if ((rtrim($vencimento4) <> '') && ($this->input->post('valor4') > 0)){
+			if ((rtrim($vencimento4) <> '') && ($valor4 <> '')){
 	            $data = array(
 	                'descricao' => set_value('descricao'),
 	                'valor' => $valor4,
@@ -645,7 +688,7 @@ class Compras extends CI_Controller {
 	            }
 			}
 
-			if ((rtrim($vencimento5) <> '') && ($this->input->post('valor5') > 0)){
+			if ((rtrim($vencimento5) <> '') && ($valor5 <> '')){
 	            $data = array(
 	                'descricao' => set_value('descricao'),
 	                'valor' => $valor5,
@@ -683,7 +726,7 @@ class Compras extends CI_Controller {
 	            }
 			}
 
-			if ((rtrim($vencimento6) <> '') && ($this->input->post('valor6') > 0)){
+			if ((rtrim($vencimento6) <> '') && ($valor6 <> '')){
 	            $data = array(
 	                'descricao' => set_value('descricao'),
 	                'valor' => $valor6,
@@ -721,6 +764,233 @@ class Compras extends CI_Controller {
 	            }
 			}
 
+			if ((rtrim($vencimento7) <> '') && ($valor7 <> '')){
+	            $data = array(
+	                'descricao' => set_value('descricao'),
+	                'valor' => $valor7,
+	                'clientes_id' => $this->input->post('clientes_id'),
+	                'data_vencimento' => $vencimento7,
+	                'baixado' => $this->input->post('recebido'),
+	                'cliente_fornecedor' => set_value('cliente'),
+	                'forma_pgto' => $this->input->post('formaPgto'),
+	                'tipo' => $this->input->post('tipo'),
+	                'documento' => $this->input->post('documentoCompra'),
+	                'grupo' => 'Compras',
+	                'observacao' => $this->input->post('observacaoCompra'),
+	                'setor' => $this->input->post('setorCompra'),
+    	            'compras_id' => $this->input->post('compras_id')
+	            );
+	
+	            if ($this->compras_model->add('lancamentos',$data) == TRUE) {
+	                $compra = $this->input->post('compras_id');
+	            	$data = array(
+    	            	'faturado' => 1,
+        	        	'valorTotal' => ($valor + $valor2 + $valor3 + $valor4 + $valor5 + $valor6 + $valor7));
+
+					if ($this->compras_model->edit('compras', $data, 'idCompras', $compra) == FALSE){
+		                $this->session->set_flashdata('error','Erro ao faturar compra.');
+	        	        $json = array('result'=>  false);
+    		            echo json_encode($json);
+    	    	        die();
+					}	
+
+	            } else {
+	                $this->session->set_flashdata('error','Erro ao faturar compra.');
+	                $json = array('result'=>  false);
+	                echo json_encode($json);
+	                die();
+	            }
+			}
+
+			if ((rtrim($vencimento8) <> '') && ($valor8 <> '')){
+	            $data = array(
+	                'descricao' => set_value('descricao'),
+	                'valor' => $valor8,
+	                'clientes_id' => $this->input->post('clientes_id'),
+	                'data_vencimento' => $vencimento8,
+	                'baixado' => $this->input->post('recebido'),
+	                'cliente_fornecedor' => set_value('cliente'),
+	                'forma_pgto' => $this->input->post('formaPgto'),
+	                'tipo' => $this->input->post('tipo'),
+	                'documento' => $this->input->post('documentoCompra'),
+	                'grupo' => 'Compras',
+	                'observacao' => $this->input->post('observacaoCompra'),
+	                'setor' => $this->input->post('setorCompra'),
+    	            'compras_id' => $this->input->post('compras_id')
+	            );
+	
+	            if ($this->compras_model->add('lancamentos',$data) == TRUE) {
+	                $compra = $this->input->post('compras_id');
+	            	$data = array(
+    	            	'faturado' => 1,
+        	        	'valorTotal' => ($valor + $valor2 + $valor3 + $valor4 + $valor5 + $valor6 + $valor7 + $valor8));
+
+					if ($this->compras_model->edit('compras', $data, 'idCompras', $compra) == FALSE){
+		                $this->session->set_flashdata('error','Erro ao faturar compra.');
+	        	        $json = array('result'=>  false);
+    		            echo json_encode($json);
+    	    	        die();
+					}	
+
+	            } else {
+	                $this->session->set_flashdata('error','Erro ao faturar compra.');
+	                $json = array('result'=>  false);
+	                echo json_encode($json);
+	                die();
+	            }
+			}
+
+			if ((rtrim($vencimento9) <> '') && ($valor9 <> '')){
+	            $data = array(
+	                'descricao' => set_value('descricao'),
+	                'valor' => $valor9,
+	                'clientes_id' => $this->input->post('clientes_id'),
+	                'data_vencimento' => $vencimento9,
+	                'baixado' => $this->input->post('recebido'),
+	                'cliente_fornecedor' => set_value('cliente'),
+	                'forma_pgto' => $this->input->post('formaPgto'),
+	                'tipo' => $this->input->post('tipo'),
+	                'documento' => $this->input->post('documentoCompra'),
+	                'grupo' => 'Compras',
+	                'observacao' => $this->input->post('observacaoCompra'),
+	                'setor' => $this->input->post('setorCompra'),
+    	            'compras_id' => $this->input->post('compras_id')
+	            );
+	
+	            if ($this->compras_model->add('lancamentos',$data) == TRUE) {
+	                $compra = $this->input->post('compras_id');
+	            	$data = array(
+    	            	'faturado' => 1,
+        	        	'valorTotal' => ($valor + $valor2 + $valor3 + $valor4 + $valor5 + $valor6 + $valor7 + $valor8 + $valor9));
+
+					if ($this->compras_model->edit('compras', $data, 'idCompras', $compra) == FALSE){
+		                $this->session->set_flashdata('error','Erro ao faturar compra.');
+	        	        $json = array('result'=>  false);
+    		            echo json_encode($json);
+    	    	        die();
+					}	
+
+	            } else {
+	                $this->session->set_flashdata('error','Erro ao faturar compra.');
+	                $json = array('result'=>  false);
+	                echo json_encode($json);
+	                die();
+	            }
+			}
+
+			if ((rtrim($vencimento10) <> '') && ($valor10 <> '')){
+	            $data = array(
+	                'descricao' => set_value('descricao'),
+	                'valor' => $valor10,
+	                'clientes_id' => $this->input->post('clientes_id'),
+	                'data_vencimento' => $vencimento10,
+	                'baixado' => $this->input->post('recebido'),
+	                'cliente_fornecedor' => set_value('cliente'),
+	                'forma_pgto' => $this->input->post('formaPgto'),
+	                'tipo' => $this->input->post('tipo'),
+	                'documento' => $this->input->post('documentoCompra'),
+	                'grupo' => 'Compras',
+	                'observacao' => $this->input->post('observacaoCompra'),
+	                'setor' => $this->input->post('setorCompra'),
+    	            'compras_id' => $this->input->post('compras_id')
+	            );
+	
+	            if ($this->compras_model->add('lancamentos',$data) == TRUE) {
+	                $compra = $this->input->post('compras_id');
+	            	$data = array(
+    	            	'faturado' => 1,
+        	        	'valorTotal' => ($valor + $valor2 + $valor3 + $valor4 + $valor5 + $valor6 + $valor7 + $valor8 + $valor9 + $valor10));
+
+					if ($this->compras_model->edit('compras', $data, 'idCompras', $compra) == FALSE){
+		                $this->session->set_flashdata('error','Erro ao faturar compra.');
+	        	        $json = array('result'=>  false);
+    		            echo json_encode($json);
+    	    	        die();
+					}	
+
+	            } else {
+	                $this->session->set_flashdata('error','Erro ao faturar compra.');
+	                $json = array('result'=>  false);
+	                echo json_encode($json);
+	                die();
+	            }
+			}
+
+			if ((rtrim($vencimento11) <> '') && ($valor11 <> '')){
+	            $data = array(
+	                'descricao' => set_value('descricao'),
+	                'valor' => $valor11,
+	                'clientes_id' => $this->input->post('clientes_id'),
+	                'data_vencimento' => $vencimento11,
+	                'baixado' => $this->input->post('recebido'),
+	                'cliente_fornecedor' => set_value('cliente'),
+	                'forma_pgto' => $this->input->post('formaPgto'),
+	                'tipo' => $this->input->post('tipo'),
+	                'documento' => $this->input->post('documentoCompra'),
+	                'grupo' => 'Compras',
+	                'observacao' => $this->input->post('observacaoCompra'),
+	                'setor' => $this->input->post('setorCompra'),
+    	            'compras_id' => $this->input->post('compras_id')
+	            );
+	
+	            if ($this->compras_model->add('lancamentos',$data) == TRUE) {
+	                $compra = $this->input->post('compras_id');
+	            	$data = array(
+    	            	'faturado' => 1,
+        	        	'valorTotal' => ($valor + $valor2 + $valor3 + $valor4 + $valor5 + $valor6 + $valor7 + $valor8 + $valor9 + $valor10 + $valor11));
+
+					if ($this->compras_model->edit('compras', $data, 'idCompras', $compra) == FALSE){
+		                $this->session->set_flashdata('error','Erro ao faturar compra.');
+	        	        $json = array('result'=>  false);
+    		            echo json_encode($json);
+    	    	        die();
+					}	
+
+	            } else {
+	                $this->session->set_flashdata('error','Erro ao faturar compra.');
+	                $json = array('result'=>  false);
+	                echo json_encode($json);
+	                die();
+	            }
+			}
+
+			if ((rtrim($vencimento12) <> '') && ($valor12 <> '')){
+	            $data = array(
+	                'descricao' => set_value('descricao'),
+	                'valor' => $valor12,
+	                'clientes_id' => $this->input->post('clientes_id'),
+	                'data_vencimento' => $vencimento12,
+	                'baixado' => $this->input->post('recebido'),
+	                'cliente_fornecedor' => set_value('cliente'),
+	                'forma_pgto' => $this->input->post('formaPgto'),
+	                'tipo' => $this->input->post('tipo'),
+	                'documento' => $this->input->post('documentoCompra'),
+	                'grupo' => 'Compras',
+	                'observacao' => $this->input->post('observacaoCompra'),
+	                'setor' => $this->input->post('setorCompra'),
+    	            'compras_id' => $this->input->post('compras_id')
+	            );
+	
+	            if ($this->compras_model->add('lancamentos',$data) == TRUE) {
+	                $compra = $this->input->post('compras_id');
+	            	$data = array(
+    	            	'faturado' => 1,
+        	        	'valorTotal' => ($valor + $valor2 + $valor3 + $valor4 + $valor5 + $valor6 + $valor7 + $valor8 + $valor9 + $valor10 + $valor11 + $valor12));
+
+					if ($this->compras_model->edit('compras', $data, 'idCompras', $compra) == FALSE){
+		                $this->session->set_flashdata('error','Erro ao faturar compra.');
+	        	        $json = array('result'=>  false);
+    		            echo json_encode($json);
+    	    	        die();
+					}	
+
+	            } else {
+	                $this->session->set_flashdata('error','Erro ao faturar compra.');
+	                $json = array('result'=>  false);
+	                echo json_encode($json);
+	                die();
+	            }
+			}
 
 			auditoria('Faturamento de compras', 'Faturada compra "'.$compra.'"');
 

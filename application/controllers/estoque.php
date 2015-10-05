@@ -341,7 +341,7 @@ class Estoque extends CI_Controller {
     		$result = $this->estoque_model->delete('estoque','idEstoque',$id); 
     		if($result){
         		if($idProduto != null){
-					if ($tipo='saida'){	
+					if ($tipo == 'saida'){	
 						if ($this->estoque_model->somaEstoque($quantidade, $idProduto) == FALSE){
 			    			$json = array('result'=>  false);
 			    			echo json_encode($json);

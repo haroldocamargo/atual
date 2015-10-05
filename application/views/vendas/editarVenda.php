@@ -262,6 +262,65 @@
     </div>
     
     <div class="span12" style="margin-left: 0"> 
+      <div class="span3" >  
+        <label for="valor7">Valor</label>
+        <input class="span12 money" id="valor7" type="text" name="valor7" value=""  />
+      </div>
+      <div class="span3" >  
+        <label for="vencimento7">Vencimento</label>
+        <input class="span12 datepicker" id="vencimento7" type="text" name="vencimento7"  />
+      </div>
+      <div class="span3" >  
+        <label for="valor8">Valor</label>
+        <input class="span12 money" id="valor8" type="text" name="valor8" value=""  />
+      </div>
+      <div class="span3" >  
+        <label for="vencimento8">Vencimento</label>
+        <input class="span12 datepicker" id="vencimento8" type="text" name="vencimento8"  />
+      </div>
+    </div>
+    
+    <div class="span12" style="margin-left: 0"> 
+      <div class="span3" >  
+        <label for="valor9">Valor</label>
+        <input class="span12 money" id="valor9" type="text" name="valor9" value=""  />
+      </div>
+      <div class="span3" >  
+        <label for="vencimento9">Vencimento</label>
+        <input class="span12 datepicker" id="vencimento9" type="text" name="vencimento9"  />
+      </div>
+      <div class="span3" >  
+        <label for="valor10">Valor</label>
+        <input class="span12 money" id="valor10" type="text" name="valor10" value=""  />
+      </div>
+      <div class="span3" >  
+        <label for="vencimento10">Vencimento</label>
+        <input class="span12 datepicker" id="vencimento10" type="text" name="vencimento10"  />
+      </div>
+    </div>
+    
+    
+    <div class="span12" style="margin-left: 0"> 
+      <div class="span3" >  
+        <label for="valor11">Valor</label>
+        <input class="span12 money" id="valor11" type="text" name="valor11" value=""  />
+      </div>
+      <div class="span3" >  
+        <label for="vencimento11">Vencimento</label>
+        <input class="span12 datepicker" id="vencimento11" type="text" name="vencimento11"  />
+      </div>
+      <div class="span3" >  
+        <label for="valor12">Valor</label>
+        <input class="span12 money" id="valor12" type="text" name="valor12" value=""  />
+      </div>
+      <div class="span3" >  
+        <label for="vencimento12">Vencimento</label>
+        <input class="span12 datepicker" id="vencimento12" type="text" name="vencimento12"  />
+      </div>
+    </div>
+    
+    
+    <div class="span12" style="margin-left: 0"> 
       <div class="span4" style="margin-left: 0">
 <!--
         <label for="recebido">Recebido?</label>
