@@ -57,7 +57,7 @@
         </div>
 
         <div class="span2">
-            <label for="tecnico">Técnico / Responsável</label>
+            <label for="tecnico">Técnico</label>
             <input id="tecnico" class="span12" type="text" name="tecnico" value=""  />
             <input id="usuarios_id" class="span12" type="hidden" name="usuarios_id" value=""  />
         </div>

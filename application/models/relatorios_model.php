@@ -83,13 +83,6 @@ class Relatorios_model extends CI_Model {
         return $this->db->get('servicos')->result();
     }
 
-    public function osRapid(){
-        $this->db->select('os.*,clientes.nomeCliente');
-        $this->db->from('os');
-        $this->db->join('clientes','clientes.idClientes = os.clientes_id');
-        return $this->db->get()->result();
-    }
-
     public function produtosRapidMin(){
         $this->db->order_by('descricao','asc');
         $this->db->where('estoque < estoqueMinimo');
@@ -115,6 +108,11 @@ class Relatorios_model extends CI_Model {
     }
 
 
+    public function osRapid(){
+        $query = "SELECT os.*,clientes.nomeCliente, usuarios.nome nomeUsuario, coalesce((select sum(subTotal) from servicos_os where os_id = os.idOs),0) as valorServicos FROM os LEFT JOIN clientes ON os.clientes_id = clientes.idClientes LEFT JOIN usuarios ON os.usuarios_id = usuarios.idUsuarios";
+        return $this->db->query($query)->result();
+    }
+
     public function osCustom($dataInicial = null,$dataFinal = null,$cliente = null,$responsavel = null,$status = null){
         $whereData = "";
         $whereCliente = "";
@@ -132,7 +130,7 @@ class Relatorios_model extends CI_Model {
         if($status != null){
             $whereStatus = "AND status = ".$this->db->escape($status);
         }
-        $query = "SELECT os.*,clientes.nomeCliente FROM os LEFT JOIN clientes ON os.clientes_id = clientes.idClientes WHERE idOs != 0 $whereData $whereCliente $whereResponsavel $whereStatus";
+        $query = "SELECT os.*,clientes.nomeCliente, usuarios.nome nomeUsuario, coalesce((select sum(subTotal) from servicos_os where os_id = os.idOs),0) as valorServicos FROM os LEFT JOIN clientes ON os.clientes_id = clientes.idClientes LEFT JOIN usuarios ON os.usuarios_id = usuarios.idUsuarios WHERE idOs != 0 $whereData $whereCliente $whereResponsavel $whereStatus";
         return $this->db->query($query)->result();
     }
 
