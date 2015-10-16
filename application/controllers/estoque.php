@@ -87,6 +87,12 @@ class Estoque extends CI_Controller {
 	        $where = $where.'data <= "'.$data2.'"';
 		};
 		
+		if ((rtrim($data) == '') && (rtrim($data2) == '')) {
+            $data = date('Y/m/d'); 
+	    	if (rtrim($where) <> '') {$where = $where.' and ';}
+	        $where = $where.'data = "'.$data.'"';
+		};
+		
 		$this->load->library('pagination');
         
         $config['base_url'] = base_url().'estoque/estoque';

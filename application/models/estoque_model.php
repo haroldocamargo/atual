@@ -11,7 +11,7 @@ class Estoque_model extends CI_Model {
         
         $this->db->select($fields);
         $this->db->from($table);
-        $this->db->order_by('idEstoque', 'asc');
+        $this->db->order_by('data', 'desc');
         $this->db->limit($perpage,$start);
         if($where){
             $this->db->where($where);

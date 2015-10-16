@@ -93,6 +93,12 @@ class Financeiro extends CI_Controller {
 	        $where = $where.'data_vencimento <= "'.$vencimento2.'"';
 		};
 		
+		if ((rtrim($vencimento) == '') && (rtrim($vencimento2) == '')) {
+            $vencimento = date('Y/m/d'); 
+	    	if (rtrim($where) <> '') {$where = $where.' and ';}
+	        $where = $where.'data_vencimento = "'.$vencimento.'"';
+		};
+		
 		$this->load->library('pagination');
         
         $config['base_url'] = base_url().'financeiro/lancamentos';
