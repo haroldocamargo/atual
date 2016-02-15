@@ -30,8 +30,8 @@ class Os extends CI_Controller {
 		$status = $this->input->get('status');
 		$usuario = $this->input->get('usuarios_id');
 		$setor = $this->input->get('setor');
+		$modelo = $this->input->get('modelo');
 
-        
         // busca os lançamentos
 	    if(rtrim($os) <> ''){
 	        $where = 'idOs = '.$os;
@@ -45,6 +45,11 @@ class Os extends CI_Controller {
 	    if(rtrim($documento) <> ''){
 	    	if (rtrim($where) <> '') {$where = $where.' and ';}
 	        $where = $where.'documentoOs like "%'.$documento.'%"';
+        };
+
+	    if(rtrim($modelo) <> ''){
+	    	if (rtrim($where) <> '') {$where = $where.' and ';}
+	        $where = $where.'modelo like "%'.$modelo.'%"';
         };
 
 		if (rtrim($vencimento) <> '') {
@@ -147,6 +152,7 @@ class Os extends CI_Controller {
                 'laudoTecnico' => set_value('laudoTecnico'),
                 'faturado' => 0,
                 'setorOs' => $this->input->post('setorOs'),
+                'modelo' => $this->input->post('modelo'),
                 'documentoOs' => $this->input->post('documentoOs')
             );
 
@@ -184,6 +190,7 @@ class Os extends CI_Controller {
                 'observacaoOs' => set_value('observacaoOs'),
                 'laudoTecnico' => set_value('laudoTecnico'),
                 'setorOs' => $this->input->post('setorOs'),
+                'modelo' => $this->input->post('modelo'),
                 'documentoOs' => $this->input->post('documentoOs')
             );
 
@@ -237,6 +244,7 @@ class Os extends CI_Controller {
                 'usuarios_id' => $this->input->post('usuarios_id'),
                 'clientes_id' => $this->input->post('clientes_id'),
                 'setorOs' => $this->input->post('setorOs'),
+                'modelo' => $this->input->post('modelo'),
                 'documentoOs' => $this->input->post('documentoOs')
             );
 

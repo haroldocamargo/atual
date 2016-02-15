@@ -36,7 +36,9 @@
                       </thead>
                       <tbody>
                           <?php
+                          $totalValor = 0;
                           foreach ($vendas as $c) {
+                          	  $totalValor = $totalValor + $c->valorTotal;
                               echo '<tr>';
                               echo '<td>' . $c->nomeCliente . '</td>';
                               echo '<td>'.number_format($c->valorTotal,2,',','.').'</td>';
@@ -46,6 +48,17 @@
                           }
                           ?>
                       </tbody>
+
+							 <tfoot>
+		                          <?php
+		                              echo '<tr>';
+		                              echo '<td>' . 'Total'. '</td>';
+		                              echo '<td>'.number_format($totalValor,2,',','.').'</td>';
+		                              echo '<td>' . '</td>';
+		                              echo '<td>' . '</td>';
+		                              echo '</tr>';
+		                          ?>
+ 							 </tfoot>
                   </table>
 
                   </div>

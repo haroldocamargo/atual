@@ -315,6 +315,7 @@ CREATE TABLE `os` (
   `lancamento` int(11) DEFAULT NULL,
   `faturado` tinyint(1) NOT NULL,
   `documentoOs` varchar(20) DEFAULT NULL,
+  `Modelo` varchar(20) DEFAULT NULL,
   `setorOs` varchar(20) DEFAULT NULL,
   `dataAtualizacao` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`idOs`),

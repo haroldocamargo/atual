@@ -27,7 +27,7 @@
                                 <form action="<?php echo current_url(); ?>" method="post" id="formOs">
 
                                     <div class="span12" style="padding: 1%">
-                                        <div class="span5">
+                                        <div class="span3">
                                             <label for="cliente">Pessoa<span class="required">*</span></label>
                                             <input id="cliente" class="span12" type="text" name="cliente" value=""  />
                                             <input id="clientes_id" class="span12" type="hidden" name="clientes_id" value=""  />
@@ -40,6 +40,10 @@
                                         <div class="span2">
                                             <label for="documentoOs">Documento<span class="required">*</span></label>
                                             <input id="documentoOs" class="span12" type="text" name="documentoOs" value=""  />
+                                        </div>
+                                        <div class="span2">
+                                            <label for="modelo">Modelo</label>
+                                            <input id="modelo" class="span12" type="text" name="modelo" value=""  />
                                         </div>
                                         <div class="span2">
                                             <label for="setorOs">Setor</span></label>

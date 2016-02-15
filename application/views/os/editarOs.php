@@ -32,7 +32,7 @@
                                     <div class="span12" style="padding: 1%; margin-left: 0">
                                         <h3>#Os: <?php echo $result->idOs ?></h3>
                                         
-                                        <div class="span5" style="margin-left: 0">
+                                        <div class="span3" style="margin-left: 0">
                                             <label for="cliente">Pessoa<span class="required">*</span></label>
                                             <input id="cliente" class="span12" type="text" name="cliente" value="<?php echo $result->nomeCliente ?>"  />
                                             <input id="clientes_id" class="span12" type="hidden" name="clientes_id" value="<?php echo $result->clientes_id ?>"  />
@@ -46,6 +46,10 @@
                                         <div class="span2">
                                             <label for="documentoOs">Documento<span class="required">*</span></label>
                                             <input id="documentoOs" class="span12" type="text" name="documentoOs" value="<?php echo $result->documentoOs ?>"  />
+                                        </div>
+                                        <div class="span2">
+                                            <label for="modelo">Modelo</label>
+                                            <input id="modelo" class="span12" type="text" name="modelo" value="<?php echo $result->modelo ?>"  />
                                         </div>
                                         <div class="span2">
                                             <label for="setorOs">Setor</span></label>

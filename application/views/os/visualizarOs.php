@@ -30,7 +30,7 @@
                                 <tr>
                                     <td style="width: 10%"><img src="<?php echo base_url()?>assets/img/logocliente.png"></td>
                                     <td> <span style="font-size: 12px; "> <?php echo $emitente[0]->nome; ?></span> </br><span style="font-size: 10px; " >Documento: <?php echo $emitente[0]->cnpj; ?> </br> <?php echo $emitente[0]->rua.', nº:'.$emitente[0]->numero.', '.$emitente[0]->bairro.' - '.$emitente[0]->cidade.' - '.$emitente[0]->uf; ?> </span> </br> <span style="font-size: 10px; " > E-mail: <?php echo $emitente[0]->email.' - Fone: '.$emitente[0]->telefone; ?></span></td>
-                                    <td style="width: 25%; text-align: center; font-size: 10px; ">#Os: <span  style="font-size: 10px; " ><?php echo $result->idOs?></span></br> <span style="font-size: 10px; " >Emissão: <?php echo date('d/m/Y h:m:s')?></span></br> <span  style="font-size: 10px; " >Documento: <?php echo $result->documentoOs?></span></br> <span style="font-size: 10px; " >Setor: <?php echo $result->setorOs;?></span> </td>
+                                    <td style="width: 25%; text-align: center; font-size: 10px; ">#Os: <span  style="font-size: 10px; " ><?php echo $result->idOs?></span></br> <span style="font-size: 10px; " >Emissão: <?php echo date('d/m/Y h:m:s')?></span></br> <span  style="font-size: 10px; " >Documento: <?php echo $result->documentoOs?></span></br> <span style="font-size: 10px; " >Modelo: <?php echo $result->modelo;?></span><span style="font-size: 10px; " > - Setor: <?php echo $result->setorOs;?></span></td>
                                 </tr>
 
                                 <?php } ?>
